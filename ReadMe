@@ -1,0 +1,63 @@
+Please install following npm plugins
+
+
+1) npm install react-xml-parser - https://www.npmjs.com/package/react-xml-parser  
+
+
+2) npm install react-native-checkbox - https://www.npmjs.com/package/react-native-checkbox
+
+3) npm i radio-button-react-native - https://www.npmjs.com/package/radio-button-react-native  
+4)npm i react-native-render-html - https://www.npmjs.com/package/react-native-render-html
+
+5) npm install --save react-navigation   -https://www.npmjs.com/package/react-navigation
+6) npm i native-base     -https://www.npmjs.com/package/native-base
+//node node_modules/native-base/ejectTheme.js
+7) npm install react-native-material-dropdown -https://www.npmjs.com/package/react-native-material-dropdown
+
+8) npm install html-entities-https://www.npmjs.com/package/html-entities 
+
+9) npm install react-native-flexbox-grid
+
+
+
+
+
+
+
+
+Following are used to fix build errors
+
+1) npm install rnpm -g  
+rnpm link react-native-vector-icons     -  Error  Unrecognised fontfamily ionicons-   https://github.com/GeekyAnts/NativeBase/issues/72
+2) sudo chmod -R a+rwx /appfolder     -Error --In mac - Spawn error 
+
+Note - npm install    --is will solve most of the node package issues
+always run  sudo chmod -R a+rwx /appfolder in MAc after npm install
+
+3) Error -Application XX has not been registered
+ fix - cd to projrct folder and run  npm start
+
+
+
+To run your app on iOS:
+   cd /Users/sonatamobility/Desktop/Archana/ReactNativeProject/TestApp/TestApp
+   react-native run-ios
+   - or -
+   Open ios/TestApp.xcodeproj in Xcode
+   Hit the Run button
+To run your app on Android:
+   cd /Users/sonatamobility/Desktop/Archana/ReactNativeProject/TestApp/TestApp
+   Have an Android emulator running (quickest way to get started), or a device connected
+   react-native run-android
+
+
+How to rename app
+//node node_modules/native-base/ejectTheme.js
+
+Copy your icons from iOS and Android.
+Update displayName in app.json to the new name.
+Delete ios/ and android/ directories.
+Run react-native eject.
+Replace the icons you copied earlier.
+Run react-native link.
+

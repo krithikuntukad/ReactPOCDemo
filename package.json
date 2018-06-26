@@ -1,0 +1,31 @@
+{
+  "name": "StarComplience",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "html-entities": "^1.2.1",
+    "native-base": "^2.6.1",
+    "radio-button-react-native": "^1.1.6",
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-checkbox": "^2.0.0",
+    "react-native-flexbox-grid": "^0.3.2",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-render-html": "^3.10.0",
+    "react-navigation": "^2.5.3",
+    "react-xml-parser": "^1.0.7"
+  },
+  "devDependencies": {
+    "babel-jest": "23.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.2.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
