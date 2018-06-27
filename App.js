@@ -12,21 +12,14 @@ import {
   Image,
   View
 } from 'react-native';
-//import SplashScreen from 'react-native-splash-screen';
-//import FlexBox from './Components/FlexBox';
- 
-//import JsonData from './Components/JsonData';
-//import Sample from './Components/Sample';
-//import Menu from './Components/Menu';
- 
-//import SettingsScreen from './Components/SettingsScreen';
+
 import HomeScreen from './Components/HomeScreen';
 
 import { DrawerNavigator , DrawerItems, StackNavigator} from 'react-navigation';
 import DemoPageStyleOne from './Components/DemoPageStyleOne';
 import DemoPageStyleTwo from './Components/DemoPageStyleTwo';
 import { Icon, Button, Container, Header, Body, Content, Left } from 'native-base';
- 
+import DemoPageStyleSeven from './Components/DemoPageStyleSeven';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -34,6 +27,8 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
  
+
+
 export default class App extends Component {
   
  
@@ -76,6 +71,10 @@ const MyApp = DrawerNavigator({
   StyleTwo : {
     screen: DemoPageStyleTwo
   },
+  StyleSeven:{
+    screen: DemoPageStyleSeven
+  }
+  
  
 },
   {

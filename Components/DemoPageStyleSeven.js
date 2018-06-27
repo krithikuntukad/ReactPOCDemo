@@ -3,25 +3,39 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
+//import { CheckBox } from 'react-native-elements';
 import RadioButton from 'radio-button-react-native';
 import { Icon, Header, Content, Left, Right } from 'native-base';
-//import HTML from 'react-native-render-html';
-//mport { Picker } from 'react-native-picker-dropdown'
+
 import { Dropdown } from 'react-native-material-dropdown';
 
 import { WebView } from 'react-native';
-//var DOMParser = require('xmldom').DOMParser
+
 var XMLParser = require('react-xml-parser');
 
 import HTML from 'react-native-render-html';
 
-import styles from './styleOne';
+import styles from './Styles/styleSeven';
 import { Container } from 'native-base';
 
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 
-export default class DemoPageStyleOne extends Component {
+import { Form, FormItem } from 'react-native-form-validation';
+
+
+//import TextInputField from './TextFieldComponent'
+
+//import Form from 'react-native-form'
+
+import ComponentWithValue from './TextFieldComponent2'
+import LabelComponent from './LabelComponent'
+import CheckboxComponent from './CheckboxComponent'
+import PickerComponent from './PickerComponent';
+import DropdownComponent from './DropdownComponent'
+import RadioButtonComponent from './RadioButtonComponent';
+
+export default class DemoPageStyleSeven extends Component {
 
   constructor(props) {
     super(props);
@@ -32,10 +46,18 @@ export default class DemoPageStyleOne extends Component {
       value: 0,
       text: '',
       htmlContent: '',
-      radioBtnOptions:[]
+      radioBtnOptions:[],
+      textInput1:'1',
+      textInput2:'2',
+      textInput3:'3',
+      controlInputs:[],
+      controlRadioButtons:[],
+      //controlDropdown:[],
     }
 
-
+   
+   
+   
 
     var responseText = `
 
@@ -2039,10 +2061,33 @@ export default class DemoPageStyleOne extends Component {
 
 
   }
+  checkBoxClicked=()=>{
+    console.log("Event here",checked)
+   this.setState({checked: !this.state.checked})
+  }
   handleOnPress(radioBtnOption,indexVal){
   this.state.radioBtnOptions[indexVal] = 1
 }
-
+textInputChange(event){
+    console.log("event.target.value",event.target.value)
+    console.log(event)
+    console.log("event.target.value",event.nativeEvent.text)
+  }
+  changeStateAttributeValue = (event,attributeKey)=>{
+    // var newState = this.state;
+    // console.log("newStatep",event.nativeEvent.text)
+    // var stateBeingChanged = this.state[stateName];
+    // console.log("stateBeingChanged",stateBeingChanged)
+    // stateBeingChanged[attributeKey] = event.nativeEvent.text;
+    // console.log("newStateq",stateBeingChanged[attributeKey])
+    // newState[stateName] = stateBeingChanged;
+    // console.log("newStater",newState[stateName])
+console.log(this.state.controlInputs)
+    this.state.controlInputs[attributeKey] = event.nativeEvent.text;
+    console.log(this.state.controlInputs[[attributeKey]])
+   // this.setState(newState); 
+  }
+  
 
   constructControls(responseText) {
 
@@ -2055,18 +2100,50 @@ export default class DemoPageStyleOne extends Component {
     xmlJson.push(xml)
     var keyIndex = 0;
     var radioVal = 0
-    xmlJson[0].children.map((currentSection, index) =>{
-console.log(JSON.stringify(xmlJson))
- 
-      
 
-      currentSection.children.map((currentItem, itemIndex) =>{
-        if (currentItem.name == "Controls") {
-          currentSection.children.map((currentControl, controlIndex) =>{
-            if (currentControl.name == "Controls") {
-              currentControl.children.map( (controlItem, controlItemIndex)=> {
-                if (controlItem.name == "Checkbox") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
+    //console.log("xmlJson")
+   // console.log(JSON.stringify(xmlJson))
+    for(var a =0; a< xmlJson[0].children.length;a++){
+      console.log("a",a)
+     
+      for(var b =0; b< xmlJson[0].children[a].children.length;b++){
+        
+        if(xmlJson[0].children[a].children[b].name == "Controls"){
+         // console.log("b",b)
+          for(var c =0; c< xmlJson[0].children[a].children[b].children.length;c++){
+         //
+         if (xmlJson[0].children[a].children[b].children[c].name == "Checkbox") {
+          var visibility = false
+          var regex= ""
+          var maxLength = 0
+          var isRequired = false
+          var contolArray =[] 
+          for(var d =0; d< xmlJson[0].children[a].children[b].children[c].children.length;d++){
+          
+            contolArray.push(xmlJson[0].children[a].children[b].children[c].children[d])
+      
+         if( xmlJson[0].children[a].children[b].children[c].children.length-1 == d){
+         
+           var tempArray = contolArray.reverse()
+           tempArray.map((innerItem, innerItemIndex) =>{
+            if(innerItem.name == "Visible"){
+                   
+              visibility = innerItem.value
+           }
+           if(innerItem.name == "Validator"){
+             if(innerItem.value == "String"){
+              regex = /^\d+$/
+             }else{
+              regex = /^\d+$/
+             }
+            
+           }
+           if(innerItem.name == "MaxLength"){
+            maxLength = innerItem.value
+           }
+           if(innerItem.name =="RequiredField"){
+            isRequired = innerItem.value
+           }
                     if (innerItem.name == "FieldHeader") {
                       keyIndex = keyIndex + 1
                       labelStyle = {
@@ -2077,206 +2154,563 @@ console.log(JSON.stringify(xmlJson))
                         width: 18,
                         height: 18
                       }
-                    
+                     var labelStyle = {
+                        color: 'black',
+                        fontSize: 10
+                      }
+                     var  checkBoxStyle = {
+                        width: 18,
+                        height: 18
+                      }
+                      if(visibility == 'true'){
+                        //console.log(regex)
+                        //console.log(this.state.xmlJson[0])
+                            this.state.controlInputs[innerItem.value] = true
+                            console.log("this.state.controlInputs[innerItem.value]")
+                            console.log(this.state.controlInputs[innerItem.value])
                       controlsArray.push(
-                        <View key={keyIndex} style={{flexDirection: 'row'}}>
-                          <CheckBox  style={styles.checkBox}
-                            label = ""
-                            labelStyle={labelStyle}
-                            checkboxStyle={checkBoxStyle}
-                            onChange={(checked) => console.log('I am checked', checked)}
-                          />
-                           <Text numberOfLines={15} style={styles.checkBoxLable }>{innerItem.value}</Text>
-                        </View>
+
+                    <FormItem
+                    isRequired={isRequired}
+                    >             
+                      <CheckboxComponent key = {keyIndex} style={styles.checkBox}
+                      label = ""
+                      labelStyle={labelStyle}
+                      checkboxStyle={checkBoxStyle}
+                      onChange={(checked) => console.log('I am checked', checked)}
+
+                      numberOfLines={15} 
+                      style={styles.checkBoxLable }
+                      value = {innerItem.value}
+                      />
+        
+                     </FormItem>     
                       )
                     }
+                  }
                   })
+                }
+              }
 
 
-                } else if (controlItem.name == "Label") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
-                    if (innerItem.name == "FieldHeader") {
-                      keyIndex = keyIndex + 1
-                      var y = innerItem.value
-                      y = new Entities().decode(y);
-                      controlsArray.push(
-                        <WebView
-                          source={{ html: y }}
-                          style={{
-                            flex: 1,
-                            marginTop: 5,
-                            height: 200,
-                          }}
-                        />
-                      )
+                }else if(xmlJson[0].children[a].children[b].children[c].name == "RadioButton"){
+                //Krithi start
+                var visibility = false
+                var regex= ""
+                var maxLength = 0
+                var isRequired = false
+                var contolArray =[]
+                var text = ""
+                var radioBtn = []
+                for(var d =0; d< xmlJson[0].children[a].children[b].children[c].children.length;d++){
+             
+                    contolArray.push(xmlJson[0].children[a].children[b].children[c].children[d])
+              
+                 if( xmlJson[0].children[a].children[b].children[c].children.length-1 == d){
+                 
+                   var tempArray = contolArray.reverse()
+                   tempArray.map((innerItem, innerItemIndex) =>{
+                   
+                     if(innerItem.name == "Visible"){
+                      
+                       visibility = innerItem.value
                     }
-
-                  })
-                } else if (controlItem.name == "RadioButton") {
-                  controlItem.children.map((innerItem, innerItemIndex) =>{
-                    var text = ""
-                    var radioBtn = []
-
-                    if (innerItem.name == "FieldHeader") {
-                      text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
-                      text = new Entities().decode(text);
-                      text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-                      text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+                    if(innerItem.name == "Validator"){
+                      if(innerItem.value == "String"){
+                       regex = /^\d+$/
+                      }else{
+                       regex = /^\d+$/
+                      }
+                     
+                    }
+                    if(innerItem.name == "MaxLength"){
+                     maxLength = innerItem.value
+                    }
+                    if(innerItem.name =="RequiredField"){
+                     isRequired = innerItem.value
+                    }
+               
+                 
                     
-                    }
-                    if (innerItem.name == "UserDefinedList") {
-                      innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
-
-                        if (radioBtnOption.name == "ListItem") {
-                          keyIndex = keyIndex + 1
-                          radioVal = radioVal+111
-                        this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
+  
+                      if (innerItem.name == "FieldHeader") {
+                        text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
+                        text = new Entities().decode(text);
+                        text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
+                        text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+                      
+                      }
+                      if (innerItem.name == "UserDefinedList") {
+                        innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+  
+                          if (radioBtnOption.name == "ListItem") {
+                            keyIndex = keyIndex + 1
+                            radioVal = radioVal+111
+                          this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
+                           
                           radioBtn.push(
+                           
                             <View style={styles.radio} key={keyIndex}>
-                              <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
-                              onPress={()=>this.handleOnPress(radioBtnOption,radioVal)
-                              }
-                                outerCircleColor='grey'
-                                innerCircleColor='#153875'
-                                innerCircleSize={8}
-                                outerCircleSize={18}
-                              >
-                                <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
-                              </RadioButton>
-                            </View>
-                          )
-                        }
-                      })
-                    }
-                    keyIndex = keyIndex + 1
-                  
-                    controlsArray.push(
-                      <View key={keyIndex}>
-                        <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
-                        />
-
-                        {radioBtn}
-                      </View>
-                    )
-                
-                  })
-                
-                } else if (controlItem.name == "Textbox") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
-                    if (innerItem.name == "FieldHeader") {
-                      keyIndex = keyIndex + 1
-
-                      var text = new AllHtmlEntities().decode(innerItem.value);
-                      text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-
-                      controlsArray.push(
-                        <View key={keyIndex}>
-                          <Text style={styles.textBox}>{text}</Text>
-                          <TextInput
-                            style={{
-                              height: 30,
-                              //borderBottomColor:'#a8a8a8', 
-                              borderWidth: 1,
-                              marginBottom: 10,
-                              paddingLeft: 5,
-                              fontSize: 10
-                            }}
-                            placeholder="Enter Text Here"
-                          // onChangeText={(text) => console.log("text changed")}
-
-                          //value={this.state.text}
-
-                          />
-                        </View>
-                      )
-                    }
-
-                  })
-                } else if (controlItem.name == "DropDownList") {
-                  //console.log("controlItem.DropDownList",controlItem.name)
-                  var dropDowValues = []
-                  var obj = {}
-                  var text = ""
-                  var label = ""
-                  controlItem.children.map( (innerItem, innerItemIndex)=> {
-
-                    if (innerItem.name == "FieldHeader") {
-                      var y = innerItem.value
-                      y = new Entities().decode(innerItem.value);
-                      y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                      text = <Text>{y}</Text>
-                      label = y
-
-                    }
-                    if (innerItem.name == "ControlActions") {
-                      innerItem.children.map( (dropdownItem, dropdownItemIndex)=> {
-                        if (dropdownItem.name == "UdfControlAction") {
-                          dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
-
-                            if (udfControlAction.name == "SourceValue") {
-                              obj = {
-                                value: udfControlAction.value,
-                              }
-                              dropDowValues.push(obj)
+                            <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
+                            onPress={()=>this.handleOnPress(radioBtnOption,radioVal)
                             }
+                              outerCircleColor='grey'
+                              innerCircleColor='#153875'
+                              innerCircleSize={8}
+                              outerCircleSize={18}
+                            >
+                              <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
+                            </RadioButton>
+                          </View>
+   
+                            )
+                          }
+                        })
+                      }
+                    
+                  
+                  
+                 
+                    })
+                  }
+                }
+                keyIndex = keyIndex + 1
+                      
+                controlsArray.push(
+                  <FormItem
+                isRequired={true}
+                regExp = {regex}
+               >
+                  <View key={keyIndex}>
+                    <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+                    />
 
-                          })
-                        }
+                    {radioBtn}
+                  </View>
+                  </FormItem>
+                )
 
-                      })
+                }else if (xmlJson[0].children[a].children[b].children[c].name == "Textbox") {
+            var visibility = false
+             var regex= ""
+             var maxLength = 0
+             var isRequired = false
+             var contolArray =[]
+             for(var d =0; d< xmlJson[0].children[a].children[b].children[c].children.length;d++){
+          
+                 contolArray.push(xmlJson[0].children[a].children[b].children[c].children[d])
+           
+              if( xmlJson[0].children[a].children[b].children[c].children.length-1 == d){
+              
+                var tempArray = contolArray.reverse()
+                tempArray.map((innerItem, innerItemIndex) =>{
+                
+                  if(innerItem.name == "Visible"){
+                   
+                    visibility = innerItem.value
+                 }
+                 if(innerItem.name == "Validator"){
+                   if(innerItem.value == "String"){
+                    regex = /^\d+$/
+                   }else{
+                    regex = /^\d+$/
+                   }
+                  
+                 }
+                 if(innerItem.name == "MaxLength"){
+                  maxLength = innerItem.value
+                 }
+                 if(innerItem.name =="RequiredField"){
+                  isRequired = innerItem.value
+                 }
+                
+             
+                  if (innerItem.name == "FieldHeader") {
+                    keyIndex = keyIndex + 1
 
-                    }
-
-                  })
-                  keyIndex = keyIndex + 1
-                  console.log("dropDowValues",dropDowValues)
-                  controlsArray.push(
-                    <View key={keyIndex}>
-
-                      <Dropdown label={label} data={dropDowValues}
-                        fontSize={10} baseColor="black" textColor='black'
-                        labelFontSize={10} />
-                    </View>
-                  )
-
-                } else if(controlItem.name == "AttachmentControl"){
-              controlItem.children.map(function(innerItem, innerItemIndex){
-                console.log("AttachmentControl")
-                if(innerItem.name == "FieldHeader"){
-                  keyIndex = keyIndex+1
-                  console.log(innerItem.value)
                     var text = new AllHtmlEntities().decode(innerItem.value);
                     text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                    controlsArray.push(
-                      <View key={keyIndex}>
-                        <Text style={styles.textBox}>{text}</Text>
-                      {/* <Button key={keyIndex}
-                    title="Browse"
-                    color="white"
-                    style={styles.browseButtonStyle}
-                    onPress={() => {
-                      // DocumentPicker.show({
-                      //   filetype: [DocumentPickerUtil.allFiles()],
-                      // },(error,res) => {
-                      //   // Android
-                      //   console.log(
-                      //      res.uri,
-                      //      res.type, // mime type
-                      //      res.fileName,
-                      //      res.fileSize
-                      //   );
-                      // });
-                  
-                      // Alert.alert('You tapped the button!');
-                  }}
-                    accessibilityLabel="Learn more about this purple button"
-                    /> */}
 
-                    </View>
+                    this.state.controlInputs[innerItem.value] = ""
+                    controlsArray.push(
+                    
+                      <FormItem
+                      isRequired={true}
+                      regExp = {regex}
+                     >
+                     <LabelComponent  style ={styles.textBox} value = {text}/>
+                      <ComponentWithValue
+                      style ={{
+                        height: 30,
+                        //borderBottomColor:'#a8a8a8', 
+                        borderWidth: 1,
+                        marginBottom: 10,
+                        paddingLeft: 5,
+                        fontSize: 10
+                      }}
+                        value={ this.state.controlInputs[innerItem.value]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
+                        placeholder="Enter Text Here"
+                        key={keyIndex}
+                        onChange={(event)=>
+                        this.changeStateAttributeValue(event,"controlInputs",innerItem.value)}/>
+                       
+                    </FormItem>
                     )
-                }
-              })
+                  }
+             
+
+                })
+               
+              }else{
+
+              }
+            
+           
           }
+           }else if (xmlJson[0].children[a].children[b].children[c].name == "DropDownList"){
+             
+              var visibility = false
+              var regex= ""
+              var maxLength = 0
+              var isRequired = false
+              var contolArray =[] 
+
+             
+              for(var d =0; d< xmlJson[0].children[a].children[b].children[c].children.length;d++){
+                var dropDowValues = []
+            var obj = {}
+            var text = ""
+            var label = ""
+                contolArray.push(xmlJson[0].children[a].children[b].children[c].children[d])
+          
+             if( xmlJson[0].children[a].children[b].children[c].children.length-1 == d){
+            
+             var tempArray = contolArray.reverse()
+             tempArray.map((innerItem, innerItemIndex) =>{
+              if(innerItem.name == "Visible"){
+                     
+                visibility = innerItem.value
+             }
+             if(innerItem.name == "Validator"){
+               if(innerItem.value == "String"){
+                regex = /^\d+$/
+               }else{
+                regex = /^\d+$/
+               }
+              
+             }
+             if(innerItem.name == "MaxLength"){
+              maxLength = innerItem.value
+             }
+             if(innerItem.name =="RequiredField"){
+              isRequired = innerItem.value
+             }
+           
+          
+           
+
+              if (innerItem.name == "FieldHeader") {
+                var y = innerItem.value
+                y = new Entities().decode(innerItem.value);
+                y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+                text = <Text>{y}</Text>
+                label = y
+
+              }
+              if (innerItem.name == "ControlActions") {
+                innerItem.children.map( (dropdownItem, dropdownItemIndex)=> {
+                  if (dropdownItem.name == "UdfControlAction") {
+                    dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
+
+                      if (udfControlAction.name == "SourceValue") {
+                        obj = {
+                          value: udfControlAction.value,
+                        }
+                        dropDowValues.push(obj)
+                      }
+
+                    })
+                  }
+
+                })
+
+              }
+
+            })
+            keyIndex = keyIndex + 1
+            controlsArray.push(
+              <FormItem
+              isRequired={true}
+              regExp = {regex}
+             >
+              <DropdownComponent key={keyIndex} label={label} dropDowValues ={dropDowValues}/>
+              </FormItem>
+            )
+
+        
+            
+   
+          }
+        }
+             
+          
+        
+          }
+           }
+           
+        }
+      }
+       
+    }
+  
+    xmlJson[0].children.map((currentSection, index) =>{
+
+ 
+      
+
+      currentSection.children.map((currentItem, itemIndex) =>{
+        if (currentItem.name == "Controls") {
+          currentSection.children.map((currentControl, controlIndex) =>{
+            if (currentControl.name == "Controls") {
+              currentControl.children.map( (controlItem, controlItemIndex)=> {
+                // if (controlItem.name == "Checkbox") {
+                //   controlItem.children.map( (innerItem, innerItemIndex) =>{
+                //     if (innerItem.name == "FieldHeader") {
+                //       keyIndex = keyIndex + 1
+                //       labelStyle = {
+                //         color: 'black',
+                //         fontSize: 10
+                //       }
+                //       checkBoxStyle = {
+                //         width: 18,
+                //         height: 18
+                //       }
+                    
+                //       controlsArray.push(
+                //         <View key={keyIndex} style={{flexDirection: 'row'}}>
+                //           <CheckBox  style={styles.checkBox}
+                //             label = ""
+                //             labelStyle={labelStyle}
+                //             checkboxStyle={checkBoxStyle}
+                //             onChange={(checked) => console.log('I am checked', checked)}
+                //           />
+                //            <Text numberOfLines={15} style={styles.checkBoxLable }>{innerItem.value}</Text>
+                //         </View>
+                //       )
+                //     }
+                //   })
+
+
+                // } else if (controlItem.name == "Label") {
+                //   controlItem.children.map( (innerItem, innerItemIndex) =>{
+                //     if (innerItem.name == "FieldHeader") {
+                //       keyIndex = keyIndex + 1
+                //       var y = innerItem.value
+                //       y = new Entities().decode(y);
+                //       controlsArray.push(
+                //         <WebView
+                //           source={{ html: y }}
+                //           style={{
+                //             flex: 1,
+                //             marginTop: 5,
+                //             height: 200,
+                //           }}
+                //         />
+                //       )
+                //     }
+
+                //   })
+                // } else if (controlItem.name == "RadioButton") {
+                //   controlItem.children.map((innerItem, innerItemIndex) =>{
+                //     var text = ""
+                //     var radioBtn = []
+
+                //     if (innerItem.name == "FieldHeader") {
+                //       text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
+                //       text = new Entities().decode(text);
+                //       text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
+                //       text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+                    
+                //     }
+                //     if (innerItem.name == "UserDefinedList") {
+                //       innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+
+                //         if (radioBtnOption.name == "ListItem") {
+                //           keyIndex = keyIndex + 1
+                //           radioVal = radioVal+111
+                //         this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
+                //           radioBtn.push(
+                //             <View style={styles.radio} key={keyIndex}>
+                //               <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
+                //               onPress={()=>this.handleOnPress(radioBtnOption,radioVal)
+                //               }
+                //                 outerCircleColor='grey'
+                //                 innerCircleColor='#153875'
+                //                 innerCircleSize={8}
+                //                 outerCircleSize={18}
+                //               >
+                //                 <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
+                //               </RadioButton>
+                //             </View>
+                //           )
+                //         }
+                //       })
+                //     }
+                //     keyIndex = keyIndex + 1
+                  
+                //     controlsArray.push(
+                //       <View key={keyIndex}>
+                //         <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+                //         />
+
+                //         {radioBtn}
+                //       </View>
+                //     )
+                
+                //   })
+                
+                // } 
+    //             if (controlItem.name == "Textbox") {
+    //               var visibility = false
+    //                var regex= ""
+    //                var maxLength = 0
+    //                var isRequired = false
+    //                var contolArray =[]
+    //               controlItem.children.map( (innerAItem, innerItemIndex) =>{
+    //                 contolArray.push(innerAItem)
+    //                // console.log("controlItem.children.length-1",controlItem.children.length-1,innerItemIndex)
+    //                 if(controlItem.children.length-1 == innerItemIndex){
+    //                   //console.log(contolArray.reverse())
+    //                   var tempArray = contolArray.reverse()
+    //                   tempArray.map((innerItem, innerItemIndex) =>{
+    //                    // console.log("innerItem.name",innerItem.name)
+    //                     if(innerItem.name == "Visible"){
+    //                      // console.log("visibility",visibility)
+    //                       visibility = innerItem.value
+    //                    }
+    //                    if(innerItem.name == "Validator"){
+    //                      if(innerItem.value == "String"){
+    //                       regex = /^\d+$/
+    //                      }else{
+    //                       regex = /^\d+$/
+    //                      }
+                        
+    //                    }
+    //                    if(innerItem.name == "MaxLength"){
+    //                     maxLength = innerItem.value
+    //                    }
+    //                    if(innerItem.name =="RequiredField"){
+    //                     isRequired = innerItem.value
+    //                    }
+                      
+                     
+    //                     if (innerItem.name == "FieldHeader") {
+    //                       keyIndex = keyIndex + 1
+    
+    //                       var text = new AllHtmlEntities().decode(innerItem.value);
+    //                       text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+    // if(visibility == 'true'){
+    //   //console.log(regex)
+    //   this.state.controlInputs[innerItem.value] = ""
+    //                       controlsArray.push(
+                          
+    //                         <FormItem
+    //                         isRequired={true}
+    //                         regExp = {regex}
+    //                        >
+    //                        <LabelComponent  style ={styles.textBox} value = {text}/>
+    //                         <ComponentWithValue
+    //                         style ={{
+    //                           height: 30,
+    //                           //borderBottomColor:'#a8a8a8', 
+    //                           borderWidth: 1,
+    //                           marginBottom: 10,
+    //                           paddingLeft: 5,
+    //                           fontSize: 10
+    //                         }}
+    //                           value={this.state.controlInputs[innerItem.value]}
+    //                           placeholder="Enter Text Here"
+    //                           onChange={(event)=>
+    //                             this.changeStateAttributeValue(event,innerItem.value)}/>
+                             
+    //                           />
+    //                       </FormItem>
+    //                       )
+    //                     }
+    //                   }
+    
+    //                   })
+                     
+    //                 }else{
+
+    //                 }
+    //               })
+                 
+    //             }
+          //       } else if (controlItem.name == "DropDownList") {
+          //         //console.log("controlItem.DropDownList",controlItem.name)
+          //         var dropDowValues = []
+          //         var obj = {}
+          //         var text = ""
+          //         var label = ""
+          //         controlItem.children.map( (innerItem, innerItemIndex)=> {
+
+          //           if (innerItem.name == "FieldHeader") {
+          //             var y = innerItem.value
+          //             y = new Entities().decode(innerItem.value);
+          //             y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+          //             text = <Text>{y}</Text>
+          //             label = y
+
+          //           }
+          //           if (innerItem.name == "ControlActions") {
+          //             innerItem.children.map( (dropdownItem, dropdownItemIndex)=> {
+          //               if (dropdownItem.name == "UdfControlAction") {
+          //                 dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
+
+          //                   if (udfControlAction.name == "SourceValue") {
+          //                     obj = {
+          //                       value: udfControlAction.value,
+          //                     }
+          //                     dropDowValues.push(obj)
+          //                   }
+
+          //                 })
+          //               }
+
+          //             })
+
+          //           }
+
+          //         })
+          //         keyIndex = keyIndex + 1
+          //         controlsArray.push(
+          //           <View key={keyIndex}>
+
+          //             <Dropdown label={label} data={dropDowValues}
+          //               fontSize={10} baseColor="black" textColor='black'
+          //               labelFontSize={10} />
+          //           </View>
+          //         )
+
+          //       } else if(controlItem.name == "AttachmentControl"){
+          //     controlItem.children.map(function(innerItem, innerItemIndex){
+          //       console.log("AttachmentControl")
+          //       if(innerItem.name == "FieldHeader"){
+          //         keyIndex = keyIndex+1
+          //         console.log(innerItem.value)
+          //           var text = new AllHtmlEntities().decode(innerItem.value);
+          //           text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+          //           controlsArray.push(
+          //             <View key={keyIndex}>
+          //               <Text style={styles.textBox}>{text}</Text>
+                  
+
+          //           </View>
+          //           )
+          //       }
+          //     })
+          // }
               })
             }
           })
@@ -2287,15 +2721,20 @@ console.log(JSON.stringify(xmlJson))
 
 
     this.state.controlsArray = controlsArray
-    console.log("console.log(controlsArray.length)")
-    console.log(controlsArray.length)
-    console.log(JSON.stringify(controlsArray))
 
     //Alert.alert(this.state.controlsArray);
     this.state.doc = JSON.stringify(xml)
 
   }
 
+  submit(){
+    let submitResults = this.refs.form.validate();
+    console.log(submitResults)
+  }
+ 
+  customValidation(){
+    return true;
+  }
   render() {
     return (
       <Container>
@@ -2317,9 +2756,18 @@ console.log(JSON.stringify(xmlJson))
     </Header>
       <View style={styles.pageStyle} >
         <ScrollView >
+          {/* <View style={styles.container}>
+         {this.state.controlsArray}
+          </View> */}
           <View style={styles.container}>
-            {this.state.controlsArray}
-          </View>
+          <Form
+            ref="form"
+            shouldValidate={true}
+            >
+             {this.state.controlsArray}
+          </Form>
+
+</View>
         </ScrollView>
         <View >
           <Row size={12}>
@@ -2339,7 +2787,7 @@ console.log(JSON.stringify(xmlJson))
                 title="Create"
                 color="white"
                 onPress={() => {
-                  Alert.alert('You tapped the button!');
+                  this.submit()
                 }}
                 accessibilityLabel="Learn more about this purple button"
               />
@@ -2352,4 +2800,4 @@ console.log(JSON.stringify(xmlJson))
   }
 }
 
-AppRegistry.registerComponent('DemoPageStyleOne', () =>DemoPageStyleOne);
+AppRegistry.registerComponent('DemoPageStyleSeven', () =>DemoPageStyleSeven);
