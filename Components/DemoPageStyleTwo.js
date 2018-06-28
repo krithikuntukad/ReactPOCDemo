@@ -2125,43 +2125,86 @@ export default class DemoPageStyleTwo extends Component {
                   controlItem.children.map(function (innerItem, innerItemIndex) {
                     var text = ""
                     var radioBtn = []
-
+                 
                     if (innerItem.name == "FieldHeader") {
                       text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
-                      console.log("innerItem.value ")
-                      console.log(innerItem.value)
+                     // console.log("innerItem.value ")
+                     // console.log(innerItem.value)
                       text = new Entities().decode(text);
-                      console.log("text")
-                      console.log(text)
+                    //  console.log("text")
+                    //  console.log(text)
                       text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-                      console.log(text)
+                    //  console.log(text)
                       text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
                     
                     }
                     if (innerItem.name == "UserDefinedList") {
+                      var switchOrRadioArray = []
+                      var switchOrRadioControlArray = []
                       innerItem.children.map(function (radioBtnOption, radioBtnOptionIndex) {
+//console.log("radios",radioBtnOptionIndex,innerItem.children.length)
+//console.log(radioBtnOption)
 
-                        if (radioBtnOption.name == "ListItem") {
-                          keyIndex = keyIndex + 1
-                    
-                           radioBtn.push(
-                             <View style={styles.radio} key={keyIndex}>
-                               <Row size={12} style={styles.switchRow}>
-             <Col sm={2} ><Switch style={styles.switchIcon}
-            onValueChange={() => {
-             Alert.alert('You tapped the button!');
-           }}
-             /></Col>
-             <Col sm={9} style={{flex:1,justifyContent:'center'}}>  <Text  style={styles.swicthLable }>{radioBtnOption.attributes.value}</Text></Col>
-                              
-                         </Row>     
-                              
-                               
-                             </View>
-                           )
-                          }
+if( innerItem.children.length == 2){
+  var obj ={
+    value:radioBtnOption.attributes.value,
+    name:radioBtnOption.attributes.name
+  }
+  switchOrRadioArray.push(obj)
+  console.log("innerItem.children.length-1",radioBtnOptionIndex)
+  if(innerItem.children.length-1 == radioBtnOptionIndex){
+  console.log("herererer")
+  console.log(JSON.stringify(switchOrRadioArray))
+    radioBtn.push(
+      <View style={styles.radio} key={keyIndex}>
+        <Row size={12} style={styles.switchRow}>
+        
+         <Col sm={12} ><Switch style={styles.switchIcon}
+         activeText ={switchOrRadioArray[0].value}
+         inActiveText ={switchOrRadioArray[1].value}
+         onValueChange={() => {
+         Alert.alert('You tapped the button!');
+       }}
+         /></Col>
+       
+           </Row> 
+       </View>
+           )
+    
+  }
+}else{
+  switchOrRadioControlArray.push(radioBtnOption)
+
+  console.log("switchOrRadioControlArray")
+ 
+  if(innerItem.children.length-1 == radioBtnOptionIndex){
+    console.log(JSON.stringify(switchOrRadioControlArray))
+    switchOrRadioControlArray.map(function (rad, radBtnOptionIndex) {
+    if (rad.name == "ListItem") {
+      keyIndex = keyIndex + 1
+      //radioVal = radioVal+111
+    //this.state.rad["radioVal"] =  this.state.rad["radioVal"]  || 0
+      radioBtn.push(
+        <View style={styles.radio} key={keyIndex}>
+          <RadioButton currentValue={rad.attributes.name} value={rad.attributes.name}
+          onPress={()=>this.handleOnPress(rad,radioVal)
+          }
+            outerCircleColor='grey'
+            innerCircleColor='#153875'
+            innerCircleSize={8}
+            outerCircleSize={18}
+          >
+            <Text style={styles.radioText} >{rad.attributes.value}</Text>
+          </RadioButton>
+        </View>
+      )
+    }
+  })
+}
+}
+                       
                         })
-                         }
+                          }
                     
                     keyIndex = keyIndex + 1
                    
