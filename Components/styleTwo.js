@@ -74,8 +74,8 @@ checkBoxLable:{
 swicthLable:{
 fontSize:10,
 color:'black',
-justifyContent: 'center', 
-alignItems: 'center' 
+//justifyContent: 'center', 
+//alignItems: 'center' 
 },
 switchIcon:{
 transform: [{ scaleX: 0.8 }, { scaleY: 0.6}]
