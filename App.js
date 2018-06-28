@@ -21,7 +21,9 @@ import DemoPageStyleTwo from './Components/DemoPageStyleTwo';
 import { Icon, Button, Container, Header, Body, Content, Left } from 'native-base';
 import DemoPageStyleSeven from './Components/DemoPageStyleSeven';
 
-import DemoPagination from './Components/DemoPagination'
+import DemoPagination from './Components/DemoPagination';
+import DemoPagination2 from './Components/DemoPagination2';
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -78,8 +80,10 @@ const MyApp = DrawerNavigator({
   },
   DemoPagination:{
     screen:DemoPagination
+  },
+  DemoPagination2:{
+    screen:DemoPagination2
   }
-
   
  
 },

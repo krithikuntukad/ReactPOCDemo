@@ -4,7 +4,7 @@ import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, S
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
 //import { CheckBox } from 'react-native-elements';
-import RadioButton from 'radio-button-react-native';
+//import RadioButton from 'radio-button-react-native';
 import { Icon, Header, Content, Left, Right } from 'native-base';
 
 import { Dropdown } from 'react-native-material-dropdown';
@@ -20,7 +20,7 @@ import { Container } from 'native-base';
 
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
-
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import { Form, FormItem } from 'react-native-form-validation';
 
 
@@ -2258,7 +2258,7 @@ console.log(JSON.stringify(validityArray))
                         text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
                       
                       }
-                      if(visibility == 'true'){
+                     // if(visibility == 'true'){
                       if (innerItem.name == "UserDefinedList") {
                         innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
   
@@ -2268,34 +2268,21 @@ console.log(JSON.stringify(validityArray))
                           this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
                            
                           radioBtn.push(
-                         
-                           <View style={styles.radio} key={keyIndex}>
-                             <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
-                            onPress={()=>this.handleOnPress(radioBtnOption,radioVal)
-                            }
-                              outerCircleColor='grey'
-                              innerCircleColor='#153875'
-                              innerCircleSize={8}
-                              outerCircleSize={18}
-                            >
-                              <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
-                            </RadioButton> 
-
-                      
-                          </View>
-   
+                           <RadioButton value={radioBtnOption.attributes.name} >
+          <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
+        </RadioButton>
                             )
                           }
                         })
                       }
                     
-                    }
+                  //  }
                   
                  
                     })
                   }
                 }
-                if(visibility == 'true'){
+                //if(visibility == 'true'){
                 keyIndex = keyIndex + 1
                       
                 controlsArray.push(
@@ -2306,37 +2293,22 @@ console.log(JSON.stringify(validityArray))
                   <View key={keyIndex}>
                     <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
                     />
-{radioBtn}
                    
-                    {/* <RadioGroup
-              callback={(selected) => { console.log(selected) }}
-              iconColor={"#00a2dd"}
-              iconSize={30}
-              //checkedIcon="ios-radio-button-on-outline"
-              //uncheckedIcon="ios-radio-button-off-outline"
-              radios={[
-                {
-                  label: "first", // label for checkbox item
-                  value: 1, // selected value for item, if selected, what value should be sent?
-                  selected: true // if the item is selected by default or not.
-                },
-                {
-                  label: "second",
-                  value: 2
-                },
-              ]}
-              labelStyle={{
-                color: '#333'
-              }}
-              rowStyle={{
-                flexDirection: 'row'
-              }}
-              rowDirection={"column"}
-            /> */}
+                   <RadioGroup
+                   size={24}
+                   thickness={2}
+                   color='#153875'
+                   //highlightColor='blue'
+        onSelect = {(index, value) => {
+
+           console.log(value)}}
+      >
+        {radioBtn}
+      </RadioGroup>
                   </View>
                   </FormItem>
                 )
-              }
+              //}
                 }else if (xmlJson[0].children[a].children[b].children[c].name == "Textbox") {
             var visibility = false
              var regex= ""

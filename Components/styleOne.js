@@ -79,5 +79,10 @@ browseButtonStyle:{
         flexDirection: 'row',
         justifyContent: 'flex-end'
 
+},
+
+pageStyles:{
+    marginLeft:20
+
 }
 });
