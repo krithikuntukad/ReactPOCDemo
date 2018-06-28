@@ -22,7 +22,7 @@ import { Container } from 'native-base';
 
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
-
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 export default class DemoPageStyleOne extends Component {
 
   constructor(props) {
@@ -2255,27 +2255,26 @@ console.log(JSON.stringify(xmlJson))
                     controlsArray.push(
                       <View key={keyIndex}>
                         <Text style={styles.textBox}>{text}</Text>
-                      {/* <Button key={keyIndex}
+                      { <Button key={keyIndex}
                     title="Browse"
                     color="white"
                     style={styles.browseButtonStyle}
                     onPress={() => {
-                      // DocumentPicker.show({
-                      //   filetype: [DocumentPickerUtil.allFiles()],
-                      // },(error,res) => {
-                      //   // Android
-                      //   console.log(
-                      //      res.uri,
-                      //      res.type, // mime type
-                      //      res.fileName,
-                      //      res.fileSize
-                      //   );
-                      // });
-                  
-                      // Alert.alert('You tapped the button!');
+                      DocumentPicker.show({
+                        filetype: [DocumentPickerUtil.allFiles()],
+                      },(error,res) => {
+                        // Android
+                        Alert.alert(res.uri)
+                        console.log(
+                           res.uri,
+                           res.type, // mime type
+                           res.fileName,
+                           res.fileSize
+                        );
+                      });
                   }}
                     accessibilityLabel="Learn more about this purple button"
-                    /> */}
+                    /> }
 
                     </View>
                     )

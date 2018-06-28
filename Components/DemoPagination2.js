@@ -18,7 +18,7 @@ import HTML from 'react-native-render-html';
 import styles from './styleOne';
 import { Container } from 'native-base';
 import Swiper from 'react-native-swiper';
-import { Pages } from 'react-native-pages';
+
 //import PaginatedListView from 'react-native-paginated-listview'
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
