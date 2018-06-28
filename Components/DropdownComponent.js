@@ -16,7 +16,7 @@ class DropdownComponent extends Component{
   render(){
     return (
       <View key = {this.props.key}>
-         <Dropdown label={this.props.label} data={this.props.dropDowValues}
+         <Dropdown label={this.props.label} data={this.props.dropDowValues} onChangeText ={this.props.onChangeText}
               fontSize={10} baseColor="black" textColor='black'
              labelFontSize={10} />
           
