@@ -35,6 +35,8 @@ import PickerComponent from './PickerComponent';
 import DropdownComponent from './DropdownComponent'
 import RadioButtonComponent from './RadioButtonComponent';
 //import RadioGroup from 'react-native-radio-group'
+
+import { DialogComponent }from 'react-native-dialog-component';
 export default class DemoPageStyleSeven extends Component {
 
   constructor(props) {
@@ -52,7 +54,9 @@ export default class DemoPageStyleSeven extends Component {
       textInput3:'3',
       controlInputs:{},
       controlRadioButtons:[],
-      //controlDropdown:[],
+      values:[],
+      
+      controlDropdown:[],
     }
 
    
@@ -946,7 +950,7 @@ export default class DemoPageStyleSeven extends Component {
     
     <FieldId>ClientType</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>true</RequiredField>
     
@@ -1088,7 +1092,7 @@ export default class DemoPageStyleSeven extends Component {
     
     <FieldId>BDReimbursementOther</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1171,7 +1175,7 @@ export default class DemoPageStyleSeven extends Component {
     
     <FieldId>ContactTypeOther</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>true</RequiredField>
     
@@ -1263,7 +1267,7 @@ export default class DemoPageStyleSeven extends Component {
     
     <FieldId>EntGovernmentOfficial</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1638,7 +1642,7 @@ export default class DemoPageStyleSeven extends Component {
     
     <FieldId>EntGuestAttendProvided</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>true</RequiredField>
     
@@ -2084,16 +2088,16 @@ textInputChange(event){
     // console.log("newStater",newState[stateName])
     console.log("attributeKey",attributeKey)
 console.log(this.state.controlInputs)
-this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
+//this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
 console.log(JSON.stringify(validityArray))
   if((event.nativeEvent.text.length != validityArray["maxLength"])|| 
   (event.nativeEvent.text != "" && validityArray["isRequired"] == "true") )
   {
     validityArray["valid"] = false
-    this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
+    //this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
   }else{
     validityArray["valid"] = true
-    this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
+   // this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
   }
 
   console.log(JSON.stringify(validityArray))
@@ -2180,7 +2184,7 @@ console.log(JSON.stringify(validityArray))
                       if(visibility == 'true'){
                         //console.log(regex)
                         //console.log(this.state.xmlJson[0])
-                            this.state.controlInputs[innerItem.value] = true
+                            this.state.controlInputs[innerItem.value] = false
                             console.log("this.state.controlInputs[innerItem.value]")
                             console.log(this.state.controlInputs[innerItem.value])
                       controlsArray.push(
@@ -2219,6 +2223,8 @@ console.log(JSON.stringify(validityArray))
                 var contolArray =[]
                 var text = ""
                 var radioBtn = []
+                var displayTxt = ""
+                var displayLabel =""
                 for(var d =0; d< xmlJson[0].children[a].children[b].children[c].children.length;d++){
              
                     contolArray.push(xmlJson[0].children[a].children[b].children[c].children[d])
@@ -2254,11 +2260,15 @@ console.log(JSON.stringify(validityArray))
                     
   
                       if (innerItem.name == "FieldHeader") {
+                        displayLabel = innerItem.value
                         text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
                         text = new Entities().decode(text);
                         text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-                        text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
-                      
+                       
+                        this.state.controlInputs[innerItem.value] = ""
+                        
+                        displayTxt = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+                       
                       }
                       //if(visibility == "true"){
                       if (innerItem.name == "UserDefinedList") {
@@ -2270,7 +2280,7 @@ console.log(JSON.stringify(validityArray))
                           this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
                            
                           radioBtn.push(
-                           <RadioButton value={radioBtnOption.attributes.name} >
+                           <RadioButton value={radioBtnOption.attributes.value} >
           <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
         </RadioButton>
                             )
@@ -2294,7 +2304,7 @@ console.log(JSON.stringify(validityArray))
                 regExp = {regex}
                >
                   <View key={keyIndex}>
-                    <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+                    <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
                     />
                    
                    <RadioGroup
@@ -2303,7 +2313,7 @@ console.log(JSON.stringify(validityArray))
                    color='#153875'
                    //highlightColor='blue'
         onSelect = {(index, value) => {
-
+          this.state.controlInputs[displayLabel] = value
            console.log(value)}}
       >
         {radioBtn}
@@ -2366,7 +2376,7 @@ console.log(JSON.stringify(validityArray))
                     var text = new AllHtmlEntities().decode(innerItem.value);
                     text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
 
-                    this.state.controlInputs[innerItem.value] = ""
+                    this.state.controlInputs[text] = ""
                     console.log("visibility",(visibility == "true"),(visibility == true))
                     if(visibility == "true"){
                     controlsArray.push(
@@ -2385,11 +2395,11 @@ console.log(JSON.stringify(validityArray))
                         paddingLeft: 5,
                         fontSize: 10
                       }}
-                        value={ this.state.controlInputs[innerItem.value]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
+                        value={ this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                         placeholder="Enter Text Here"
                         key={keyIndex}
                         onChange={(event)=>
-                        this.changeStateAttributeValue(event,innerItem.value,validityArray)}/>
+                        this.changeStateAttributeValue(event,text,validityArray)}/>
                     </FormItem>
                     )
                   }
@@ -2454,7 +2464,7 @@ var stateIndexVal = ""
                 label = y
 
               }
-              stateIndexVal =innerItem.value
+              stateIndexVal =label
               this.state.controlInputs[stateIndexVal] = ""
               
               if (innerItem.name == "ControlActions") {
@@ -2514,14 +2524,38 @@ var stateIndexVal = ""
 
   }
 
-  submit(){
+  submit=()=>{
    // let submitResults = this.refs.form.validate();
    //console.log("this.stae")
-    console.log(this.state.controlInputs)
+    //console.log(this.state.controlInputs)
 
     var Array  = this.state.controlInputs
+var nonNullArray = []
+    //console.log(JSON.stringify(this.state.controlInputs))
+  this.state.values=[]
+    for(var key in Array){
+      console.log("Key")
+      console.log(Array[key])
+if(Array[key] !=""){
 
-    Alert.alert(Array)
+  var text = key //<Text style={styles.Header }>{innerItem.value}</Text>
+  text = new Entities().decode(text);
+  text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
+  obj= {
+    "Question" :text,
+    "Answer":Array[key]
+
+  }
+  nonNullArray.push(obj)
+}
+this.setState({
+  values: JSON.stringify(nonNullArray)
+})
+      
+     
+    }
+    this.dialogComponent.show();
+    //Alert.alert(Array)
     
     /*for(var a =0; a<xmlJson[0].children.length;a++){
       for(var b =0; b< xmlJson[0].children[a].children.length;b++){
@@ -2585,6 +2619,7 @@ console.log(this.state.controlInputs.length)
   customValidation(){
     return true;
   }
+  
   render() {
     return (
       <Container>
@@ -2605,6 +2640,7 @@ console.log(this.state.controlInputs.length)
       </Right>
     </Header>
       <View style={styles.pageStyle} >
+     
         <ScrollView >
           {/* <View style={styles.container}>
          {this.state.controlsArray}
@@ -2619,6 +2655,13 @@ console.log(this.state.controlInputs.length)
 
 </View>
         </ScrollView>
+        <DialogComponent 
+    ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
+  >
+    <View>
+      <Text>{this.state.values}</Text>
+    </View>
+  </DialogComponent>
         <View >
           <Row size={12}>
             <Col sm={6} style={styles.buttonBorderColor}>
@@ -2638,6 +2681,7 @@ console.log(this.state.controlInputs.length)
                 color="white"
                 onPress={() => {
                   this.submit()
+                  
                 }}
                 accessibilityLabel="Learn more about this purple button"
               />

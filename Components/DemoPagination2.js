@@ -1020,7 +1020,7 @@ export default class DemoPagination2 extends Component {
     
     <FieldId>BDReimbursementMethod</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1068,7 +1068,7 @@ export default class DemoPagination2 extends Component {
     
     <FieldId>BDReimbursementOther</FieldId>
     
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     
     <RequiredField>false</RequiredField>
     
