@@ -2172,7 +2172,7 @@ console.log(JSON.stringify(xmlJson))
                       text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
 
                       controlsArray.push(
-                        <TouchableOpacity key={keyIndex}>
+                        <TouchableOpacity key={keyIndex} style={{margin:10}}>
                           <Text style={styles.textBox}>{text}</Text>
                           <TextInput
                             style={{
@@ -2233,7 +2233,7 @@ console.log(JSON.stringify(xmlJson))
                   keyIndex = keyIndex + 1
                   console.log("dropDowValues",dropDowValues)
                   controlsArray.push(
-                    <TouchableOpacity key={keyIndex} style ={styles.pageStyles}>
+                    <TouchableOpacity key={keyIndex} style ={styles.pageStyles} style ={{margin:10}}  >
 
                       <Dropdown label={label} data={dropDowValues}
                         fontSize={10} baseColor="black" textColor='black'
