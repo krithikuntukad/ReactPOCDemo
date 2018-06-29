@@ -1,47 +1,57 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
-//import RadioButton from 'radio-button-react-native';
-
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
+import RadioButton from 'radio-button-react-native';
 import { Icon, Header, Content, Left, Right } from 'native-base';
+
+//import Accordion from 'react-native-collapsible/Accordion';
+//import * as Animatable from 'react-native-animatable';
 //import HTML from 'react-native-render-html';
 //mport { Picker } from 'react-native-picker-dropdown'
 import { Dropdown } from 'react-native-material-dropdown';
 
 import { WebView } from 'react-native';
+
 //var DOMParser = require('xmldom').DOMParser
 var XMLParser = require('react-xml-parser');
 
 import HTML from 'react-native-render-html';
 
-import styles from './styleOne';
+import styles from './Styles/styleFour';
 import { Container } from 'native-base';
 
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-export default class DemoPageStyleOne extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      doc: [],
-      controlsArray: [],
-      checked: false,
-      value: 0,
-      text: '',
-      htmlContent: '',
-      radioBtnOptions:[],
-      Url:"",
-      display:false
-    }
+var totalData;
 
 
+export default class DemoPageStyleThree extends Component {
 
-    var responseText = `
+
+    constructor(props) {
+
+        super(props);
+
+        this.state = {
+            displayedSection: false,
+            displayedSectionTwo: false,
+            doc: [],
+            controlsArrayOne: [],
+            controlsArrayTwo: [],
+            controlsArray: [],
+            checked: false,
+            value: 0,
+            text: '',
+            htmlContent: '',
+
+            radioBtnOptions: []
+        }
+
+
+
+        var responseText = `
 
     <Sections>
     
@@ -2037,358 +2047,344 @@ export default class DemoPageStyleOne extends Component {
 
 
 
-   // this.handlePress = this.handlePress.bind(this);
+        // this.handlePress = this.handlePress.bind(this);
 
-    this.constructControls(responseText)
-
-
-  }
-  handleOnPress(radioBtnOption,indexVal){
-  this.state.radioBtnOptions[indexVal] = 1
-}
+        this.constructControls(responseText)
 
 
-  constructControls(responseText) {
+    }
+    handleOnPress(radioBtnOption, indexVal) {
+        // console.log("radioBtnOptions")
+        // console.log(this.state.radioBtnOptions)
+        //this.state.value = value
+        this.state.radioBtnOptions[indexVal] = 1
+        //console.log(this.state.radioBtnOptions)
+        //  Alert.alert("radioBtnOptions")
+    }
+    sectionOne = () => {
+        this.setState({
+            displayedSection: !this.state.displayedSection,
+            displayedSectionTwo: false
+        })
+    }
+    sectionTwo = () => {
+        this.setState({
+            displayedSectionTwo: !this.state.displayedSectionTwo,
+            displayedSection: false
+        });
 
-    var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
-   
-    
-
-    var xmlJson = []
-    var controlsArray = []
-    xmlJson.push(xml)
-    var keyIndex = 0;
-    var radioVal = 0
-    xmlJson[0].children.map((currentSection, index) =>{
-console.log(JSON.stringify(xmlJson))
- 
-      
-
-      currentSection.children.map((currentItem, itemIndex) =>{
-        if (currentItem.name == "Controls") {
-          currentSection.children.map((currentControl, controlIndex) =>{
-            if (currentControl.name == "Controls") {
-              currentControl.children.map( (controlItem, controlItemIndex)=> {
-                if (controlItem.name == "Checkbox") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
-                    if (innerItem.name == "FieldHeader") {
-                      keyIndex = keyIndex + 1
-                      labelStyle = {
-                        color: 'black',
-                        fontSize: 10
-                      }
-                      checkBoxStyle = {
-                        width: 18,
-                        height: 18
-                      }
-                    
-                      controlsArray.push(
-                        <View key={keyIndex} style={{flexDirection: 'row'}}>
-                          <CheckBox  style={styles.checkBox}
-                            label = ""
-                            labelStyle={labelStyle}
-                            checkboxStyle={checkBoxStyle}
-                            onChange={(checked) => console.log('I am checked', checked)}
-                          />
-                           <Text numberOfLines={15} style={styles.checkBoxLable }>{innerItem.value}</Text>
-                        </View>
-                      )
-                    }
-                  })
+    }
 
 
-                } else if (controlItem.name == "Label") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
-                    if (innerItem.name == "FieldHeader") {
-                      keyIndex = keyIndex + 1
-                      var y = innerItem.value
-                      y = new Entities().decode(y);
-                      controlsArray.push(
-                        <WebView
-                          source={{ html: y }}
-                          style={{
-                            flex: 1,
-                            marginTop: 5,
-                            height: 200,
-                          }}
-                        />
-                      )
-                    }
+    constructControls(responseText) {
 
-                  })
-                } else if (controlItem.name == "RadioButton") {
-                  controlItem.children.map((innerItem, innerItemIndex) =>{
-                    var text = ""
-                    var radioBtn = []
+        var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
+        // console.log(JSON.stringify(xml));
+        var mainArray = [];
+        var xmlJson = []
+        var controlsArrayOne = []
+        var controlsArrayTwo = []
+        xmlJson.push(xml)
+        var keyIndex = 0;
+        var radioVal = 0;
 
-                    if (innerItem.name == "FieldHeader") {
-                      text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
-                      text = new Entities().decode(text);
-                      text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-                      text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
-                    
-                    }
-                    if (innerItem.name == "UserDefinedList") {
-                      innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+        xmlJson[0].children.map((currentSection, index) => {
+            controlsArray = []
+            console.log("currentSection", currentSection)
 
-                        if (radioBtnOption.name == "ListItem") {
-                          keyIndex = keyIndex + 1
-                          radioVal = radioVal+111
-                        this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
-                          radioBtn.push(
-                           
-                              <RadioButton value={radioBtnOption.attributes.name} >
-          <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
-        </RadioButton>
-                           
-                          )
+            currentSection.children.map((currentItem, itemIndex) => {
+                // console.log("currentItem",currentItem)
+                console.log('currentItem', currentItem.value)
+                if (currentItem.name == "Controls") {
+
+                    currentSection.children.map((currentControl, controlIndex) => {
+
+                        //console.log("currentControl",controlIndex)
+
+                        if (currentControl.name == "Controls") {
+
+                            currentControl.children.map((controlItem, controlItemIndex) => {
+                                if (controlItem.name == "Checkbox") {
+                                    controlItem.children.map((innerItem, innerItemIndex) => {
+                                        if (innerItem.name == "FieldHeader") {
+                                            keyIndex = keyIndex + 1
+                                            labelStyle = {
+                                                color: 'black',
+                                                fontSize: 10
+                                            }
+                                            checkBoxStyle = {
+                                                width: 18,
+                                                height: 18
+                                            }
+
+                                            controlsArray.push(
+                                                <View key={keyIndex} style={{ flexDirection: 'row' }}>
+
+                                                    <CheckBox style={styles.checkBox}
+                                                        label=""
+                                                        labelStyle={labelStyle}
+                                                        checkboxStyle={checkBoxStyle}
+                                                        onChange={(checked) => console.log('I am checked', checked)}
+                                                    />
+                                                    <Text numberOfLines={15} style={styles.checkBoxLable}>{innerItem.value}</Text>
+                                                </View>
+                                            )
+                                        }
+                                    })
+
+
+                                } else if (controlItem.name == "Label") {
+                                    controlItem.children.map((innerItem, innerItemIndex) => {
+                                        if (innerItem.name == "FieldHeader") {
+                                            keyIndex = keyIndex + 1
+                                            var y = innerItem.value
+                                            y = new Entities().decode(y);
+                                            controlsArray.push(
+                                                <WebView
+                                                    source={{ html: y }}
+                                                    style={{
+                                                        flex: 1,
+                                                        marginTop: 5,
+                                                        height: 200,
+                                                    }}
+                                                />
+                                            )
+
+                                        }
+
+                                    })
+                                } else if (controlItem.name == "RadioButton") {
+                                    controlItem.children.map((innerItem, innerItemIndex) => {
+                                        var text = ""
+                                        var radioBtn = []
+
+                                        if (innerItem.name == "FieldHeader") {
+                                            text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
+                                            // console.log("innerItem.value ")
+                                            //  console.log(innerItem.value)
+                                            text = new Entities().decode(text);
+                                            // console.log("text")
+                                            // console.log(text)
+                                            text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
+                                            // console.log(text)
+                                            text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+
+                                        }
+                                        if (innerItem.name == "UserDefinedList") {
+                                            innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+
+                                                if (radioBtnOption.name == "ListItem") {
+                                                    keyIndex = keyIndex + 1
+                                                    radioVal = radioVal + 111
+                                                    //     console.log('radioBtnOption["radioVal"]',this.state.radioBtnOptions["radioVal"])
+                                                    this.state.radioBtnOptions["radioVal"] = this.state.radioBtnOptions["radioVal"] || 0
+                                                    radioBtn.push(
+                                                        <View style={styles.radio} key={keyIndex}>
+                                                            <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
+                                                                //  onPress={//this.handleOnPress().bind(this)
+                                                                //   this.handlePress(innerItem,radioBtnOption.attributes.name)
+
+
+                                                                // }
+                                                                onPress={() => this.handleOnPress(radioBtnOption, radioVal)
+                                                                }
+                                                                outerCircleColor='grey'
+                                                                innerCircleColor='#153875'
+                                                                innerCircleSize={8}
+                                                                outerCircleSize={18}
+                                                            >
+                                                                <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
+                                                            </RadioButton>
+                                                        </View>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                        keyIndex = keyIndex + 1
+
+                                        controlsArray.push(
+                                            <View key={keyIndex}>
+                                                <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+                                                />
+
+                                                {radioBtn}
+                                            </View>
+                                        )
+
+                                    })
+
+                                } else if (controlItem.name == "Textbox") {
+                                    controlItem.children.map((innerItem, innerItemIndex) => {
+                                        if (innerItem.name == "FieldHeader") {
+                                            keyIndex = keyIndex + 1
+
+                                            var text = new AllHtmlEntities().decode(innerItem.value);
+                                            text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+
+
+                                            controlsArray.push(
+                                                <View key={keyIndex}>
+                                                    <Text style={styles.textBox}>{text}</Text>
+                                                    <TextInput
+                                                        style={{
+                                                            height: 30,
+                                                            //borderBottomColor:'#a8a8a8', 
+                                                            borderWidth: 1,
+                                                            marginBottom: 10,
+                                                            paddingLeft: 5,
+                                                            fontSize: 10
+                                                        }}
+                                                        placeholder="Enter Text Here"
+                                                    // onChangeText={(text) => console.log("text changed")}
+
+                                                    //value={this.state.text}
+
+                                                    />
+                                                </View>
+                                            )
+                                        }
+
+                                    })
+                                } else if (controlItem.name == "DropDownList") {
+                                    //console.log("controlItem.DropDownList",controlItem.name)
+                                    var dropDowValues = []
+                                    var obj = {}
+                                    var text = ""
+                                    var label = ""
+                                    controlItem.children.map((innerItem, innerItemIndex) => {
+
+                                        if (innerItem.name == "FieldHeader") {
+                                            var y = innerItem.value
+                                            y = new Entities().decode(innerItem.value);
+                                            y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+                                            text = <Text>{y}</Text>
+                                            label = y
+
+                                        }
+                                        if (innerItem.name == "ControlActions") {
+                                            innerItem.children.map((dropdownItem, dropdownItemIndex) => {
+                                                if (dropdownItem.name == "UdfControlAction") {
+                                                    dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
+
+                                                        if (udfControlAction.name == "SourceValue") {
+                                                            obj = {
+                                                                value: udfControlAction.value,
+                                                            }
+                                                            dropDowValues.push(obj)
+                                                        }
+
+                                                    })
+                                                }
+
+                                            })
+
+                                        }
+
+                                    })
+                                    keyIndex = keyIndex + 1
+                                    //  controlsArray.push(
+                                    controlsArray.push(
+                                        <View key={keyIndex}>
+
+                                            <Dropdown label={label} data={dropDowValues}
+                                                fontSize={10} baseColor="black" textColor='black'
+                                                labelFontSize={10} />
+                                        </View>
+                                    )
+
+                                }
+                            })
                         }
-                      })
-                    }
-                    keyIndex = keyIndex + 1
-                  
-                    controlsArray.push(
-                      <View key={keyIndex}>
-                        <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
-                        />
-
-                              <RadioGroup
-                   size={24}
-                   thickness={2}
-                   color='#153875'
-                   //highlightColor='blue'
-        onSelect = {(index, value) => {
-
-           console.log(value)}}
-      >
-        {radioBtn}
-      </RadioGroup>
-                      </View>
-                    )
-                
-                  })
-                
-                } else if (controlItem.name == "Textbox") {
-                  controlItem.children.map( (innerItem, innerItemIndex) =>{
-                    if (innerItem.name == "FieldHeader") {
-                      keyIndex = keyIndex + 1
-
-                      var text = new AllHtmlEntities().decode(innerItem.value);
-                      text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-
-                      controlsArray.push(
-                        <View key={keyIndex}>
-                          <Text style={styles.textBox}>{text}</Text>
-                          <TextInput
-                            style={{
-                              height: 30,
-                              //borderBottomColor:'#a8a8a8', 
-                              borderWidth: 1,
-                              marginBottom: 10,
-                              paddingLeft: 5,
-                              fontSize: 10
-                            }}
-                            placeholder="Enter Text Here"
-                          // onChangeText={(text) => console.log("text changed")}
-
-                          //value={this.state.text}
-
-                          />
-                        </View>
-                      )
-                    }
-
-                  })
-                } else if (controlItem.name == "DropDownList") {
-                  //console.log("controlItem.DropDownList",controlItem.name)
-                  var dropDowValues = []
-                  var obj = {}
-                  var text = ""
-                  var label = ""
-                  controlItem.children.map( (innerItem, innerItemIndex)=> {
-
-                    if (innerItem.name == "FieldHeader") {
-                      var y = innerItem.value
-                      y = new Entities().decode(innerItem.value);
-                      y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                      text = <Text>{y}</Text>
-                      label = y
-
-                    }
-                    if (innerItem.name == "ControlActions") {
-                      innerItem.children.map( (dropdownItem, dropdownItemIndex)=> {
-                        if (dropdownItem.name == "UdfControlAction") {
-                          dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
-
-                            if (udfControlAction.name == "SourceValue") {
-                              obj = {
-                                value: udfControlAction.value,
-                              }
-                              dropDowValues.push(obj)
-                            }
-
-                          })
-                        }
-
-                      })
-
-                    }
-
-                  })
-                  keyIndex = keyIndex + 1
-                  console.log("dropDowValues",dropDowValues)
-                  controlsArray.push(
-                    <View key={keyIndex}>
-
-                      <Dropdown label={label} data={dropDowValues}
-                        fontSize={10} baseColor="black" textColor='black'
-                        labelFontSize={10} />
-                    </View>
-                  )
-
-                } else if(controlItem.name == "AttachmentControl"){
-              controlItem.children.map((innerItem, innerItemIndex)=>{
-                console.log("AttachmentControl")
-                if(innerItem.name == "FieldHeader"){
-                  keyIndex = keyIndex+1
-                  console.log(innerItem.value)
-                    var text = new AllHtmlEntities().decode(innerItem.value);
-                    text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                var x=    this.state.display?<Text style={styles.textBox}>sgfhjsgdfgs</Text>:null
-                    controlsArray.push(
-                      <View key={keyIndex}>
-                        <Text style={styles.textBox}>{text}</Text>
-                       
-            <View style={styles.BrowserStyle}>
-                       <Button key={keyIndex}
-                    title="Browse"
-                    color="white"
-                    style={styles.browseButtonStyle}
-                  //   onPress={() => {
-                  //     DocumentPicker.show({
-                  //       filetype: [DocumentPickerUtil.allFiles()],
-                  //     },(error,res) => {
-                  //       // Android
-                  //       this.setState({
-                  //         Url: res.uri
-                        
-                  //     })
-                       
-                  //      // this.setS = res.uri
-                  //       Alert.alert(res.uri)
-                  //       console.log(
-                  //          res.uri,
-                  //          res.type, // mime type
-                  //          res.fileName,
-                  //          res.fileSize
-                  //       );
-                  //     });
-                  // }}
-                  onPress={this.browsing}
-                    accessibilityLabel="Learn more about this purple button"
-                    /> 
-</View>
-
-                    </View>
-                    )
+                    })
                 }
-              })
-          }
-              })
+            })
+            obj = {
+                "key": controlsArray
             }
-          })
-        }
-      })
-    });
+            mainArray.push(obj)
+
+        });
+        this.state.controlsArrayOne = mainArray[0].key
+        this.state.controlsArrayTwo = mainArray[1].key
+        this.state.doc = JSON.stringify(xml)
+    }
+
+    render() {
+
+        var section1 = this.state.displayedSection ? this.state.controlsArrayOne : null;
+        var section2 = this.state.displayedSectionTwo ? this.state.controlsArrayTwo : null
+        return (
+            <Container>
+                <ImageBackground style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'center', }}
+                    source={require('./images/BackgroundImage.jpg')} >
+                    <Header style={{ backgroundColor: "#0865a3", }}>
+                        <Left>
+                            <Icon name="ios-menu" style={{ color: 'white' }} onPress={() =>
+                                this.props.navigation.openDrawer()} />
+                        </Left>
+                        <Content contentContainerStyle={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={{ color: 'white', textAlign: 'center' }}> Style Three  </Text>
+                        </Content>
+                        <Right>
+                            <Image style={{ width: 30, height: 30, }}
+                                source={require('./images/Save-White.png')} />
+                        </Right>
+                    </Header>
+                    <View style={styles.pageStyle} >
+                        <View style={styles.container}>
+                            <View style={{ marginBottom: 10, borderColor: 'grey'}}>
+                                <TouchableOpacity style={{ backgroundColor: '#0865a3', height: 30 }} onPress={this.sectionOne}>
+                                    <Row size={12} >
+                                        <Col sm={11} >
+                                            <Text style={{ color: 'white', paddingLeft: 5 ,paddingTop:5}}>Section One</Text>
+                                        </Col>
+                                        <Col sm={1} >
+                                            <Image
+                                                style={{ width: 20, height: 20,marginTop:5 }}
+                                                source={require('./images/Arrow.png')}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </TouchableOpacity>
+                                <View  >
+                                    <ScrollView style={{ padding: 5, borderColor: 'grey' }} >
+                                        {section1}
+                                    </ScrollView>
+                                </View>
+
+                            </View>
+                            <View style={{ marginBottom: 10, borderColor: 'gray' }}>
+                                <TouchableOpacity style={{ backgroundColor: '#0865a3', height: 30 }} onPress={this.sectionTwo}>
+                                    <Row size={12}>
+                                        <Col sm={11} >
+                                            <Text style={{ color: 'white', paddingLeft: 5,paddingTop:5 }}>Section Two</Text>
+                                        </Col>
+                                        <Col sm={1} >
+                                            <Image
+                                                style={{ width: 20, height: 20,marginTop:5 }}
+                                                source={require('./images/Arrow.png')}
+                                            />
 
 
-
-    this.state.controlsArray = controlsArray
-    console.log("console.log(controlsArray.length)")
-    console.log(controlsArray.length)
-    console.log(JSON.stringify(controlsArray))
-
-    //Alert.alert(this.state.controlsArray);
-    this.state.doc = JSON.stringify(xml)
-
-  }
-
-  browsing=()=>{
-    
-    DocumentPicker.show({
-            filetype: [DocumentPickerUtil.allFiles()],
-          },(error,res) => {
-            // Android
-            this.setState({
-              Url: res.uri,
-              display:true
-          })
-           
-           // this.setS = res.uri
-           Alert.alert(this.state.Url)
-            console.log(
-               res.uri,
-               res.type, // mime type
-               res.fileName,
-               res.fileSize
-            );
-          });
-  }
-  render() {
-  
-    return (
-      <Container>
-      <Header style={{backgroundColor: "#153875",}}>
-      <Left>
-        <Icon name="ios-menu" style={{color: 'white'}} onPress={() =>
-          this.props.navigation.openDrawer()} />
-      </Left>
-      <Content contentContainerStyle={{
-       flex:1,
-       alignItems:'center',
-      justifyContent:'center'}}>
-     <Text style={{ color: 'white',textAlign:'center'}}> Style One  </Text>
-     </Content>
-      <Right>
-        <Image style={{ width: 30, height: 30, }}
-          source={require('./images/Save-White.png')} />
-      </Right>
-    </Header>
-      <View style={styles.pageStyle} >
-        <ScrollView >
-          <View style={styles.container}>
-            {this.state.controlsArray}
-          </View>
-        </ScrollView>
-        <View >
-          <Row size={12}>
-            <Col sm={6} style={styles.buttonBorderColor}>
-              <Button
-                // onPress={onPressLearnMore}
-                title='Cancel'
-                color="#153875"
-                onPress={() => {
-                  Alert.alert('You tapped the button!');
-                }}
-                accessibilityLabel="Learn more about this purple button"
-              />
-            </Col>
-            <Col style={styles.createButtonColor} sm={6}>
-              <Button
-                title="Create"
-                color="white"
-                onPress={() => {
-                  Alert.alert('You tapped the button!');
-                }}
-                accessibilityLabel="Learn more about this purple button"
-              />
-            </Col>
-          </Row>
-        </View>
-      </View>
-      </Container>
-    );
-  }
+                                        </Col>
+                                    </Row>
+                                </TouchableOpacity>
+                                <View >
+                                    <ScrollView style={{ padding: 5, backgroundColor: 'white' }}>
+                                        {section2}
+                                    </ScrollView>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </ImageBackground>
+            </Container>
+        );
+    }
 }
 
-AppRegistry.registerComponent('DemoPageStyleOne', () =>DemoPageStyleOne);
+AppRegistry.registerComponent('DemoPageStyleThree', () => DemoPageStyleThree);

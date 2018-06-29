@@ -23,7 +23,8 @@ import DemoPageStyleSeven from './Components/DemoPageStyleSeven';
 
 import DemoPagination from './Components/DemoPagination';
 import DemoPagination2 from './Components/DemoPagination2';
-
+import DemoPageStyleFour from './Components/DemoPageStyleFour';
+import DemoPageStyleThree from './Components/DemoPageStyleThree';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -74,6 +75,12 @@ const MyApp = DrawerNavigator({
   },
   StyleTwo : {
     screen: DemoPageStyleTwo
+  },
+  StyleThree : {
+    screen: DemoPageStyleThree
+  },
+  StyleFour:{
+    screen:DemoPageStyleFour
   },
   StyleSeven:{
     screen: DemoPageStyleSeven
