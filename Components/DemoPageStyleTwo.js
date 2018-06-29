@@ -27,7 +27,8 @@ export default class DemoPageStyleTwo extends Component {
       checked: false,
       value: 0,
       text: '',
-      htmlContent: ''
+      htmlContent: '',
+      controlInputs:{}
     }
 
 
@@ -2144,7 +2145,7 @@ export default class DemoPageStyleTwo extends Component {
                       innerItem.children.map(function (radioBtnOption, radioBtnOptionIndex) {
 //console.log("radios",radioBtnOptionIndex,innerItem.children.length)
 //console.log(radioBtnOption)
-
+//this.state.controlInputs[innerItem.value] =""
 if( innerItem.children.length == 2){
   SwitchFlag = true;
   var obj ={
@@ -2161,8 +2162,9 @@ if( innerItem.children.length == 2){
         <Row size={12} style={styles.switchRow}>
         <Col sm={1} style={{flex:0.1,justifyContent:'center'}}>  <Text  style={styles.swicthLable }>{switchOrRadioArray[0].value}</Text></Col>
          <Col sm={2} ><Switch style={styles.switchIcon}
-         onValueChange={() => {
-         Alert.alert('You tapped the button!');
+         onValueChange={(val) => {
+          //this.state.controlInputs[innerItem.value] = val
+         
        }}
          /></Col>
         <Col sm={8} style={{flex:1,justifyContent:'center'}}>  <Text  style={styles.swicthLable }>{switchOrRadioArray[1].value}</Text></Col>
