@@ -2340,7 +2340,7 @@ export default class DemoPageStyleThree extends Component {
                                 <TouchableOpacity style={{ backgroundColor: '#0865a3', height: 30 }} onPress={this.sectionOne}>
                                     <Row size={12} >
                                         <Col sm={11} >
-                                            <Text style={{ color: 'white', paddingLeft: 5 ,paddingTop:5}}>Section One</Text>
+                                            <Text style={{ color: 'white', paddingLeft: 5 ,paddingTop:5}}>Section 2</Text>
                                         </Col>
                                         <Col sm={1} >
                                             <Image
@@ -2361,7 +2361,7 @@ export default class DemoPageStyleThree extends Component {
                                 <TouchableOpacity style={{ backgroundColor: '#0865a3', height: 30 }} onPress={this.sectionTwo}>
                                     <Row size={12}>
                                         <Col sm={11} >
-                                            <Text style={{ color: 'white', paddingLeft: 5,paddingTop:5 }}>Section Two</Text>
+                                            <Text style={{ color: 'white', paddingLeft: 5,paddingTop:5 }}>Entertainment</Text>
                                         </Col>
                                         <Col sm={1} >
                                             <Image

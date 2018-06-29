@@ -92,5 +92,11 @@ BrowserStyle: {
         flexDirection: 'column',
         justifyContent: 'center'
     
+},
+wrapper:{
+paddingTop:10
+},
+paginationContent:{
+    flexDirection: 'row',paddingLeft:10,paddingRight:10
 }
 });

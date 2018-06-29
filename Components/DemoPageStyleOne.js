@@ -2360,7 +2360,7 @@ console.log(JSON.stringify(xmlJson))
             {this.state.controlsArray}
           </View>
         </ScrollView>
-        <View >
+        {/* <View >
           <Row size={12}>
             <Col sm={6} style={styles.buttonBorderColor}>
               <Button
@@ -2384,7 +2384,7 @@ console.log(JSON.stringify(xmlJson))
               />
             </Col>
           </Row>
-        </View>
+        </View> */}
       </View>
       </Container>
     );

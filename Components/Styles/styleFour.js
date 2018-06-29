@@ -66,6 +66,7 @@ module.exports = StyleSheet.create({
     pageStyle: {
         flex: 1,
         fontFamily: 'helvetica',
+        margin:10
         // backgroundColor: '#eff2f7',
  
     },

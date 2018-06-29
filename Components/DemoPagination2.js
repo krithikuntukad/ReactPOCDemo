@@ -2081,7 +2081,7 @@ console.log(JSON.stringify(xmlJson))
                       }
                     
                       controlsArray.push(
-                        <TouchableOpacity key={keyIndex} style={{flexDirection: 'row'}}>
+                        <TouchableOpacity key={keyIndex} style={styles.paginationContent}>
                           <CheckBox  style={styles.checkBox}
                             label = ""
                             labelStyle={labelStyle}
@@ -2249,9 +2249,9 @@ console.log(JSON.stringify(xmlJson))
                   console.log(innerItem.value)
                     var text = new AllHtmlEntities().decode(innerItem.value);
                     text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                    controlsArray.push(
-                      <TouchableOpacity key={keyIndex}>
-                        <Text style={styles.textBox}>{text}</Text>
+                    // controlsArray.push(
+                    //   <TouchableOpacity key={keyIndex}>
+                    //     <Text style={styles.textBox}>{text}</Text>
                       {/* <Button key={keyIndex}
                     title="Browse"
                     color="white"
@@ -2274,8 +2274,8 @@ console.log(JSON.stringify(xmlJson))
                     accessibilityLabel="Learn more about this purple button"
                     /> */}
 
-                    </TouchableOpacity>
-                    )
+                    // </TouchableOpacity>
+                    // )
                 }
               })
           }
@@ -2327,6 +2327,7 @@ console.log(JSON.stringify(xmlJson))
         </ScrollView> */}
 
         <Swiper style={styles.wrapper} showsButtons={true}>
+        
             {this.state.controlsArray}
             </Swiper> 
         <View >

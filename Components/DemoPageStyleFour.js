@@ -2353,7 +2353,7 @@ export default class DemoPageStyleFour extends Component {
                         source={require('./images/Save-White.png')} />
                 </Right>
             </Header>
-        <View style={{backgroundcolor:'transparent'}} >
+        <View  style={styles.pageStyle} >
  
           <ScrollView >
             <View style={styles.container}>
