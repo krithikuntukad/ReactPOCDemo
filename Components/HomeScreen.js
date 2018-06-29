@@ -15,19 +15,6 @@ export default class HomeScreen extends Component {
   }
   render() {
     return (
-      // <Container>
-      // <Header>
-      //   <Right>
-      //     <Icon name="ios-menu" onPress={()=> this.props.navigation.openDrawer() } />
-      //     </Right>
-      //     </Header>
-      //  <Content contentContainerStyle={{
-      //     flex:1,
-      //     alignItems:'center',
-      //     justifyContent:'center'}}>
-      //       <Text>SettingsScreen </Text>
-      //       </Content>
-      //       </Container>
       <Container>
         <Header style={{ backgroundColor: "#0865a3", }}>
           <Left>
