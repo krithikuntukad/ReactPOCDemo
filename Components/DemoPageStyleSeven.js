@@ -2597,7 +2597,7 @@ console.log(this.state.controlInputs.length)
        flex:1,
        alignItems:'center',
       justifyContent:'center'}}>
-     <Text style={{ color: 'white',textAlign:'center'}}> Style One  </Text>
+     <Text style={{ color: 'white',textAlign:'center'}}> Style Five  </Text>
      </Content>
       <Right>
         <Image style={{ width: 30, height: 30, }}

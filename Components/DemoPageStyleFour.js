@@ -2333,33 +2333,26 @@ export default class DemoPageStyleFour extends Component {
  
   render() {
     return (
-      <Container>
-        <ImageBackground
-style={{ flex:
-1,width: '100%', height:
-'100%',justifyContent:
-'center', }}
- 
-source={require('./images/BackgroundImage.jpg')}
-> 
- 
-        <Header style={{ backgroundColor: "#0865a3", }}>
-          <Left>
-            <Icon name="ios-arrow-back" style={{ color: 'white' }} onPress={() =>
-              this.props.navigation.openDrawer()} />
-          </Left>
-          <Content contentContainerStyle={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Text style={{ color: 'white', textAlign: 'center' }}> Style Four </Text>
-          </Content>
-          <Right>
-            <Image style={{ width: 25, height: 25, }}
-              source={require('./images/Save-White.png')} />
-          </Right>
-        </Header>
+        <Container>
+        <ImageBackground style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'center', }}
+            source={require('./images/BackgroundImage.jpg')} >
+            <Header style={{ backgroundColor: "#0865a3", }}>
+                <Left>
+                    <Icon name="ios-menu" style={{ color: 'white' }} onPress={() =>
+                        this.props.navigation.openDrawer()} />
+                </Left>
+                <Content contentContainerStyle={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Text style={{ color: 'white', textAlign: 'center' }}> Style Four  </Text>
+                </Content>
+                <Right>
+                    <Image style={{ width: 30, height: 30, }}
+                        source={require('./images/Save-White.png')} />
+                </Right>
+            </Header>
         <View style={{backgroundcolor:'transparent'}} >
  
           <ScrollView >

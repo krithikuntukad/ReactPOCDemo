@@ -82,15 +82,13 @@ const MyApp = DrawerNavigator({
   StyleFour:{
     screen:DemoPageStyleFour
   },
-  StyleSeven:{
+  StyleFive:{
     screen: DemoPageStyleSeven
   },
   DemoPagination:{
-    screen:DemoPagination
-  },
-  DemoPagination2:{
     screen:DemoPagination2
   }
+
   
  
 },

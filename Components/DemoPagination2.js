@@ -2310,7 +2310,7 @@ console.log(JSON.stringify(xmlJson))
        flex:1,
        alignItems:'center',
       justifyContent:'center'}}>
-     <Text style={{ color: 'white',textAlign:'center'}}> Style One  </Text>
+     <Text style={{ color: 'white',textAlign:'center'}}> Demo Pagination</Text>
      </Content>
       <Right>
         <Image style={{ width: 30, height: 30, }}

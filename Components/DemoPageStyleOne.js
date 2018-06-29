@@ -2253,7 +2253,7 @@ console.log(JSON.stringify(xmlJson))
                   keyIndex = keyIndex+1
                   console.log(innerItem.value)
                     var text = new AllHtmlEntities().decode(innerItem.value);
-                    text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
+                    text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'").replace("<ul>", "").replace("</ul>", "").replace("<li>", "").replace("</li>", "").replace("<li>", "").replace("</li>", "").replace("&quot;","")
                 var x=    this.state.display?<Text style={styles.textBox}>sgfhjsgdfgs</Text>:null
                     controlsArray.push(
                       <View key={keyIndex}>
@@ -2261,7 +2261,7 @@ console.log(JSON.stringify(xmlJson))
                        
             <View style={styles.BrowserStyle}>
                        <Button key={keyIndex}
-                    title="Browse"
+                    title="Open Button"
                     color="white"
                     style={styles.browseButtonStyle}
                   //   onPress={() => {

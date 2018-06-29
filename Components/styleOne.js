@@ -87,7 +87,7 @@ pageStyles:{
 BrowserStyle: {
     borderWidth:1,
     backgroundColor:'#153875',
-    height:30,
+    //height:30,
     flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'
