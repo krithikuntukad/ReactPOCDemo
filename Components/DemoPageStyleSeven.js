@@ -2226,6 +2226,8 @@ console.log(JSON.stringify(validityArray))
                  if( xmlJson[0].children[a].children[b].children[c].children.length-1 == d){
                  
                    var tempArray = contolArray.reverse()
+                   console.log("radio visible check")
+                   console.log(JSON.stringify(tempArray))
                    tempArray.map((innerItem, innerItemIndex) =>{
                    console.log("innerItem Rad")
                    console.log(innerItem)
@@ -2258,7 +2260,7 @@ console.log(JSON.stringify(validityArray))
                         text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
                       
                       }
-                     // if(visibility == 'true'){
+                      //if(visibility == "true"){
                       if (innerItem.name == "UserDefinedList") {
                         innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
   
@@ -2276,13 +2278,14 @@ console.log(JSON.stringify(validityArray))
                         })
                       }
                     
-                  //  }
+                   //}
                   
                  
                     })
                   }
                 }
-                //if(visibility == 'true'){
+                //console.log("visibility radsss",visibility)
+                if(visibility == "true"){
                 keyIndex = keyIndex + 1
                       
                 controlsArray.push(
@@ -2308,7 +2311,7 @@ console.log(JSON.stringify(validityArray))
                   </View>
                   </FormItem>
                 )
-              //}
+              }
                 }else if (xmlJson[0].children[a].children[b].children[c].name == "Textbox") {
             var visibility = false
              var regex= ""
@@ -2364,7 +2367,8 @@ console.log(JSON.stringify(validityArray))
                     text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
 
                     this.state.controlInputs[innerItem.value] = ""
-                    if(visibility == 'true'){
+                    console.log("visibility",(visibility == "true"),(visibility == true))
+                    if(visibility == "true"){
                     controlsArray.push(
                     
                       <FormItem
@@ -2420,7 +2424,8 @@ var stateIndexVal = ""
              var tempArray = contolArray.reverse()
              tempArray.map((innerItem, innerItemIndex) =>{
               if(innerItem.name == "Visible"){
-                     
+                     console.log("drop")
+                     console.log(JSON.stringify(innerItem))
                 visibility = innerItem.value
              }
              if(innerItem.name == "Validator"){
@@ -2473,6 +2478,7 @@ var stateIndexVal = ""
 
             })
             keyIndex = keyIndex + 1
+            if(visibility == "true"){
             controlsArray.push(
               <FormItem
               isRequired={true}
@@ -2487,7 +2493,7 @@ var stateIndexVal = ""
 
         
             
-   
+          }
           }
         }
              
@@ -2512,6 +2518,10 @@ var stateIndexVal = ""
    // let submitResults = this.refs.form.validate();
    //console.log("this.stae")
     console.log(this.state.controlInputs)
+
+    var Array  = this.state.controlInputs
+
+    Alert.alert(Array)
     
     /*for(var a =0; a<xmlJson[0].children.length;a++){
       for(var b =0; b< xmlJson[0].children[a].children.length;b++){
