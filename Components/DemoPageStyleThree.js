@@ -3,25 +3,14 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
-
 import { Icon, Header, Content, Left, Right } from 'native-base';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
-//import Accordion from 'react-native-collapsible/Accordion';
-//import * as Animatable from 'react-native-animatable';
-//import HTML from 'react-native-render-html';
-//mport { Picker } from 'react-native-picker-dropdown'
 import { Dropdown } from 'react-native-material-dropdown';
-
 import { WebView } from 'react-native';
-
-//var DOMParser = require('xmldom').DOMParser
 var XMLParser = require('react-xml-parser');
-
 import HTML from 'react-native-render-html';
-
 import styles from './Styles/styleFour';
 import { Container } from 'native-base';
-
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 var totalData;
@@ -31,44 +20,18 @@ export default class DemoPageStyleThree extends Component {
 
 
     constructor(props) {
-
         super(props);
-
         this.state = {
             displayedSection: false,
             displayedSectionTwo: false,
-            doc: [],
             controlsArrayOne: [],
             controlsArrayTwo: [],
-            controlsArray: [],
-            checked: false,
-            value: 0,
-            text: '',
-            htmlContent: '',
-
-            radioBtnOptions: []
+            controlsArray: []
         }
-
-
         var responseText = jsonData[0].data
-
-
-
-
-        // this.handlePress = this.handlePress.bind(this);
-
         this.constructControls(responseText)
-
-
     }
-    handleOnPress(radioBtnOption, indexVal) {
-        // console.log("radioBtnOptions")
-        // console.log(this.state.radioBtnOptions)
-        //this.state.value = value
-        this.state.radioBtnOptions[indexVal] = 1
-        //console.log(this.state.radioBtnOptions)
-        //  Alert.alert("radioBtnOptions")
-    }
+ 
     sectionOne = () => {
         this.setState({
             displayedSection: !this.state.displayedSection,
@@ -87,7 +50,7 @@ export default class DemoPageStyleThree extends Component {
     constructControls(responseText) {
 
         var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
-        // console.log(JSON.stringify(xml));
+     
         var mainArray = [];
         var xmlJson = []
         var controlsArrayOne = []
@@ -101,16 +64,10 @@ export default class DemoPageStyleThree extends Component {
             console.log("currentSection", currentSection)
 
             currentSection.children.map((currentItem, itemIndex) => {
-                // console.log("currentItem",currentItem)
                 console.log('currentItem', currentItem.value)
                 if (currentItem.name == "Controls") {
-
                     currentSection.children.map((currentControl, controlIndex) => {
-
-                        //console.log("currentControl",controlIndex)
-
                         if (currentControl.name == "Controls") {
-
                             currentControl.children.map((controlItem, controlItemIndex) => {
                                 if (controlItem.name == "Checkbox") {
                                     controlItem.children.map((innerItem, innerItemIndex) => {
@@ -124,10 +81,8 @@ export default class DemoPageStyleThree extends Component {
                                                 width: 18,
                                                 height: 18
                                             }
-
                                             controlsArray.push(
                                                 <View key={keyIndex} style={{ flexDirection: 'row' }}>
-
                                                     <CheckBox style={styles.checkBox}
                                                         label=""
                                                         labelStyle={labelStyle}
@@ -167,14 +122,9 @@ export default class DemoPageStyleThree extends Component {
                                         var radioBtn = []
 
                                         if (innerItem.name == "FieldHeader") {
-                                            text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
-                                            // console.log("innerItem.value ")
-                                            //  console.log(innerItem.value)
+                                            text = innerItem.value 
                                             text = new Entities().decode(text);
-                                            // console.log("text")
-                                            // console.log(text)
                                             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-                                            // console.log(text)
                                             text = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
 
                                         }
@@ -183,9 +133,6 @@ export default class DemoPageStyleThree extends Component {
 
                                                 if (radioBtnOption.name == "ListItem") {
                                                     keyIndex = keyIndex + 1
-                                                    radioVal = radioVal + 111
-                                                    //     console.log('radioBtnOption["radioVal"]',this.state.radioBtnOptions["radioVal"])
-                                                    this.state.radioBtnOptions["radioVal"] = this.state.radioBtnOptions["radioVal"] || 0
                                                     radioBtn.push(
                                                         <RadioButton value={radioBtnOption.attributes.name} >
                                                         <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
@@ -198,16 +145,13 @@ export default class DemoPageStyleThree extends Component {
 
                                         controlsArray.push(
                                             <View key={keyIndex}>
-
                                                <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true} />
                                                 <RadioGroup
                                                         size={24}
                                                         thickness={2}
                                                         color='#153875'
-                                                        //highlightColor='blue'
                                                 onSelect = {(index, value) => {
-
-                                                console.log(value)}}
+                                                }}
                                             >
                                                 {radioBtn}
                                             </RadioGroup>
@@ -220,28 +164,20 @@ export default class DemoPageStyleThree extends Component {
                                     controlItem.children.map((innerItem, innerItemIndex) => {
                                         if (innerItem.name == "FieldHeader") {
                                             keyIndex = keyIndex + 1
-
                                             var text = new AllHtmlEntities().decode(innerItem.value);
                                             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-
-
                                             controlsArray.push(
                                                 <View key={keyIndex}>
                                                     <Text style={styles.textBox}>{text}</Text>
                                                     <TextInput
                                                         style={{
                                                             height: 30,
-                                                            //borderBottomColor:'#a8a8a8', 
                                                             borderWidth: 1,
                                                             marginBottom: 10,
                                                             paddingLeft: 5,
                                                             fontSize: 10
                                                         }}
                                                         placeholder="Enter Text Here"
-                                                    // onChangeText={(text) => console.log("text changed")}
-
-                                                    //value={this.state.text}
-
                                                     />
                                                 </View>
                                             )
@@ -309,11 +245,8 @@ export default class DemoPageStyleThree extends Component {
         });
         this.state.controlsArrayOne = mainArray[0].key
         this.state.controlsArrayTwo = mainArray[1].key
-        this.state.doc = JSON.stringify(xml)
     }
-
     render() {
-
         var section1 = this.state.displayedSection ? this.state.controlsArrayOne : null;
         var section2 = this.state.displayedSectionTwo ? this.state.controlsArrayTwo : null
         return (
