@@ -29,43 +29,21 @@ export default class DemoPagination extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      doc: [],
-      controlsArray: [],
-      checked: false,
-      value: 0,
-      text: '',
-      htmlContent: '',
-      radioBtnOptions:[]
+      controlsArray: []
     }
-    
   var responseText = jsonData[0].data
-   // this.handlePress = this.handlePress.bind(this);
-
     this.constructControls(responseText)
-
-
   }
-  handleOnPress(radioBtnOption,indexVal){
-  this.state.radioBtnOptions[indexVal] = 1
-}
+
 
 
   constructControls(responseText) {
-
     var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
-   
-    
-
     var xmlJson = []
     var controlsArray = []
     xmlJson.push(xml)
     var keyIndex = 0;
-    var radioVal = 0
     xmlJson[0].children.map((currentSection, index) =>{
-console.log(JSON.stringify(xmlJson))
- 
-      
-
       currentSection.children.map((currentItem, itemIndex) =>{
         if (currentItem.name == "Controls") {
           currentSection.children.map((currentControl, controlIndex) =>{
@@ -135,10 +113,7 @@ console.log(JSON.stringify(xmlJson))
 
                         if (radioBtnOption.name == "ListItem") {
                           keyIndex = keyIndex + 1
-                          radioVal = radioVal+111
-                        this.state.radioBtnOptions["radioVal"] =  this.state.radioBtnOptions["radioVal"]  || 0
                           radioBtn.push(
-                        
                             <RadioButton value={radioBtnOption.attributes.name} >
                             <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
                           </RadioButton>
@@ -147,26 +122,6 @@ console.log(JSON.stringify(xmlJson))
                       })
                     }
                     keyIndex = keyIndex + 1
-                  
-                    //  controlsArray.push(
-                    //   <TouchableOpacity key={keyIndex}>
-                    // <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
-                    // />
-
-                    //       <RadioGroup
-                    //         size={24}
-                    //         thickness={2}
-                    //         color='#153875'
-                          
-                    //           onSelect = {(index, value) => {
-
-                    //             console.log(value)}}
-                    //         >
-                    //           {radioBtn}
-                    //         </RadioGroup>
-                    //    </TouchableOpacity>
-                    //  )
-                
                   })
                 
                 } else if (controlItem.name == "Textbox") {
@@ -183,17 +138,12 @@ console.log(JSON.stringify(xmlJson))
                           <TextInput
                             style={{
                               height: 30,
-                              //borderBottomColor:'#a8a8a8', 
                               borderWidth: 1,
                               marginBottom: 10,
                               paddingLeft: 5,
                               fontSize: 10
                             }}
                             placeholder="Enter Text Here"
-                          // onChangeText={(text) => console.log("text changed")}
-
-                          //value={this.state.text}
-
                           />
                         </TouchableOpacity>
                       )
@@ -201,7 +151,6 @@ console.log(JSON.stringify(xmlJson))
 
                   })
                 } else if (controlItem.name == "DropDownList") {
-                  //console.log("controlItem.DropDownList",controlItem.name)
                   var dropDowValues = []
                   var obj = {}
                   var text = ""
@@ -249,39 +198,12 @@ console.log(JSON.stringify(xmlJson))
 
                 } else if(controlItem.name == "AttachmentControl"){
               controlItem.children.map(function(innerItem, innerItemIndex){
-                console.log("AttachmentControl")
                 if(innerItem.name == "FieldHeader"){
                   keyIndex = keyIndex+1
                   console.log(innerItem.value)
                     var text = new AllHtmlEntities().decode(innerItem.value);
                     text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-                    // controlsArray.push(
-                    //   <TouchableOpacity key={keyIndex}>
-                    //     <Text style={styles.textBox}>{text}</Text>
-                      {/* <Button key={keyIndex}
-                    title="Browse"
-                    color="white"
-                    style={styles.browseButtonStyle}
-                    onPress={() => {
-                      // DocumentPicker.show({
-                      //   filetype: [DocumentPickerUtil.allFiles()],
-                      // },(error,res) => {
-                      //   // Android
-                      //   console.log(
-                      //      res.uri,
-                      //      res.type, // mime type
-                      //      res.fileName,
-                      //      res.fileSize
-                      //   );
-                      // });
-                  
-                      // Alert.alert('You tapped the button!');
-                  }}
-                    accessibilityLabel="Learn more about this purple button"
-                    /> */}
-
-                    // </TouchableOpacity>
-                    // )
+                   
                 }
               })
           }
@@ -291,17 +213,7 @@ console.log(JSON.stringify(xmlJson))
         }
       })
     });
-
-
-
     this.state.controlsArray = controlsArray
-    console.log("console.log(controlsArray.length)")
-    console.log(controlsArray.length)
-    console.log(JSON.stringify(controlsArray))
-
-    //Alert.alert(this.state.controlsArray);
-    this.state.doc = JSON.stringify(xml)
-
   }
 
   render() {
@@ -324,23 +236,13 @@ console.log(JSON.stringify(xmlJson))
       </Right>
     </Header>
       <View style={styles.pageStyle} >
-        {/* <ScrollView    pagingEnabled={true}   horizontal ={true}>
-          <View style={styles.container}>
-         
-            {this.state.controlsArray}
-          
-          </View>
-        </ScrollView> */}
-
         <Swiper style={styles.wrapper} showsButtons={true}>
-        
             {this.state.controlsArray}
             </Swiper> 
         <View >
           <Row size={12}>
             <Col sm={6} style={styles.buttonBorderColor}>
               <Button
-                // onPress={onPressLearnMore}
                 title='Cancel'
                 color="#153875"
                 onPress={() => {
