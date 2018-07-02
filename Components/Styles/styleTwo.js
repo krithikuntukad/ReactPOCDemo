@@ -83,5 +83,20 @@ transform: [{ scaleX: 0.8 }, { scaleY: 0.6}]
 switchRow:{
     //flex: 1,
    // flexDirection: 'row',
-}
+},
+browseButtonStyle:{
+    borderWidth:1,
+    borderColor:'#153875',
+    width: 100, height: 30
+
+},
+BrowserStyle: {
+    borderWidth:1,
+    backgroundColor:'#153875',
+    //height:30,
+    flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    
+},
 });

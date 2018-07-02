@@ -16,6 +16,7 @@ const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
 var jsonData = require('./Constants/xmlData.json');
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 export default class DemoPageStyleTwo extends Component {
 
   constructor(props) {

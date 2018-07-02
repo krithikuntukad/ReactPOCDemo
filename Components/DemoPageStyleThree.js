@@ -12,7 +12,7 @@ import styles from './Styles/styleFour';
 import { Container } from 'native-base';
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
-
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 
 var jsonData = require('./Constants/xmlData.json');
 export default class DemoPageStyleThree extends Component {

@@ -72,18 +72,18 @@ color:'black',
 marginLeft:5
 },
 
-browseButtonStyle:{
-    borderWidth:1,
-    borderColor:'#153875',
-    width: 100, height: 30
-
-},
 
 pageStyles:{
     marginLeft:20
 
 },
 
+browseButtonStyle:{
+    borderWidth:1,
+    borderColor:'#153875',
+    width: 100, height: 30
+
+},
 BrowserStyle: {
     borderWidth:1,
     backgroundColor:'#153875',
