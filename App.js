@@ -19,10 +19,9 @@ import { DrawerNavigator , DrawerItems, StackNavigator} from 'react-navigation';
 import DemoPageStyleOne from './Components/DemoPageStyleOne';
 import DemoPageStyleTwo from './Components/DemoPageStyleTwo';
 import { Icon, Button, Container, Header, Body, Content, Left } from 'native-base';
-import DemoPageStyleSeven from './Components/DemoPageStyleSeven';
+import DemoPageStyleFive from './Components/DemoPageStyleFive';
 
 import DemoPagination from './Components/DemoPagination';
-import DemoPagination2 from './Components/DemoPagination2';
 import DemoPageStyleFour from './Components/DemoPageStyleFour';
 import DemoPageStyleThree from './Components/DemoPageStyleThree';
 const instructions = Platform.select({
@@ -83,10 +82,10 @@ const MyApp = DrawerNavigator({
     screen:DemoPageStyleFour
   },
   StyleFive:{
-    screen: DemoPageStyleSeven
+    screen: DemoPageStyleFive
   },
   DemoPagination:{
-    screen:DemoPagination2
+    screen:DemoPagination
   }
 
   
