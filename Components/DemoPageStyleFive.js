@@ -37,7 +37,7 @@ import RadioButtonComponent from './RadioButtonComponent';
 //import RadioGroup from 'react-native-radio-group'
 
 import { DialogComponent }from 'react-native-dialog-component';
-var jsonData = require('./Constants/xmlData.json');
+var jsonData = require('./Constants/xmlDataStyleFive.json');
 export default class DemoPageStyleFive extends Component {
 
   constructor(props) {
