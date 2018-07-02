@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image,ImageBackground, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
-import RadioButton from 'radio-button-react-native';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import { Icon, Header, Content, Left, Right } from 'native-base';
 //import HTML from 'react-native-render-html';
 //mport { Picker } from 'react-native-picker-dropdown'
@@ -165,23 +165,9 @@ export default class DemoPageStyleFour extends Component {
                           this.state.radioBtnOptions["radioVal"] = this.state.radioBtnOptions["radioVal"] || 0
                           radioBtn.push(
               
-                            <View style={styles.radio} key={keyIndex}>
-                              <RadioButton currentValue={this.state.radioBtnOptions[radioVal]} value={radioBtnOption.attributes.name}
-                                //  onPress={//this.handleOnPress().bind(this)
-                                //   this.handlePress(innerItem,radioBtnOption.attributes.name)
- 
-                                // }
-                                onPress={() => this.handleOnPress(radioBtnOption, radioVal)
-                                }
-                                outerCircleColor='grey'
-                                innerCircleColor='#153875'
-                                innerCircleSize={8}
-                                outerCircleSize={18}
-                              >
-                                <Text style={styles.radioText} >{radioBtnOption.attributes.value}</Text>
-                              </RadioButton>
-                           
-                            </View>
+                            <RadioButton value={radioBtnOption.attributes.name} >
+                            <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
+                            </RadioButton>
                           )
                         }
                       })
@@ -191,10 +177,18 @@ export default class DemoPageStyleFour extends Component {
                     controlsArray.push(
                       <View>
                       <View key={keyIndex}>
-                        <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
-                        />
- 
-                        {radioBtn}
+                      <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true} />
+                                                <RadioGroup
+                                                        size={24}
+                                                        thickness={2}
+                                                        color='#153875'
+                                                        //highlightColor='blue'
+                                                onSelect = {(index, value) => {
+
+                                                console.log(value)}}
+                                            >
+                                                {radioBtn}
+                                            </RadioGroup>
                        
                       </View>
                       {/* <View

@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
-//import { CheckBox } from 'react-native-elements';
-//import RadioButton from 'radio-button-react-native';
+
 import { Icon, Header, Content, Left, Right } from 'native-base';
 
 import { Dropdown } from 'react-native-material-dropdown';

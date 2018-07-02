@@ -3,35 +3,26 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
-//import RadioButton from 'radio-button-react-native';
-
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import { Icon, Header, Content, Left, Right } from 'native-base';
-//import HTML from 'react-native-render-html';
-//mport { Picker } from 'react-native-picker-dropdown'
 import { Dropdown } from 'react-native-material-dropdown';
-
 import { WebView } from 'react-native';
-//var DOMParser = require('xmldom').DOMParser
+
 var XMLParser = require('react-xml-parser');
-
 import HTML from 'react-native-render-html';
-
-
 import styles from './Styles/styleOne';
 import { Container } from 'native-base';
 
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-
 var jsonData = require('./Constants/xmlData.json');
+
 export default class DemoPageStyleOne extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      doc: [],
       controlsArray: [],
       checked: false,
       value: 0,
@@ -320,8 +311,7 @@ console.log(JSON.stringify(xmlJson))
     console.log(controlsArray.length)
     console.log(JSON.stringify(controlsArray))
 
-    //Alert.alert(this.state.controlsArray);
-    this.state.doc = JSON.stringify(xml)
+
 
   }
 

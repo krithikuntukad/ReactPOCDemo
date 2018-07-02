@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import RadioButton from 'radio-button-react-native';
+//import RadioButton from 'radio-button-react-native';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import {
   View,
   Text,
@@ -16,14 +17,14 @@ class RadioButtonComponent extends Component{
   render(){
     return (
         <View style={this.props.radio}>
-       <RadioButton currentValue={this.props.currentValue} value={this.props.name}
+       {/* <RadioButton currentValue={this.props.currentValue} value={this.props.name}
        onPress={()=>this.props.onPress}
          outerCircleColor='grey'
          innerCircleColor='#153875'
          innerCircleSize={8}
          outerCircleSize={18}
        >
-       </RadioButton>
+       </RadioButton> */}
        <Text style={this.props.radioText} >{this.props.name}</Text>
        </View>
     
