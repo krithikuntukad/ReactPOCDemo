@@ -27,7 +27,7 @@ Please install following npm plugins
 13)  npm i react-native-flexi-radio-button --https://www.npmjs.com/package/react-native-flexi-radio-button
 Following are used to fix build errors
 14)npm install react-native-document-picker --https://github.com/Elyx0/react-native-document-picker
-15)react-native-collapsible/Accordion
+15)npm install --save react-native-popup-dialog --https://www.npmjs.com/package/react-native-popup-dialog
 
 
 1) npm install rnpm -g  
