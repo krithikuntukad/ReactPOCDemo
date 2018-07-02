@@ -35,7 +35,10 @@ export default class DemoPagination extends Component {
     this.constructControls(responseText)
   }
 
-
+/**
+  * Function : constructControls
+  * Description : Creates Controls from JSON
+  */
 
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML

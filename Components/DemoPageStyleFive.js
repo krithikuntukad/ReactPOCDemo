@@ -30,8 +30,11 @@ export default class DemoPageStyleFive extends Component {
     this.constructControls(responseText)
   }
 
+  /**
+  * Function : changeStateAttributeValue
+  * Description : Assigns user action  values to dynamic text fields 
+  */
   changeStateAttributeValue = (event,attributeKey,validityArray)=>{
-
   if((event.nativeEvent.text.length != validityArray["maxLength"])|| 
   (event.nativeEvent.text != "" && validityArray["isRequired"] == "true") )
   {
@@ -44,7 +47,10 @@ export default class DemoPageStyleFive extends Component {
     this.state.controlInputs[attributeKey] = event.nativeEvent.text;
   }
   
-  
+  /**
+  * Function : constructControls
+  * Description : Creates Controls from JSON
+  */
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
     xmlJson=[]
@@ -177,7 +183,6 @@ export default class DemoPageStyleFive extends Component {
                         displayTxt = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
                        
                       }
-                      //if(visibility == "true"){
                       if (innerItem.name == "UserDefinedList") {
                         innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
   
@@ -195,7 +200,6 @@ export default class DemoPageStyleFive extends Component {
                     })
                   }
                 }
-            
                 if(visibility == "true"){
                 keyIndex = keyIndex + 1
                       

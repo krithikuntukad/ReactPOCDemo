@@ -32,12 +32,20 @@ export default class DemoPageStyleThree extends Component {
         this.constructControls(responseText)
     }
  
+    /**
+  * Function : sectionOne
+  * Description : displays section One
+  */
     sectionOne = () => {
         this.setState({
             displayedSection: !this.state.displayedSection,
             displayedSectionTwo: false
         })
     }
+    /**
+  * Function : sectionTwo
+  * Description : displays section Two
+  */
     sectionTwo = () => {
         this.setState({
             displayedSectionTwo: !this.state.displayedSectionTwo,
@@ -46,7 +54,10 @@ export default class DemoPageStyleThree extends Component {
 
     }
 
-
+/**
+  * Function : constructControls
+  * Description : Creates Controls from JSON
+  */
     constructControls(responseText) {
 
         var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
