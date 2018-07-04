@@ -20,6 +20,7 @@ class ComponentWithValue extends Component{
           value={this.props.value}
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}
+          maxLength={this.props.maxLength}
           />
       </View>
     );

@@ -17,51 +17,77 @@ import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
 var jsonData = require('./Constants/xmlDataStyleFive.json');
-
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+var responseText;
 export default class DemoPageStyleFive extends Component {
   constructor(props) {
     super(props);
     this.state = {
       controlsArray: [],
       controlInputs: {},
-      values: []
+      values: [],
+      controlValid:{},
+      childControlVisibility:{},
+      xmlJson:[]
+ 
     }
-    var responseText = jsonData[0].data
-    this.constructControls(responseText)
+     responseText = jsonData[0].data
+     this.constructControls(responseText)
+    
   }
 
+  validateControl = (attributeKey, validityArray) =>{
+    let statusCopy = Object.assign({}, this.state);
+    console.log("validityArray",JSON.stringify(validityArray))
+    if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
+      statusCopy.controlValid[attributeKey] = "Not valid";
+      this.setState(statusCopy);
+    }else if(this.state.controlInputs[attributeKey].length>0 && validityArray.regExp !="" && !(new RegExp(validityArray.regExp).test(this.state.controlInputs[attributeKey]))){
+      statusCopy.controlValid[attributeKey] = "Not valid";
+      this.setState(statusCopy);
+    } else{
+      statusCopy.controlValid[attributeKey] =null;
+      this.setState(statusCopy);
+    }
+  }
   /**
  * Function : changeStateAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
   changeStateAttributeValue = (event, attributeKey, validityArray) => {
-    if ((event.nativeEvent.text.length != validityArray["maxLength"]) ||
-      (event.nativeEvent.text != "" && validityArray["isRequired"] == "true")) {
-      validityArray["valid"] = false
-      //this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
-    } else {
-      validityArray["valid"] = true
-      // this.state.controlInputs[attributeKey+"ValidityChecker"] = validityArray
-    }
-    this.state.controlInputs[attributeKey] = event.nativeEvent.text;
+    let statusCopy = Object.assign({}, this.state);
+    statusCopy.controlInputs[attributeKey] = event.nativeEvent.text;
+    this.setState(statusCopy);
+   //console.log("userInputs",event.nativeEvent.text,this.state.controlInputs[attributeKey].length)
+this.validateControl(attributeKey, validityArray)
+   
   }
 
+  changeRadioButtonAttributeValue = (value, attributeKey,childKey,childAttributes) => {
+    let statusCopy = Object.assign({}, this.state);
+    statusCopy.controlInputs[attributeKey] = value;
+    this.setState(statusCopy);
+
+    console.log("childKey",childKey)
+    console.log("childAttributes")
+    JSON.stringify(childAttributes)
+  }
   /**
     * Function : createCheckBoxControl
     * Description : Creates Check box controls
     */
-  createCheckBoxControl(keyIndex, controlItem, controlsArray) {
+  createCheckBoxControl(keyIndex, controlItem) {
     var visibility = false
     var regex = ""
     var maxLength = 0
     var isRequired = false
     var contolArray = []
-    controlItem.children.map((outerItem, outerItemIndex) => {
-      contolArray.push(outerItem)
+    return controlItem.children.map((outerItem, outerItemIndex) => {
+       contolArray.push(outerItem)
 
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
-        tempArray.map((innerItem, innerItemIndex) => {
+        return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
@@ -96,11 +122,12 @@ export default class DemoPageStyleFive extends Component {
               width: 18,
               height: 18
             }
+            console.log("visibility chk",visibility)
             if (visibility == 'true') {
               this.state.controlInputs[innerItem.value] = false
-              controlsArray.push(
+              return(
                 <FormItem
-                  isRequired={isRequired}
+                  isRequired={isRequired == "true"?true:false}
                 >
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
@@ -128,7 +155,7 @@ export default class DemoPageStyleFive extends Component {
     * Function : createRadioButtonControl
     * Description : Creates Radio Button controls
     */
-  createRadioButtonControl(keyIndex, controlItem, controlsArray) {
+  createRadioButtonControl(keyIndex, controlItem) {
     var visibility = false
     var regex = ""
     var maxLength = 0
@@ -138,13 +165,13 @@ export default class DemoPageStyleFive extends Component {
     var radioBtn = []
     var displayTxt = ""
     var displayLabel = ""
-    controlItem.children.map((outerItem, outerItemIndex) => {
+    return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
 
-        tempArray.map((innerItem, innerItemIndex) => {
+        return tempArray.map((innerItem, innerItemIndex) => {
 
           if (innerItem.name == "Visible") {
 
@@ -176,7 +203,7 @@ export default class DemoPageStyleFive extends Component {
 
           }
           if (innerItem.name == "UserDefinedList") {
-            innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+            return innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
 
               if (radioBtnOption.name == "ListItem") {
                 keyIndex = keyIndex + 1
@@ -188,44 +215,52 @@ export default class DemoPageStyleFive extends Component {
               }
             })
           }
-
+          if(tempArray.length-1 == innerItemIndex){
+            if (visibility == "true") {
+              keyIndex = keyIndex + 1
+      
+              return(
+                <FormItem
+                  isRequired={true}
+                  regExp={regex}
+                >
+                  <View key={keyIndex}>
+                    <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+                    />
+      
+                    <RadioGroup
+                      size={24}
+                      thickness={2}
+                      color='#153875'
+                      onSelect={(index, value) => {
+                        this.state.controlInputs[displayLabel] = value
+                        console.log(value)
+                      }}
+                    >
+                      {radioBtn}
+                    </RadioGroup>
+                  </View>
+                </FormItem>
+              )
+            }
+          }
         })
       }
-      if (visibility == "true") {
-        keyIndex = keyIndex + 1
-
-        controlsArray.push(
-          <FormItem
-            isRequired={true}
-            regExp={regex}
-          >
-            <View key={keyIndex}>
-              <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
-              />
-
-              <RadioGroup
-                size={24}
-                thickness={2}
-                color='#153875'
-                onSelect={(index, value) => {
-                  this.state.controlInputs[displayLabel] = value
-                  console.log(value)
-                }}
-              >
-                {radioBtn}
-              </RadioGroup>
-            </View>
-          </FormItem>
-        )
-      }
+     
     })
+  }
+
+  getDisplayLabel(text,isRequired){
+
+    return  labelVal = isRequired == "true"?text+"*":text
+
   }
 
   /**
  * Function : createTextFieldControl
  * Description : Creates Text Field  controls
  */
-  createTextFieldControl(keyIndex, controlItem, controlsArray) {
+  createTextFieldControl(keyIndex, controlItem) {
     var visibility = false
     var regex = ""
     var maxLength = 0
@@ -233,29 +268,35 @@ export default class DemoPageStyleFive extends Component {
     var contolArray = []
     var stringVal = false
     var validityArray = {}
-    controlItem.children.map((outerItem, outerItemIndex) => {
+    // return (
+    //   <Text>"archana"</Text>
+    // )
+    return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
-        tempArray.map((innerItem, innerItemIndex) => {
+        return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
           if (innerItem.name == "Validator") {
             if (innerItem.value == "String") {
               stringVal = true
-              regex = /^\d+$/
+              regex = ""
             } else {
               regex = /^\d+$/
               stringVal = false
             }
           }
+
+          
           if (innerItem.name == "MaxLength") {
-            maxLength = innerItem.value
+            maxLength = innerItem.value 
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
+           
           }
 
           validityArray = {
@@ -265,20 +306,22 @@ export default class DemoPageStyleFive extends Component {
             "regex": regex,
             valid: true
           }
+          console.log("validityArray")
+          console.log(validityArray)
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
+            console.log("KRithi KEyIndex",keyIndex)
             var text = new AllHtmlEntities().decode(innerItem.value);
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-            this.state.controlInputs[text] = ""
-            console.log("visibility", (visibility == "true"), (visibility == true))
+           // this.state.controlInputs[text] = "";
+            //this.state.controlValid[text] = null;
             if (visibility == "true") {
-              controlsArray.push(
-
+              return(
                 <FormItem
-                  isRequired={true}
+                isRequired= {true}
                   regExp={regex}
                 >
-                  <LabelComponent style={styles.textBox} value={text} />
+                  <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
                   <ComponentWithValue
                     style={{
                       height: 30,
@@ -288,10 +331,15 @@ export default class DemoPageStyleFive extends Component {
                       fontSize: 10
                     }}
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
-                    placeholder="Enter Text Here"
+                    placeholder= "Enter Text Here"
                     key={keyIndex}
+                    maxLength={50}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray)} />
+                     
+                      {(
+  <Text style={{color: "red"}}>{this.state.controlValid[text]}</Text>
+)}
                 </FormItem>
               )
             }
@@ -305,14 +353,14 @@ export default class DemoPageStyleFive extends Component {
   * Function : createDropdownControl
   * Description : Creates Dropdown Controls
   */
-  createDropdownControl(keyIndex, controlItem, controlsArray) {
+  createDropdownControl(keyIndex, controlItem) {
     var visibility = false
     var regex = ""
     var maxLength = 0
     var isRequired = false
     var contolArray = []
     var stateIndexVal = ""
-    controlItem.children.map((outerItem, outerItemIndex) => {
+    return controlItem.children.map((outerItem, outerItemIndex) => {
       var dropDowValues = []
       var obj = {}
       var text = ""
@@ -321,7 +369,7 @@ export default class DemoPageStyleFive extends Component {
 
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
-        tempArray.map((innerItem, innerItemIndex) => {
+        return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
@@ -351,9 +399,9 @@ export default class DemoPageStyleFive extends Component {
           this.state.controlInputs[stateIndexVal] = ""
 
           if (innerItem.name == "ControlActions") {
-            innerItem.children.map((dropdownItem, dropdownItemIndex) => {
+            return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
               if (dropdownItem.name == "UdfControlAction") {
-                dropdownItem.children.map(function (udfControlAction, udfControlActionIndex) {
+                return dropdownItem.children.map((udfControlAction, udfControlActionIndex)=> {
 
                   if (udfControlAction.name == "SourceValue") {
                     obj = {
@@ -368,13 +416,12 @@ export default class DemoPageStyleFive extends Component {
             })
 
           }
-
-        })
-        keyIndex = keyIndex + 1
-        if (visibility == "true") {
-          controlsArray.push(
+if(tempArray.length-1 == innerItemIndex){
+          keyIndex = keyIndex + 1
+       // if (visibility == "true") {
+          return (
             <FormItem
-              isRequired={true}
+            isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
               <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val) => {
@@ -383,7 +430,11 @@ export default class DemoPageStyleFive extends Component {
               }} />
             </FormItem>
           )
+        //}
         }
+        })
+      
+        
       }
     })
   }
@@ -393,62 +444,44 @@ export default class DemoPageStyleFive extends Component {
   */
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
-    xmlJson = []
+    this.state.xmlJson = []
     var controlsArray = []
-    xmlJson.push(xml)
+    this.state.xmlJson.push(xml)
     var keyIndex = 0;
-    xmlJson[0].children.map((currentSection, index) => {
-      currentSection.children.map((currentItem, itemIndex) => {
-        if (currentItem.name == "Controls") {
-          currentSection.children.map((currentControl, controlIndex) => {
-            if (currentControl.name == "Controls") {
-              currentControl.children.map((controlItem, controlItemIndex) => {
-                if (controlItem.name == "Checkbox") {
-                  this.createCheckBoxControl(keyIndex, controlItem, controlsArray)
-                } else if (controlItem.name == "RadioButton") {
-                  this.createRadioButtonControl(keyIndex, controlItem, controlsArray)
-                } else if (controlItem.name == "Textbox") {
-                  this.createTextFieldControl(keyIndex, controlItem, controlsArray)
-                } else if (controlItem.name == "DropDownList") {
-                  this.createDropdownControl(keyIndex, controlItem, controlsArray)
+    // this.state.xmlJson[0].children.map((currentSection, index) => {
+    //   currentSection.children.map((currentItem, itemIndex) => {
+    //     if (currentItem.name == "Controls") {
+    //       currentSection.children.map((currentControl, controlIndex) => {
+    //         if (currentControl.name == "Controls") {
+    //           currentControl.children.map((controlItem, controlItemIndex) => {
+    //             if (controlItem.name == "Checkbox") {
+    //              this.createCheckBoxControl(keyIndex, controlItem, controlsArray)
+    //             } else if (controlItem.name == "RadioButton") {
+    //              // this.createRadioButtonControl(keyIndex, controlItem, controlsArray)
+    //             } else if (controlItem.name == "Textbox") {
+    //               this.createTextFieldControl(keyIndex, controlItem, controlsArray)
+    //             } else if (controlItem.name == "DropDownList") {
+    //               this.createDropdownControl(keyIndex, controlItem, controlsArray)
 
-                }
-              })
-            }
-          })
-        }
-      })
-    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    this.state.controlsArray = controlsArray
+    //             }
+    //           })
+    //         }
+    //       })
+    //     }
+    //   })
+    // })
+    // this.state.controlsArray = controlsArray
 
   }
 
   submit = () => {
+    //console.log(this.refs.form)
     var Array = this.state.controlInputs
     var nonNullArray = []
     //console.log(JSON.stringify(this.state.controlInputs))
     this.state.values = []
     for (var key in Array) {
-      console.log("Key")
-      console.log(Array[key])
+     
       if (Array[key] != "") {
 
         var text = key //<Text style={styles.Header }>{innerItem.value}</Text>
@@ -474,8 +507,55 @@ export default class DemoPageStyleFive extends Component {
   customValidation() {
     return true;
   }
+  validate(){
+    var Array = this.state.controlInputs
+    for (var key in Array) {
 
+    if(Array[key] != "" && Array[key].length<2){
+      let statusCopy = Object.assign({}, this.state);
+        statusCopy.controlValid[key+"Error"] = "Not valid";
+        this.setState(statusCopy);
+    }else{
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.controlValid[key+"Error"] =null;
+      this.setState(statusCopy);
+    }
+  }
+  }
   render() {
+    var keyIndex = 0;
+    content = this.state.xmlJson[0].children.map((currentSection, index) => {
+      return currentSection.children.map((currentItem, itemIndex) => {
+        console.log("itemIndex here",itemIndex)
+        console.log(currentItem)
+        if (currentItem.name == "Controls") {
+          return currentSection.children.map((currentControl, controlIndex) => {
+            if (currentControl.name == "Controls") {
+              return currentControl.children.map((controlItem, controlItemIndex) => {
+                if (controlItem.name == "Checkbox") {
+                  return this.createCheckBoxControl(keyIndex,controlItem)
+                } else if (controlItem.name == "Label") {
+                 // this.createHTMLTable(keyIndex,controlItem)
+                } else if (controlItem.name == "RadioButton") {
+                  return this.createRadioButtonControl(keyIndex,controlItem)
+                } else if (controlItem.name == "Textbox") {
+                  return this.createTextFieldControl(keyIndex,controlItem)
+                } else if (controlItem.name == "DropDownList") {
+                  return this.createDropdownControl(keyIndex,controlItem)
+                } else if (controlItem.name == "AttachmentControl") {
+                 // this.createAttachmentControl(keyIndex,controlItem)
+                }
+              })
+            }
+          })
+        }
+      })
+    })
+  // return (
+  //   <View>
+  //      {contents}
+  //   </View>
+  // );
     return (
       <Container>
         <Header style={{ backgroundColor: "#153875", }}>
@@ -503,7 +583,7 @@ export default class DemoPageStyleFive extends Component {
                 ref="form"
                 shouldValidate={true}
               >
-                {this.state.controlsArray}
+                {content}
               </Form>
 
             </View>
