@@ -61,7 +61,7 @@ export default class DemoPageStyleFive extends Component {
     statusCopy.visibilityInputs[fieldId] =event.nativeEvent.text;
     this.setState(statusCopy);
     console.log("Krithi")
-    console.log(JSON.stringify(this.state.visibilityInputs))
+    
 this.validateControl(attributeKey, validityArray)
    
   }
@@ -70,9 +70,12 @@ this.validateControl(attributeKey, validityArray)
  * Function : changeRadioButtonAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-  changeRadioButtonAttributeValue = (value, attributeKey,childKey,childAttributes,fieldId) => {
+  changeRadioButtonAttributeValue = (value, attributeKey,fieldId) => {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[attributeKey] = value;
+    //statusCopy.visibilityInputs[fieldId] =value;
+    statusCopy.visibilityInputs[fieldId] = value
+    console.log(JSON.stringify(this.state.visibilityInputs))
     this.setState(statusCopy);
   }
 
@@ -213,18 +216,15 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             if(controlActions.name=="UdfControlAction"){
               var Action="",SourceField="",SourceValue=""
               controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-            console.log("udfControlAction",udfControlActionIndex)
+          
             if(udfControlAction.name=="Action"){
-            console.log("udfControlAction.name here",udfControlAction.name)
             Action=udfControlAction.value
            }
            if(udfControlAction.name=="SourceField"){
-            console.log("udfControlAction.name SourceField",udfControlAction.name)
             SourceField=udfControlAction.value
            }
     
           if(udfControlAction.name=="SourceValue"){
-            console.log("udfControlAction.name SourceValue",udfControlAction.name)
             SourceValue=udfControlAction.value
           }
           if(controlActions.children.length-1 == udfControlActionIndex){
@@ -249,7 +249,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
   keyIndex = keyIndex + 1
   var y = innerItem.value
   y = new Entities().decode(y);
- 
+
   controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
   if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
     if(visibilityAction.Action == "Hide"){
@@ -261,7 +261,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
       isRequired = "true"
     }
   }
-   console.log("finally visibility "+visibility) 
   })
   
   if(visibility == "true"){
@@ -297,6 +296,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
     var displayTxt = ""
     var displayLabel = ""
     var fieldId = ""
+    var controlActionsArray=[]
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
@@ -326,8 +326,42 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
           }
+          if(innerItem.name == "ControlActions"){
+            console.log("ControlActions")
+            innerItem.children.map((controlActions,controlActionsIndex) => {
+              if(controlActions.name=="UdfControlAction"){
+                var Action="",SourceField="",SourceValue=""
+                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+             
+              if(udfControlAction.name=="Action"){
+              Action=udfControlAction.value
+             }
+             if(udfControlAction.name=="SourceField"){
+              SourceField=udfControlAction.value
+             }
+      
+            if(udfControlAction.name=="SourceValue"){
+              SourceValue=udfControlAction.value
+            }
+            if(controlActions.children.length-1 == udfControlActionIndex){
+              let obj ={
+                "Action":Action,
+                "SourceField":SourceField,
+                "SourceValue":SourceValue
+              }
+              controlActionsArray.push(obj)
+            }
+                })
+              }
+              
+  
+  
+            })
+  
+          }
           if (innerItem.name == "FieldHeader") {
             displayLabel = innerItem.value
+            console.log(displayLabel)
             text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
             text = new Entities().decode(text);
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
@@ -343,7 +377,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
               if (radioBtnOption.name == "ListItem") {
                 keyIndex = keyIndex + 1
                 radioBtn.push(
-                  <RadioButton value={radioBtnOption.attributes.value} >
+                  <RadioButton value={radioBtnOption.attributes.name} >
                     <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
                   </RadioButton>
                 )
@@ -351,6 +385,23 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             })
           }
           if(tempArray.length-1 == innerItemIndex){
+            console.log("controlActionsArray")
+            console.log(JSON.stringify(controlActionsArray))
+            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+              console.log(this.state.visibilityInputs[visibilityAction.SourceField])
+              console.log(visibilityAction.SourceValue)
+              console.log(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue)
+              if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+                if(visibilityAction.Action == "Hide"){
+                  visibility = "false"
+                }else if(visibilityAction.Action == "Show"){
+                  visibility = "true"
+                }else if(visibilityAction.Action == "ShowAndRequiredField"){
+                  visibility = "true"
+                  isRequired = "true"
+                }
+              }
+              })
             if (visibility == "true") {
               keyIndex = keyIndex + 1
       
@@ -368,8 +419,8 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
                       thickness={2}
                       color='#153875'
                       onSelect={(index, value) => {
-                        this.state.controlInputs[displayLabel] = value
-                      //  console.log(value)
+                        this.changeRadioButtonAttributeValue(value,displayLabel,fieldId)
+                        
                       }}
                     >
                       {radioBtn}
