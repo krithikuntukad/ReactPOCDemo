@@ -38,6 +38,42 @@ export default class DemoPageStyleFive extends Component {
     
   }
 
+  controlHideShowAction=(innerItem)=>{
+    var controlActionsArray =[]
+    if(innerItem.name == "ControlActions"){
+      console.log("ControlActions")
+      return innerItem.children.map((controlActions,controlActionsIndex) => {
+        if(controlActions.name=="UdfControlAction"){
+          var Action="",SourceField="",SourceValue=""
+          controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+       
+        if(udfControlAction.name=="Action"){
+        Action=udfControlAction.value
+       }
+       if(udfControlAction.name=="SourceField"){
+        SourceField=udfControlAction.value
+       }
+
+      if(udfControlAction.name=="SourceValue"){
+        SourceValue=udfControlAction.value
+      }
+      if(controlActions.children.length-1 == udfControlActionIndex){
+        let obj ={
+          "Action":Action,
+          "SourceField":SourceField,
+          "SourceValue":SourceValue
+        }
+        controlActionsArray.push(obj)
+      }
+          })
+        }
+        
+
+
+      })
+return controlActionsArray
+    }
+  }
   validateControl = (attributeKey, validityArray) =>{
     let statusCopy = Object.assign({}, this.state);
     if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
@@ -102,6 +138,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
     var isRequired = false
     var contolArray = []
     var fieldId = ""
+    var controlActionsArray =[]
     return controlItem.children.map((outerItem, outerItemIndex) => {
        contolArray.push(outerItem)
 
@@ -127,6 +164,38 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
           }
+          if(innerItem.name == "ControlActions"){
+            console.log("ControlActions")
+            return innerItem.children.map((controlActions,controlActionsIndex) => {
+              if(controlActions.name=="UdfControlAction"){
+                var Action="",SourceField="",SourceValue=""
+                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+             
+              if(udfControlAction.name=="Action"){
+              Action=udfControlAction.value
+             }
+             if(udfControlAction.name=="SourceField"){
+              SourceField=udfControlAction.value
+             }
+      
+            if(udfControlAction.name=="SourceValue"){
+              SourceValue=udfControlAction.value
+            }
+            if(controlActions.children.length-1 == udfControlActionIndex){
+              let obj ={
+                "Action":Action,
+                "SourceField":SourceField,
+                "SourceValue":SourceValue
+              }
+              controlActionsArray.push(obj)
+            }
+                })
+              }
+              
+      
+      
+            })
+          }
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
             labelStyle = {
@@ -145,6 +214,18 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
               width: 18,
               height: 18
             }
+            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+              if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+                if(visibilityAction.Action == "Hide"){
+                  visibility = "false"
+                }else if(visibilityAction.Action == "Show"){
+                  visibility = "true"
+                }else if(visibilityAction.Action == "ShowAndRequiredField"){
+                  visibility = "true"
+                  isRequired = "true"
+                }
+              }
+              })
             if (visibility == 'true') {
               //this.state.controlInputs[innerItem.value] = false
               return(
@@ -243,6 +324,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           })
 
         }
+        //controlActionsArray = this.controlHideShowAction(innerItem)
 
         
   if (innerItem.name == "FieldHeader") {
@@ -385,12 +467,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             })
           }
           if(tempArray.length-1 == innerItemIndex){
-            console.log("controlActionsArray")
-            console.log(JSON.stringify(controlActionsArray))
             controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
-              console.log(this.state.visibilityInputs[visibilityAction.SourceField])
-              console.log(visibilityAction.SourceValue)
-              console.log(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue)
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
                   visibility = "false"
@@ -455,6 +532,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
     var stringVal = false
     var validityArray = {}
     var fieldId = ""
+    var controlActionsArray = [];
     // return (
     //   <Text>"archana"</Text>
     // )
@@ -497,12 +575,57 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             "regex": regex,
             valid: true
           }
+          if(innerItem.name == "ControlActions"){
+            console.log("ControlActions")
+            innerItem.children.map((controlActions,controlActionsIndex) => {
+              if(controlActions.name=="UdfControlAction"){
+                var Action="",SourceField="",SourceValue=""
+                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+             
+              if(udfControlAction.name=="Action"){
+              Action=udfControlAction.value
+             }
+             if(udfControlAction.name=="SourceField"){
+              SourceField=udfControlAction.value
+             }
+      
+            if(udfControlAction.name=="SourceValue"){
+              SourceValue=udfControlAction.value
+            }
+            if(controlActions.children.length-1 == udfControlActionIndex){
+              let obj ={
+                "Action":Action,
+                "SourceField":SourceField,
+                "SourceValue":SourceValue
+              }
+              controlActionsArray.push(obj)
+            }
+                })
+              }
+              
+  
+  
+            })
+  
+          }
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
             var text = new AllHtmlEntities().decode(innerItem.value);
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
            // this.state.controlInputs[text] = "";
             //this.state.controlValid[text] = null;
+            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+              if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+                if(visibilityAction.Action == "Hide"){
+                  visibility = "false"
+                }else if(visibilityAction.Action == "Show"){
+                  visibility = "true"
+                }else if(visibilityAction.Action == "ShowAndRequiredField"){
+                  visibility = "true"
+                  isRequired = "true"
+                }
+              }
+              })
             if (visibility == "true") {
               return(
                 <FormItem
@@ -604,7 +727,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             })
 
           }
-if(tempArray.length-1 == innerItemIndex){
+       if(tempArray.length-1 == innerItemIndex){
           keyIndex = keyIndex + 1
        // if (visibility == "true") {
           return (
