@@ -127,6 +127,29 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
   //statusCopy.visibilityInputs[fieldId] =value;
   this.setState(statusCopy);
 }
+
+ /**
+ * Function : changeRadioButtonAttributeValue
+ * Description : Assigns user action  values to dynamic text fields 
+ */
+changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
+  var name =""
+  for(var i =0;i<data.length-1;i++){
+    console.log("value",value,i)
+    console.log("value",data[i].value)
+    if(value ==data[i].value ){
+      name =data[i].name
+    }
+  }
+  console.log("name",name)
+  let statusCopy = Object.assign({}, this.state);
+  statusCopy.controlInputs[attributeKey] = value;
+  //statusCopy.visibilityInputs[fieldId] =value;
+  statusCopy.visibilityInputs[fieldId] = name
+  this.setState(statusCopy);
+  console.log("chocolate")
+  console.log(JSON.stringify(this.state.visibilityInputs))
+}
   /**
     * Function : createCheckBoxControl
     * Description : Creates Check box controls
@@ -668,6 +691,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
     var isRequired = false
     var contolArray = []
     var stateIndexVal = ""
+    var controlActionsArray = [];
     return controlItem.children.map((outerItem, outerItemIndex) => {
       var dropDowValues = []
       var obj = {}
@@ -678,6 +702,9 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
+          if (innerItem.name == "FieldId") {
+            fieldId = innerItem.value
+          }
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
@@ -694,6 +721,38 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
+          }
+          if(innerItem.name == "ControlActions"){
+            innerItem.children.map((controlActions,controlActionsIndex) => {
+              if(controlActions.name=="UdfControlAction"){
+                var Action="",SourceField="",SourceValue=""
+                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+             
+              if(udfControlAction.name=="Action"){
+              Action=udfControlAction.value
+             }
+             if(udfControlAction.name=="SourceField"){
+              SourceField=udfControlAction.value
+             }
+      
+            if(udfControlAction.name=="SourceValue"){
+              SourceValue=udfControlAction.value
+            }
+            if(controlActions.children.length-1 == udfControlActionIndex){
+              let obj ={
+                "Action":Action,
+                "SourceField":SourceField,
+                "SourceValue":SourceValue
+              }
+              controlActionsArray.push(obj)
+            }
+                })
+              }
+              
+  
+  
+            })
+  
           }
           if (innerItem.name == "FieldHeader") {
             var y = innerItem.value
@@ -717,16 +776,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
                         name:dropdownItem.attributes.name
                       }
                       dropDowValues.push(obj)
-                // return dropdownItem.children.map((udfControlAction, udfControlActionIndex)=> {
-
-                //   if (udfControlAction.name == "SourceValue") {
-                //     obj = {
-                //       value: udfControlAction.value,
-                //     }
-                //     dropDowValues.push(obj)
-                //   }
-
-                // })
+               
               }
 
             })
@@ -734,19 +784,33 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           }
        if(tempArray.length-1 == innerItemIndex){
           keyIndex = keyIndex + 1
-       // if (visibility == "true") {
+          controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+            if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+              if(visibilityAction.Action == "Hide"){
+                visibility = "false"
+              }else if(visibilityAction.Action == "Show"){
+                visibility = "true"
+              }else if(visibilityAction.Action == "ShowAndRequiredField"){
+                visibility = "true"
+                isRequired = "true"
+              }
+            }
+            })
+        if (visibility == "true") {
           return (
             <FormItem
             isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
-              <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val) => {
-                this.state.controlInputs[stateIndexVal] = val
+              <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
+                //this.state.controlInputs[stateIndexVal] = val
+               // console.log(data)
+                this.changeDropDownAttributeValue(val,label,fieldId,data)
 
               }} />
             </FormItem>
           )
-        //}
+        }
         }
         })
       
@@ -796,19 +860,20 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
 
     var validationCheckRules =[]
     validationCheckRules = this.state.validityRules
+    var Array = this.state.controlInputs
     for (var key in validationCheckRules) {
      var  rules = validationCheckRules[key]
      console.log(JSON.stringify(rules))
      console.log(this.state.controlInputs[key])
  
-     //if(this.state.controlInputs[key].length > 0 && rules["isRequired"] == "true"){
+    // if(Array[0][key].length > 0 && rules["isRequired"] == "true"){
       let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = "Not valid";
         this.setState(statusCopy);
      //}
     }
 
-    var Array = this.state.controlInputs
+    
     var nonNullArray = []
     //console.log(JSON.stringify(this.state.controlInputs))
     this.state.values = []
