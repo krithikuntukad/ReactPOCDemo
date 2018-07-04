@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Button, Image, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { AppRegistry, Text, View, Button, Image, Alert,ActivityIndicator, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import { Icon, Header, Content, Left, Right } from 'native-base';
 var XMLParser = require('react-xml-parser');
@@ -18,6 +18,7 @@ import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
 var jsonData = require('./Constants/xmlDataStyleFive.json');
 import { WebView } from 'react-native';
+
 var responseText;
 export default class DemoPageStyleFive extends Component {
   constructor(props) {
@@ -30,14 +31,19 @@ export default class DemoPageStyleFive extends Component {
       controlValid:{},
       validityRules:{},
       visibilityInputs:{},
-      xmlJson:[]
+      xmlJson:[],
+      displayLoader:true
  
     }
      responseText = jsonData[0].data
      this.constructControls(responseText)
     
   }
-
+componentWillMount(){
+  setTimeout(() => {
+    this.setState({displayLoader:false})
+  }, 3000);
+}
   controlHideShowAction=(innerItem)=>{
     var controlActionsArray =[]
     if(innerItem.name == "ControlActions"){
@@ -565,6 +571,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             "regex": regex,
             valid: true
           }
+         
           if(innerItem.name == "ControlActions"){
             innerItem.children.map((controlActions,controlActionsIndex) => {
               if(controlActions.name=="UdfControlAction"){
@@ -603,6 +610,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
            // this.state.controlInputs[text] = "";
             //this.state.controlValid[text] = null;
+            this.state.validityRules[text] = validityArray
             controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
@@ -784,6 +792,22 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
 
   submit = () => {
     //console.log(this.refs.form)
+    console.log(JSON.stringify(this.state.validityRules))
+
+    var validationCheckRules =[]
+    validationCheckRules = this.state.validityRules
+    for (var key in validationCheckRules) {
+     var  rules = validationCheckRules[key]
+     console.log(JSON.stringify(rules))
+     console.log(this.state.controlInputs[key])
+ 
+     //if(this.state.controlInputs[key].length > 0 && rules["isRequired"] == "true"){
+      let statusCopy = Object.assign({}, this.state);
+        statusCopy.controlValid[key] = "Not valid";
+        this.setState(statusCopy);
+     //}
+    }
+
     var Array = this.state.controlInputs
     var nonNullArray = []
     //console.log(JSON.stringify(this.state.controlInputs))
@@ -885,6 +909,14 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
         <View style={styles.pageStyle} >
 
           <ScrollView >
+          
+          <View >
+            {
+              this.state.displayLoader? <ActivityIndicator size="large" color="#0000ff" />:null
+            }
+       
+       
+      </View>
             <View style={styles.container}>
               <Form
                 ref="form"
