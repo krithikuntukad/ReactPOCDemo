@@ -124,7 +124,7 @@ this.validateControl(attributeKey, validityArray)
             }
             console.log("visibility chk",visibility)
             if (visibility == 'true') {
-              this.state.controlInputs[innerItem.value] = false
+              //this.state.controlInputs[innerItem.value] = false
               return(
                 <FormItem
                   isRequired={isRequired == "true"?true:false}
@@ -197,7 +197,7 @@ this.validateControl(attributeKey, validityArray)
             text = new Entities().decode(text);
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
 
-            this.state.controlInputs[innerItem.value] = ""
+           // this.state.controlInputs[innerItem.value] = ""
 
             displayTxt = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
 
@@ -396,7 +396,7 @@ this.validateControl(attributeKey, validityArray)
 
           }
           stateIndexVal = label
-          this.state.controlInputs[stateIndexVal] = ""
+          //this.state.controlInputs[stateIndexVal] = ""
 
           if (innerItem.name == "ControlActions") {
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
