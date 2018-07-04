@@ -320,6 +320,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
 
           }
           if (innerItem.name == "MaxLength") {
+           
             maxLength = innerItem.value
           }
           if (innerItem.name == "RequiredField") {
@@ -430,7 +431,8 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
 
           
           if (innerItem.name == "MaxLength") {
-            maxLength = innerItem.value 
+            maxLength =parseInt(innerItem.value) 
+           // maxLength = innerItem.value 
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
@@ -468,7 +470,7 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}
-                    maxLength={50}
+                    maxLength={maxLength}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
                      
