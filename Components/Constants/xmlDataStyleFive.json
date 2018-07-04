@@ -884,7 +884,7 @@
     
     <FieldId>ClientType</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>true</RequiredField>
     
@@ -936,7 +936,7 @@
     
     <FieldId>BDReimbursement</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -978,7 +978,7 @@
     
     <FieldId>BDReimbursementMethod</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1026,7 +1026,7 @@
     
     <FieldId>BDReimbursementOther</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1067,7 +1067,7 @@
     
     <FieldId>ERISAType</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>false</RequiredField>
     
@@ -1109,7 +1109,7 @@
     
     <FieldId>ContactTypeOther</FieldId>
     
-    <Visible>true</Visible>
+    <Visible>false</Visible>
     
     <RequiredField>true</RequiredField>
     

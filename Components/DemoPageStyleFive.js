@@ -17,17 +17,19 @@ import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
 var jsonData = require('./Constants/xmlDataStyleFive.json');
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { WebView } from 'react-native';
 var responseText;
 export default class DemoPageStyleFive extends Component {
   constructor(props) {
     super(props);
+   
     this.state = {
       controlsArray: [],
       controlInputs: {},
       values: [],
       controlValid:{},
-      childControlVisibility:{},
+      validityRules:{},
+      visibilityInputs:{},
       xmlJson:[]
  
     }
@@ -38,7 +40,6 @@ export default class DemoPageStyleFive extends Component {
 
   validateControl = (attributeKey, validityArray) =>{
     let statusCopy = Object.assign({}, this.state);
-    console.log("validityArray",JSON.stringify(validityArray))
     if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
       statusCopy.controlValid[attributeKey] = "Not valid";
       this.setState(statusCopy);
@@ -54,24 +55,39 @@ export default class DemoPageStyleFive extends Component {
  * Function : changeStateAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-  changeStateAttributeValue = (event, attributeKey, validityArray) => {
+  changeStateAttributeValue = (event, attributeKey, validityArray,fieldId) => {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[attributeKey] = event.nativeEvent.text;
+    statusCopy.visibilityInputs[fieldId] =event.nativeEvent.text;
     this.setState(statusCopy);
-   //console.log("userInputs",event.nativeEvent.text,this.state.controlInputs[attributeKey].length)
+    console.log("Krithi")
+    console.log(JSON.stringify(this.state.visibilityInputs))
 this.validateControl(attributeKey, validityArray)
    
   }
 
-  changeRadioButtonAttributeValue = (value, attributeKey,childKey,childAttributes) => {
+  /**
+ * Function : changeRadioButtonAttributeValue
+ * Description : Assigns user action  values to dynamic text fields 
+ */
+  changeRadioButtonAttributeValue = (value, attributeKey,childKey,childAttributes,fieldId) => {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[attributeKey] = value;
     this.setState(statusCopy);
-
-    console.log("childKey",childKey)
-    console.log("childAttributes")
-    JSON.stringify(childAttributes)
   }
+
+    /**
+ * Function : changeCheckboxAttributeValue
+ * Description : Assigns user action  values to dynamic text fields 
+ */
+changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
+  let statusCopy = Object.assign({}, this.state);
+  statusCopy.controlInputs[attributeKey] = value;
+  statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
+  //statusCopy.visibilityInputs[fieldId] =value;
+  console.log(JSON.stringify(this.state.visibilityInputs))
+  this.setState(statusCopy);
+}
   /**
     * Function : createCheckBoxControl
     * Description : Creates Check box controls
@@ -82,12 +98,16 @@ this.validateControl(attributeKey, validityArray)
     var maxLength = 0
     var isRequired = false
     var contolArray = []
+    var fieldId = ""
     return controlItem.children.map((outerItem, outerItemIndex) => {
        contolArray.push(outerItem)
 
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
+          if (innerItem.name == "FieldId") {
+            fieldId = innerItem.value
+          }
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
@@ -122,7 +142,6 @@ this.validateControl(attributeKey, validityArray)
               width: 18,
               height: 18
             }
-            console.log("visibility chk",visibility)
             if (visibility == 'true') {
               //this.state.controlInputs[innerItem.value] = false
               return(
@@ -134,7 +153,7 @@ this.validateControl(attributeKey, validityArray)
                     labelStyle={labelStyle}
                     checkboxStyle={checkBoxStyle}
                     onChange={(checked) =>
-                      this.state.controlInputs[innerItem.value] = checked
+                      this.changeCheckboxAttributeValue(checked,innerItem.value,fieldId)
                     }
 
                     numberOfLines={15}
@@ -151,6 +170,118 @@ this.validateControl(attributeKey, validityArray)
     })
   }
 
+    /**
+  * Function : createHTMLTable
+  * Description : Creates HTML Table controls
+  */
+ createHTMLTable(keyIndex,controlItem){
+  var visibility = false
+  var regex = ""
+  var maxLength = 0
+  var isRequired = false
+  var fieldId = ""
+  var contolArray = []
+  var controlActionsArray=[]
+  return controlItem.children.map((outerItem, outerItemIndex) => {
+    contolArray.push(outerItem)
+
+    if (controlItem.children.length - 1 == outerItemIndex) {
+      var tempArray = contolArray.reverse()
+      return tempArray.map((innerItem, innerItemIndex) => {
+        if (innerItem.name == "FieldId") {
+          fieldId = innerItem.value
+        }
+        if (innerItem.name == "Visible") {
+          visibility = innerItem.value
+        }
+        if (innerItem.name == "Validator") {
+          if (innerItem.value == "String") {
+            regex = /^\d+$/
+          } else {
+            regex = /^\d+$/
+          }
+        }
+        if (innerItem.name == "MaxLength") {
+          maxLength = innerItem.value
+        }
+        if (innerItem.name == "RequiredField") {
+          isRequired = innerItem.value
+        }
+        if(innerItem.name == "ControlActions"){
+          console.log("ControlActions")
+          innerItem.children.map((controlActions,controlActionsIndex) => {
+            if(controlActions.name=="UdfControlAction"){
+              var Action="",SourceField="",SourceValue=""
+              controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
+            console.log("udfControlAction",udfControlActionIndex)
+            if(udfControlAction.name=="Action"){
+            console.log("udfControlAction.name here",udfControlAction.name)
+            Action=udfControlAction.value
+           }
+           if(udfControlAction.name=="SourceField"){
+            console.log("udfControlAction.name SourceField",udfControlAction.name)
+            SourceField=udfControlAction.value
+           }
+    
+          if(udfControlAction.name=="SourceValue"){
+            console.log("udfControlAction.name SourceValue",udfControlAction.name)
+            SourceValue=udfControlAction.value
+          }
+          if(controlActions.children.length-1 == udfControlActionIndex){
+            let obj ={
+              "Action":Action,
+              "SourceField":SourceField,
+              "SourceValue":SourceValue
+            }
+            controlActionsArray.push(obj)
+          }
+              })
+            }
+            
+
+
+          })
+
+        }
+
+        
+  if (innerItem.name == "FieldHeader") {
+  keyIndex = keyIndex + 1
+  var y = innerItem.value
+  y = new Entities().decode(y);
+ 
+  controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+  if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+    if(visibilityAction.Action == "Hide"){
+      visibility = "false"
+    }else if(visibilityAction.Action == "Show"){
+      visibility = "true"
+    }else if(visibilityAction.Action == "ShowAndRequiredField"){
+      visibility = "true"
+      isRequired = "true"
+    }
+  }
+   console.log("finally visibility "+visibility) 
+  })
+  
+  if(visibility == "true"){
+  return(
+    <WebView
+      source={{ html: y }}
+      style={{
+        flex: 1,
+        marginTop: 5,
+        height: 200,
+      }}
+    />
+  )
+}
+  }
+      
+    })
+  }
+})
+ }
   /**
     * Function : createRadioButtonControl
     * Description : Creates Radio Button controls
@@ -165,6 +296,7 @@ this.validateControl(attributeKey, validityArray)
     var radioBtn = []
     var displayTxt = ""
     var displayLabel = ""
+    var fieldId = ""
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
@@ -172,7 +304,9 @@ this.validateControl(attributeKey, validityArray)
         var tempArray = contolArray.reverse()
 
         return tempArray.map((innerItem, innerItemIndex) => {
-
+          if (innerItem.name == "FieldId") {
+            fieldId = innerItem.value
+          }
           if (innerItem.name == "Visible") {
 
             visibility = innerItem.value
@@ -234,7 +368,7 @@ this.validateControl(attributeKey, validityArray)
                       color='#153875'
                       onSelect={(index, value) => {
                         this.state.controlInputs[displayLabel] = value
-                        console.log(value)
+                      //  console.log(value)
                       }}
                     >
                       {radioBtn}
@@ -268,6 +402,7 @@ this.validateControl(attributeKey, validityArray)
     var contolArray = []
     var stringVal = false
     var validityArray = {}
+    var fieldId = ""
     // return (
     //   <Text>"archana"</Text>
     // )
@@ -277,6 +412,9 @@ this.validateControl(attributeKey, validityArray)
       if (controlItem.children.length - 1 == outerItemIndex) {
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
+          if (innerItem.name == "FieldId") {
+            fieldId = innerItem.value
+          }
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
           }
@@ -306,11 +444,8 @@ this.validateControl(attributeKey, validityArray)
             "regex": regex,
             valid: true
           }
-          console.log("validityArray")
-          console.log(validityArray)
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
-            console.log("KRithi KEyIndex",keyIndex)
             var text = new AllHtmlEntities().decode(innerItem.value);
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
            // this.state.controlInputs[text] = "";
@@ -335,7 +470,7 @@ this.validateControl(attributeKey, validityArray)
                     key={keyIndex}
                     maxLength={50}
                     onChange={(event) =>
-                      this.changeStateAttributeValue(event, text, validityArray)} />
+                      this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
                      
                       {(
   <Text style={{color: "red"}}>{this.state.controlValid[text]}</Text>
@@ -526,8 +661,7 @@ if(tempArray.length-1 == innerItemIndex){
     var keyIndex = 0;
     content = this.state.xmlJson[0].children.map((currentSection, index) => {
       return currentSection.children.map((currentItem, itemIndex) => {
-        console.log("itemIndex here",itemIndex)
-        console.log(currentItem)
+
         if (currentItem.name == "Controls") {
           return currentSection.children.map((currentControl, controlIndex) => {
             if (currentControl.name == "Controls") {
@@ -535,7 +669,7 @@ if(tempArray.length-1 == innerItemIndex){
                 if (controlItem.name == "Checkbox") {
                   return this.createCheckBoxControl(keyIndex,controlItem)
                 } else if (controlItem.name == "Label") {
-                 // this.createHTMLTable(keyIndex,controlItem)
+                 return  this.createHTMLTable(keyIndex,controlItem)
                 } else if (controlItem.name == "RadioButton") {
                   return this.createRadioButtonControl(keyIndex,controlItem)
                 } else if (controlItem.name == "Textbox") {
