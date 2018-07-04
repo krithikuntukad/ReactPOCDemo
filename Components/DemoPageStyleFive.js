@@ -41,7 +41,6 @@ export default class DemoPageStyleFive extends Component {
   controlHideShowAction=(innerItem)=>{
     var controlActionsArray =[]
     if(innerItem.name == "ControlActions"){
-      console.log("ControlActions")
       return innerItem.children.map((controlActions,controlActionsIndex) => {
         if(controlActions.name=="UdfControlAction"){
           var Action="",SourceField="",SourceValue=""
@@ -96,10 +95,7 @@ return controlActionsArray
     statusCopy.controlInputs[attributeKey] = event.nativeEvent.text;
     statusCopy.visibilityInputs[fieldId] =event.nativeEvent.text;
     this.setState(statusCopy);
-    console.log("Krithi")
-    
 this.validateControl(attributeKey, validityArray)
-   
   }
 
   /**
@@ -111,7 +107,6 @@ this.validateControl(attributeKey, validityArray)
     statusCopy.controlInputs[attributeKey] = value;
     //statusCopy.visibilityInputs[fieldId] =value;
     statusCopy.visibilityInputs[fieldId] = value
-    console.log(JSON.stringify(this.state.visibilityInputs))
     this.setState(statusCopy);
   }
 
@@ -124,7 +119,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
   statusCopy.controlInputs[attributeKey] = value;
   statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
   //statusCopy.visibilityInputs[fieldId] =value;
-  console.log(JSON.stringify(this.state.visibilityInputs))
   this.setState(statusCopy);
 }
   /**
@@ -165,7 +159,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             isRequired = innerItem.value
           }
           if(innerItem.name == "ControlActions"){
-            console.log("ControlActions")
             return innerItem.children.map((controlActions,controlActionsIndex) => {
               if(controlActions.name=="UdfControlAction"){
                 var Action="",SourceField="",SourceValue=""
@@ -292,7 +285,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           isRequired = innerItem.value
         }
         if(innerItem.name == "ControlActions"){
-          console.log("ControlActions")
           innerItem.children.map((controlActions,controlActionsIndex) => {
             if(controlActions.name=="UdfControlAction"){
               var Action="",SourceField="",SourceValue=""
@@ -409,7 +401,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             isRequired = innerItem.value
           }
           if(innerItem.name == "ControlActions"){
-            console.log("ControlActions")
             innerItem.children.map((controlActions,controlActionsIndex) => {
               if(controlActions.name=="UdfControlAction"){
                 var Action="",SourceField="",SourceValue=""
@@ -443,7 +434,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           }
           if (innerItem.name == "FieldHeader") {
             displayLabel = innerItem.value
-            console.log(displayLabel)
             text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
             text = new Entities().decode(text);
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
@@ -576,7 +566,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
             valid: true
           }
           if(innerItem.name == "ControlActions"){
-            console.log("ControlActions")
             innerItem.children.map((controlActions,controlActionsIndex) => {
               if(controlActions.name=="UdfControlAction"){
                 var Action="",SourceField="",SourceValue=""
@@ -709,19 +698,27 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
           stateIndexVal = label
           //this.state.controlInputs[stateIndexVal] = ""
 
-          if (innerItem.name == "ControlActions") {
+          if (innerItem.name == "UserDefinedList") {
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
-              if (dropdownItem.name == "UdfControlAction") {
-                return dropdownItem.children.map((udfControlAction, udfControlActionIndex)=> {
+              if (dropdownItem.name == "ListItem") {
 
-                  if (udfControlAction.name == "SourceValue") {
-                    obj = {
-                      value: udfControlAction.value,
-                    }
-                    dropDowValues.push(obj)
-                  }
+                console.log("dropdownItem")
+                console.log(dropdownItem.attributes.value)
+                obj = {
+                        value: dropdownItem.attributes.value,
+                        name:dropdownItem.attributes.name
+                      }
+                      dropDowValues.push(obj)
+                // return dropdownItem.children.map((udfControlAction, udfControlActionIndex)=> {
 
-                })
+                //   if (udfControlAction.name == "SourceValue") {
+                //     obj = {
+                //       value: udfControlAction.value,
+                //     }
+                //     dropDowValues.push(obj)
+                //   }
+
+                // })
               }
 
             })
