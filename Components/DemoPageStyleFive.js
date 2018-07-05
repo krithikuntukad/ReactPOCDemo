@@ -40,11 +40,13 @@ export default class DemoPageStyleFive extends Component {
      this.constructControls(responseText)
     
   }
-componentWillMount(){
-  setTimeout(() => {
-    this.setState({displayLoader:false})
-  }, 3000);
-}
+
+    componentWillMount(){
+      setTimeout(() => {
+        this.setState({displayLoader:false})
+      }, 3000);
+    }
+
   controlHideShowAction=(innerItem)=>{
     var controlActionsArray =[]
     if(innerItem.name == "ControlActions"){
@@ -73,11 +75,8 @@ componentWillMount(){
       }
           })
         }
-        
-
-
       })
-return controlActionsArray
+      return controlActionsArray
     }
   }
   validateControl = (attributeKey, validityArray) =>{
@@ -86,7 +85,6 @@ return controlActionsArray
       statusCopy.controlValid[attributeKey] = validityArray["RequiredFieldErrorMessage"];
       this.setState(statusCopy);
     }  else if (this.state.controlInputs[attributeKey].length > 0 && validityArray.regExp != "" && !regtext.test(this.state.controlInputs[attributeKey])) {
-      // statusCopy.controlValid[attributeKey] = "enter text only";
       statusCopy.controlValid[attributeKey] =validityArray["ValidatorErrorMessage"]
       this.setState(statusCopy);
     }
@@ -114,7 +112,6 @@ this.validateControl(attributeKey, validityArray)
   changeRadioButtonAttributeValue = (value, attributeKey,fieldId,validityArray) => {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[attributeKey] = value;
-    //statusCopy.visibilityInputs[fieldId] =value;
     statusCopy.visibilityInputs[fieldId] = value
     this.setState(statusCopy);
     this.validateControl(attributeKey, validityArray)
@@ -128,7 +125,6 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId,validityArray) => {
   let statusCopy = Object.assign({}, this.state);
   statusCopy.controlInputs[attributeKey] = value;
   statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
-  //statusCopy.visibilityInputs[fieldId] =value;
   this.setState(statusCopy);
   this.validateControl(attributeKey, validityArray)
 }
@@ -292,9 +288,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                 <FormItem
                   isRequired={isRequired == "true"?true:false}
                 >
-                                 {(
-  <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
-)}
+              {(
+                <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
+              )}
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
                     labelStyle={labelStyle}
@@ -380,50 +376,44 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
               })
             }
-            
-
-
           })
-
         }
-        //controlActionsArray = this.controlHideShowAction(innerItem)
-
         
-  if (innerItem.name == "FieldHeader") {
-  keyIndex = keyIndex + 1
-  var y = innerItem.value
-  y = new Entities().decode(y);
+        if (innerItem.name == "FieldHeader") {
+        keyIndex = keyIndex + 1
+        var y = innerItem.value
+        y = new Entities().decode(y);
 
-  controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
-  if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
-    if(visibilityAction.Action == "Hide"){
-      visibility = "false"
-    }else if(visibilityAction.Action == "Show"){
-      visibility = "true"
-    }else if(visibilityAction.Action == "ShowAndRequiredField"){
-      visibility = "true"
-      isRequired = "true"
-    }
-  }
-  })
-  
-  if(visibility == "true"){
-  return(
-    <WebView
-      source={{ html: y }}
-      style={{
-        flex: 1,
-        marginTop: 5,
-        height: 200,
-      }}
-    />
-  )
-}
-  }
-      
-    })
-  }
-})
+        controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+        if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+          if(visibilityAction.Action == "Hide"){
+            visibility = "false"
+          }else if(visibilityAction.Action == "Show"){
+            visibility = "true"
+          }else if(visibilityAction.Action == "ShowAndRequiredField"){
+            visibility = "true"
+            isRequired = "true"
+          }
+        }
+        })
+        
+        if(visibility == "true"){
+        return(
+          <WebView
+            source={{ html: y }}
+            style={{
+              flex: 1,
+              marginTop: 5,
+              height: 200,
+            }}
+          />
+        )
+      }
+        }
+            
+          })
+        }
+      })
  }
   /**
     * Function : createRadioButtonControl
@@ -530,9 +520,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             }
                 })
               }
-              
-  
-  
             })
   
           }
@@ -583,8 +570,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   regExp={regex}
                 >
                 {(
-  <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
-)}
+               <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
+                )}
                   <View key={keyIndex}>
                     <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
                     />
@@ -635,9 +622,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
     var validityArray = {}
     var fieldId = ""
     var controlActionsArray = [];
-    // return (
-    //   <Text>"archana"</Text>
-    // )
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
@@ -663,7 +647,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           
           if (innerItem.name == "MaxLength") {
             maxLength =parseInt(innerItem.value) 
-           // maxLength = innerItem.value 
           }
           if (innerItem.name == "ValidatorErrorMessage") {
             ValidatorErrorMessage = innerItem.value
@@ -722,9 +705,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             }
                 })
               }
-              
-  
-  
             })
   
           }
@@ -732,8 +712,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             keyIndex = keyIndex + 1
             var text = new AllHtmlEntities().decode(innerItem.value);
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
-           // this.state.controlInputs[text] = "";
-            //this.state.controlValid[text] = null;
             this.state.validityRules[text] = validityArray
             controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
@@ -769,9 +747,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     maxLength={maxLength}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
-                                   {(
-  <Text style={styles.error}>{this.state.controlValid[text]}</Text>
-)}
+                {(
+                  <Text style={styles.error}>{this.state.controlValid[text]}</Text>
+                )}
 
                 </FormItem>
               )
@@ -864,7 +842,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               if(controlActions.name=="UdfControlAction"){
                 var Action="",SourceField="",SourceValue=""
                 controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-             
               if(udfControlAction.name=="Action"){
               Action=udfControlAction.value
              }
@@ -882,14 +859,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                 "SourceValue":SourceValue
               }
               controlActionsArray.push(obj)
-            }
-                })
-              }
-              
-  
-  
+             }
             })
-  
+              }
+            })
           }
           if (innerItem.name == "FieldHeader") {
             var y = innerItem.value
@@ -897,10 +870,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             y = y.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
             text = <Text>{y}</Text>
             label = y
-
           }
           stateIndexVal = label
-          //this.state.controlInputs[stateIndexVal] = ""
           this.state.validityRules[label] = validityArray
           if (innerItem.name == "UserDefinedList") {
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
@@ -910,11 +881,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                         name:dropdownItem.attributes.name
                       }
                       dropDowValues.push(obj)
-               
               }
-
             })
-
           }
        if(tempArray.length-1 == innerItemIndex){
           keyIndex = keyIndex + 1
@@ -936,14 +904,13 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
-
               <DropdownComponent key={keyIndex} label={this.getDisplayLabel(label,isRequired)} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
                 this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
 
               }} />
-                          {(
-  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
-)}
+              {(
+              <Text style={styles.error}>{this.state.controlValid[label]}</Text>
+              )}
             </FormItem>
           )
         }
@@ -1082,11 +1049,7 @@ var errorMessage=[]
         }
       })
     })
-  // return (
-  //   <View>
-  //      {contents}
-  //   </View>
-  // );
+ 
     return (
       <Container>
         <Header style={{ backgroundColor: "#153875", }}>
@@ -1132,32 +1095,6 @@ var errorMessage=[]
         </View>
         </DialogComponent>
         </View>
-          {/* <ScrollView >
-          
-          <View >
-            {
-              this.state.displayLoader? <ActivityIndicator size="large" color="#0000ff" />:null
-            }
-       
-       
-      </View>
-            <View style={styles.container}>
-              <Form
-                ref="form"
-                shouldValidate={true}
-              >
-                {content}
-              </Form>
-
-            </View>
-          </ScrollView>
-          <DialogComponent
-            ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
-          >
-            <View>
-              <Text>{this.state.values}</Text>
-            </View>
-          </DialogComponent> */}
           <View >
             <Row size={12}>
               <Col sm={6} style={styles.buttonBorderColor}>
