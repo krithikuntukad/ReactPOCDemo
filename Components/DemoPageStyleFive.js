@@ -81,25 +81,8 @@ return controlActionsArray
     }
   }
   validateControl = (attributeKey, validityArray) =>{
-    // let statusCopy = Object.assign({}, this.state);
-    // if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
-    //   statusCopy.controlValid[attributeKey] = "Not valid";
-    //   this.setState(statusCopy);
-    // }else if(this.state.controlInputs[attributeKey].length>0 && validityArray.regExp !="" && !(new RegExp(validityArray.regExp).test(this.state.controlInputs[attributeKey]))){
-    //   statusCopy.controlValid[attributeKey] = "Not valid";
-    //   this.setState(statusCopy);
-    // } else{
-    //   statusCopy.controlValid[attributeKey] =null;
-    //   this.setState(statusCopy);
-    // }
-
     let statusCopy = Object.assign({}, this.state);
-   console.log("validityArray", JSON.stringify(validityArray))
-    // console.warn("my text here",event.nativeEvent.text);
-    //  let regtext=/^[a-zA-Z]+$/;
-    console.log(this.state.controlInputs[attributeKey].length)
     if (this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true") {
-     console.log("here")
       statusCopy.controlValid[attributeKey] = validityArray["RequiredFieldErrorMessage"];
       this.setState(statusCopy);
     }  else if (this.state.controlInputs[attributeKey].length > 0 && validityArray.regExp != "" && !regtext.test(this.state.controlInputs[attributeKey])) {
@@ -128,12 +111,13 @@ this.validateControl(attributeKey, validityArray)
  * Function : changeRadioButtonAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-  changeRadioButtonAttributeValue = (value, attributeKey,fieldId) => {
+  changeRadioButtonAttributeValue = (value, attributeKey,fieldId,validityArray) => {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[attributeKey] = value;
     //statusCopy.visibilityInputs[fieldId] =value;
     statusCopy.visibilityInputs[fieldId] = value
     this.setState(statusCopy);
+    this.validateControl(attributeKey, validityArray)
   }
 
     /**
@@ -155,20 +139,15 @@ changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
 changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
   var name =""
   for(var i =0;i<data.length-1;i++){
-    console.log("value",value,i)
-    console.log("value",data[i].value)
     if(value ==data[i].value ){
       name =data[i].name
     }
   }
-  console.log("name",name)
   let statusCopy = Object.assign({}, this.state);
   statusCopy.controlInputs[attributeKey] = value;
   //statusCopy.visibilityInputs[fieldId] =value;
   statusCopy.visibilityInputs[fieldId] = name
   this.setState(statusCopy);
-  console.log("chocolate")
-  console.log(JSON.stringify(this.state.visibilityInputs))
 }
   /**
     * Function : createCheckBoxControl
@@ -420,6 +399,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
     var displayLabel = ""
     var fieldId = ""
     var controlActionsArray=[]
+    var stringVal = false
+    var keyboardType = ""
+    var ValidatorErrorMessage
+    var RequiredFieldErrorMessage
+    var Validator = ""
+    var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
 
@@ -431,24 +416,52 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
             fieldId = innerItem.value
           }
           if (innerItem.name == "Visible") {
-
             visibility = innerItem.value
           }
           if (innerItem.name == "Validator") {
             if (innerItem.value == "String") {
-              regex = /^\d+$/
+              stringVal = true
+              regtext = /^[a-zA-Z]+$/
             } else {
-              regex = /^\d+$/
+              regtext = /^\d+$/
+              stringVal = false
             }
-
           }
+          
           if (innerItem.name == "MaxLength") {
-           
-            maxLength = innerItem.value
+            maxLength =parseInt(innerItem.value) 
+          }
+          if (innerItem.name == "ValidatorErrorMessage") {
+            ValidatorErrorMessage = ""
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
           }
+          if (innerItem.name == "RequiredFieldErrorMessage") {
+            RequiredFieldErrorMessage = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            Validator = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            if (innerItem.value == "String") {
+              regex =""
+            } else {
+              regex = ""
+            }
+
+          }
+
+          validityArray = {
+            "maxLength": maxLength,
+            "isRequired": isRequired,
+            "stringVal": stringVal,
+            "ValidatorErrorMessage" : ValidatorErrorMessage,
+            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
+            "regex": regex,
+            valid: true
+          }
+
           if(innerItem.name == "ControlActions"){
             innerItem.children.map((controlActions,controlActionsIndex) => {
               if(controlActions.name=="UdfControlAction"){
@@ -488,8 +501,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
 
            // this.state.controlInputs[innerItem.value] = ""
-
-            displayTxt = '<p style="fontSize:10;margin-bottom:5">' + text + '</p>'
+           console.log("kkkk",JSON.stringify(validityArray))
+           this.state.validityRules[displayLabel] = validityArray
+            displayTxt = '<p style="fontSize:10;margin-bottom:5">' + this.getDisplayLabel(text,isRequired) + '</p>'
 
           }
           if (innerItem.name == "UserDefinedList") {
@@ -535,13 +549,15 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
                       thickness={2}
                       color='#153875'
                       onSelect={(index, value) => {
-                        this.changeRadioButtonAttributeValue(value,displayLabel,fieldId)
-                        
+                        this.changeRadioButtonAttributeValue(value,displayLabel,fieldId,validityArray)
                       }}
                     >
                       {radioBtn}
                     </RadioGroup>
                   </View>
+                  {(
+  <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
+)}
                 </FormItem>
               )
             }
@@ -811,9 +827,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
           if (innerItem.name == "UserDefinedList") {
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
               if (dropdownItem.name == "ListItem") {
-
-                console.log("dropdownItem")
-                console.log(dropdownItem.attributes.value)
                 obj = {
                         value: dropdownItem.attributes.value,
                         name:dropdownItem.attributes.name
@@ -846,8 +859,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
               regExp={regex}
             >
               <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
-                //this.state.controlInputs[stateIndexVal] = val
-               // console.log(data)
                 this.changeDropDownAttributeValue(val,label,fieldId,data)
 
               }} />
@@ -868,52 +879,31 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText);    // Assume xmlText contains the example XML
     this.state.xmlJson = []
-    var controlsArray = []
     this.state.xmlJson.push(xml)
-    var keyIndex = 0;
-    // this.state.xmlJson[0].children.map((currentSection, index) => {
-    //   currentSection.children.map((currentItem, itemIndex) => {
-    //     if (currentItem.name == "Controls") {
-    //       currentSection.children.map((currentControl, controlIndex) => {
-    //         if (currentControl.name == "Controls") {
-    //           currentControl.children.map((controlItem, controlItemIndex) => {
-    //             if (controlItem.name == "Checkbox") {
-    //              this.createCheckBoxControl(keyIndex, controlItem, controlsArray)
-    //             } else if (controlItem.name == "RadioButton") {
-    //              // this.createRadioButtonControl(keyIndex, controlItem, controlsArray)
-    //             } else if (controlItem.name == "Textbox") {
-    //               this.createTextFieldControl(keyIndex, controlItem, controlsArray)
-    //             } else if (controlItem.name == "DropDownList") {
-    //               this.createDropdownControl(keyIndex, controlItem, controlsArray)
-
-    //             }
-    //           })
-    //         }
-    //       })
-    //     }
-    //   })
-    // })
-    // this.state.controlsArray = controlsArray
-
   }
 
   submit = () => {
-    //console.log(this.refs.form)
     
-    console.log(JSON.stringify(this.state.validityRules))
 var errorMessage=[]
     var validationCheckRules =[]
     validationCheckRules = this.state.validityRules
+    console.log(validationCheckRules)
     var Array = this.state.controlInputs
     for (var key in validationCheckRules) {
+      console.log("key")
+      console.log(key)
      var  rules = validationCheckRules[key]
-     console.log("errorMessage")
-     console.log(errorMessage)
- 
+     console.log("rules")
+      console.log(rules)
+      console.log(Array[key])
+
     if(rules["isRequired"] == "true" && (Array[key] == undefined||Array[key] == 'undefined' || Array[key] == 'null' || Array[key] ==null || Array[key] =="")){
+     
+     console.log("checking validity")
       let statusCopy = Object.assign({}, this.state);
-        statusCopy.controlValid[key] = "Not valid";
+        statusCopy.controlValid[key] = rules["RequiredFieldErrorMessage"];
         errorMessage.push(statusCopy.controlValid[key])
+        console.log("errorMessage",errorMessage)
         this.setState(statusCopy);
      }
 
@@ -932,7 +922,6 @@ var errorMessage=[]
 
     
     var nonNullArray = []
-    //console.log(JSON.stringify(this.state.controlInputs))
     this.state.values = []
     
     for (var key in Array) {
