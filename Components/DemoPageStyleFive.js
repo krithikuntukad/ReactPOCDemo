@@ -124,19 +124,20 @@ this.validateControl(attributeKey, validityArray)
  * Function : changeCheckboxAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-changeCheckboxAttributeValue = (value, attributeKey,fieldId) => {
+changeCheckboxAttributeValue = (value, attributeKey,fieldId,validityArray) => {
   let statusCopy = Object.assign({}, this.state);
   statusCopy.controlInputs[attributeKey] = value;
   statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
   //statusCopy.visibilityInputs[fieldId] =value;
   this.setState(statusCopy);
+  this.validateControl(attributeKey, validityArray)
 }
 
  /**
  * Function : changeRadioButtonAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
+changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) => {
   var name =""
   for(var i =0;i<data.length-1;i++){
     if(value ==data[i].value ){
@@ -148,6 +149,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
   //statusCopy.visibilityInputs[fieldId] =value;
   statusCopy.visibilityInputs[fieldId] = name
   this.setState(statusCopy);
+  this.validateControl(attributeKey, validityArray)
 }
   /**
     * Function : createCheckBoxControl
@@ -295,7 +297,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
                     labelStyle={labelStyle}
                     checkboxStyle={checkBoxStyle}
                     onChange={(checked) =>
-                      this.changeCheckboxAttributeValue(checked,innerItem.value,fieldId)
+                      this.changeCheckboxAttributeValue(checked,innerItem.value,fieldId,validityArray)
                     }
 
                     numberOfLines={15}
@@ -790,6 +792,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
     var contolArray = []
     var stateIndexVal = ""
     var controlActionsArray = [];
+    var stringVal = false
+    var keyboardType = ""
+    var ValidatorErrorMessage
+    var RequiredFieldErrorMessage
+    var Validator = ""
+    var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
       var dropDowValues = []
       var obj = {}
@@ -808,17 +816,46 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
           }
           if (innerItem.name == "Validator") {
             if (innerItem.value == "String") {
-              regex = /^\d+$/
+              stringVal = true
+              regtext = /^[a-zA-Z]+$/
             } else {
-              regex = /^\d+$/
+              regtext = /^\d+$/
+              stringVal = false
             }
-
           }
+          
           if (innerItem.name == "MaxLength") {
-            maxLength = innerItem.value
+            maxLength =parseInt(innerItem.value) 
+          }
+          if (innerItem.name == "ValidatorErrorMessage") {
+            ValidatorErrorMessage = ""
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
+          }
+          if (innerItem.name == "RequiredFieldErrorMessage") {
+            RequiredFieldErrorMessage = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            Validator = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            if (innerItem.value == "String") {
+              regex =""
+            } else {
+              regex = ""
+            }
+
+          }
+
+          validityArray = {
+            "maxLength": maxLength,
+            "isRequired": isRequired,
+            "stringVal": stringVal,
+            "ValidatorErrorMessage" : ValidatorErrorMessage,
+            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
+            "regex": regex,
+            valid: true
           }
           if(innerItem.name == "ControlActions"){
             innerItem.children.map((controlActions,controlActionsIndex) => {
@@ -898,9 +935,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
               regExp={regex}
             >
               <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
-                this.changeDropDownAttributeValue(val,label,fieldId,data)
+                this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
 
               }} />
+              {(
+  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
+)}
             </FormItem>
           )
         }
@@ -944,6 +984,10 @@ var errorMessage=[]
         errorMessage.push(statusCopy.controlValid[key])
         console.log("errorMessage",errorMessage)
         this.setState(statusCopy);
+     }else{
+      let statusCopy = Object.assign({}, this.state);
+        statusCopy.controlValid[key] = null;
+        this.setState(statusCopy); 
      }
 
     
@@ -1060,31 +1104,31 @@ var errorMessage=[]
           </Right>
         </Header>
         <View style={styles.pageStyle} >
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-{
-this.state.displayLoader ? <ActivityIndicator size="large" color="#0000ff" /> : null
-}
-{
-!this.state.displayLoader ?
-<ScrollView >
-<View style={styles.container}>
-<Form
-ref="form"
-shouldValidate={true}
->
-{content}
-</Form>
-</View> 
-</ScrollView>: null
-}
-<DialogComponent
-ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
->
-<View>
-<Text>{this.state.values}</Text>
-</View>
-</DialogComponent>
-</View>
+       <View style={{ flex: 1, justifyContent: 'center' }}>
+         {
+        this.state.displayLoader ? <ActivityIndicator size="large" color="#0000ff" /> : null
+        }
+        {
+        !this.state.displayLoader ?
+        <ScrollView >
+        <View style={styles.container}>
+        <Form
+        ref="form"
+        shouldValidate={true}
+        >
+        {content}
+        </Form>
+        </View> 
+        </ScrollView>: null
+        }
+        <DialogComponent
+        ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
+        >
+        <View>
+        <Text>{this.state.values}</Text>
+        </View>
+        </DialogComponent>
+        </View>
           {/* <ScrollView >
           
           <View >

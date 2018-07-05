@@ -3270,13 +3270,13 @@
 
    
 
-    <Visible>false</Visible>
+    <Visible>true</Visible>
 
    
 
-    <RequiredField>false</RequiredField>
+    <RequiredField>true</RequiredField>
 
-   
+    <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
 
     <Validator>Integer</Validator>
 

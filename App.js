@@ -72,22 +72,22 @@ const MyApp = DrawerNavigator({
   Home: {
     screen: HomeScreen
   },
-  StyleOne : {
-    screen: DemoPageStyleOne
-  },
-  StyleTwo : {
-    screen: DemoPageStyleTwo
-  },
-  StyleThree : {
-    screen: DemoPageStyleThree
-  },
-  StyleFour:{
-    screen:DemoPageStyleFour
-  },
-  StyleFive:{
+  // "Style one - Complete XML form" : {
+  //   screen: DemoPageStyleOne
+  // },
+  "Main XML form":{
     screen: DemoPageStyleFive
   },
-  DemoPagination:{
+  " XML form with Switch" : {
+    screen: DemoPageStyleTwo
+  },
+  "Accordion" : {
+    screen: DemoPageStyleThree
+  },
+  "Complete XML form with styles"  :{
+    screen:DemoPageStyleFour
+  },
+  "Paging":{
     screen:DemoPagination
   }
 
