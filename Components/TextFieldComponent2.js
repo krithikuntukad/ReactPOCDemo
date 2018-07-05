@@ -21,6 +21,7 @@ class ComponentWithValue extends Component{
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}
           maxLength={this.props.maxLength}
+          keyboardType = {this.props.keyboardType}
           />
       </View>
     );

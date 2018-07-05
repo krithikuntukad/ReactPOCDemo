@@ -95,4 +95,10 @@ BrowserStyle: {
         justifyContent: 'center'
     
 },
+error:{
+    color:'red',
+    fontSize:10, 
+    marginTop:-10
+
+}
 });

@@ -18,7 +18,7 @@ import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
 var jsonData = require('./Constants/xmlDataStyleFive.json');
 import { WebView } from 'react-native';
-
+var regtext;
 var responseText;
 export default class DemoPageStyleFive extends Component {
   constructor(props) {
@@ -32,7 +32,8 @@ export default class DemoPageStyleFive extends Component {
       validityRules:{},
       visibilityInputs:{},
       xmlJson:[],
-      displayLoader:true
+      displayLoader:true,
+      validForm:false
  
     }
      responseText = jsonData[0].data
@@ -80,15 +81,34 @@ return controlActionsArray
     }
   }
   validateControl = (attributeKey, validityArray) =>{
+    // let statusCopy = Object.assign({}, this.state);
+    // if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
+    //   statusCopy.controlValid[attributeKey] = "Not valid";
+    //   this.setState(statusCopy);
+    // }else if(this.state.controlInputs[attributeKey].length>0 && validityArray.regExp !="" && !(new RegExp(validityArray.regExp).test(this.state.controlInputs[attributeKey]))){
+    //   statusCopy.controlValid[attributeKey] = "Not valid";
+    //   this.setState(statusCopy);
+    // } else{
+    //   statusCopy.controlValid[attributeKey] =null;
+    //   this.setState(statusCopy);
+    // }
+
     let statusCopy = Object.assign({}, this.state);
-    if(this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true"){
-      statusCopy.controlValid[attributeKey] = "Not valid";
+   console.log("validityArray", JSON.stringify(validityArray))
+    // console.warn("my text here",event.nativeEvent.text);
+    //  let regtext=/^[a-zA-Z]+$/;
+    console.log(this.state.controlInputs[attributeKey].length)
+    if (this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true") {
+     console.log("here")
+      statusCopy.controlValid[attributeKey] = validityArray["RequiredFieldErrorMessage"];
       this.setState(statusCopy);
-    }else if(this.state.controlInputs[attributeKey].length>0 && validityArray.regExp !="" && !(new RegExp(validityArray.regExp).test(this.state.controlInputs[attributeKey]))){
-      statusCopy.controlValid[attributeKey] = "Not valid";
+    }  else if (this.state.controlInputs[attributeKey].length > 0 && validityArray.regExp != "" && !regtext.test(this.state.controlInputs[attributeKey])) {
+      // statusCopy.controlValid[attributeKey] = "enter text only";
+      statusCopy.controlValid[attributeKey] =validityArray["ValidatorErrorMessage"]
       this.setState(statusCopy);
-    } else{
-      statusCopy.controlValid[attributeKey] =null;
+    }
+    else {
+      statusCopy.controlValid[attributeKey] = null;
       this.setState(statusCopy);
     }
   }
@@ -549,6 +569,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
     var isRequired = false
     var contolArray = []
     var stringVal = false
+    var keyboardType = ""
+    var ValidatorErrorMessage
+    var RequiredFieldErrorMessage
+    var Validator = ""
     var validityArray = {}
     var fieldId = ""
     var controlActionsArray = [];
@@ -570,9 +594,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
           if (innerItem.name == "Validator") {
             if (innerItem.value == "String") {
               stringVal = true
-              regex = ""
+              regtext = /^[a-zA-Z]+$/
             } else {
-              regex = /^\d+$/
+              regtext = /^\d+$/
               stringVal = false
             }
           }
@@ -582,15 +606,33 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
             maxLength =parseInt(innerItem.value) 
            // maxLength = innerItem.value 
           }
+          if (innerItem.name == "ValidatorErrorMessage") {
+            ValidatorErrorMessage = innerItem.value
+          }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
-           
+          }
+          if (innerItem.name == "RequiredFieldErrorMessage") {
+            RequiredFieldErrorMessage = innerItem.value
           }
 
+          if (innerItem.name == "Validator") {
+            Validator = innerItem.value
+          }
+
+          if (Validator == "String") {
+            keyboardType = 'default'
+          }
+
+          else if (Validator == "Integer") {
+            keyboardType = 'numeric'
+          }
           validityArray = {
             "maxLength": maxLength,
             "isRequired": isRequired,
             "stringVal": stringVal,
+            "ValidatorErrorMessage" : ValidatorErrorMessage,
+            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
             "regex": regex,
             valid: true
           }
@@ -664,12 +706,13 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}
+                    keyboardType={keyboardType}
                     maxLength={maxLength}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
                      
                       {(
-  <Text style={{color: "red"}}>{this.state.controlValid[text]}</Text>
+  <Text style={styles.error}>{this.state.controlValid[text]}</Text>
 )}
                 </FormItem>
               )
@@ -856,27 +899,42 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
 
   submit = () => {
     //console.log(this.refs.form)
+    
     console.log(JSON.stringify(this.state.validityRules))
-
+var errorMessage=[]
     var validationCheckRules =[]
     validationCheckRules = this.state.validityRules
     var Array = this.state.controlInputs
     for (var key in validationCheckRules) {
      var  rules = validationCheckRules[key]
-     console.log(JSON.stringify(rules))
-     console.log(this.state.controlInputs[key])
+     console.log("errorMessage")
+     console.log(errorMessage)
  
-    // if(Array[0][key].length > 0 && rules["isRequired"] == "true"){
+    if(rules["isRequired"] == "true" && (Array[key] == undefined||Array[key] == 'undefined' || Array[key] == 'null' || Array[key] ==null || Array[key] =="")){
       let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = "Not valid";
+        errorMessage.push(statusCopy.controlValid[key])
         this.setState(statusCopy);
-     //}
+     }
+
+    
     }
+    if(errorMessage.length>0){
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.validForm = false;
+      this.setState(statusCopy);
+    }else{
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.validForm = true;
+      this.setState(statusCopy);
+    }
+   
 
     
     var nonNullArray = []
     //console.log(JSON.stringify(this.state.controlInputs))
     this.state.values = []
+    
     for (var key in Array) {
      
       if (Array[key] != "") {
@@ -897,7 +955,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
 
 
     }
+    if(this.state.validForm == true){
     this.dialogComponent.show();
+    }
 
   }
 
