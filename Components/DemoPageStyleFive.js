@@ -544,7 +544,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   <View key={keyIndex}>
                     <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
                     />
-      
                     <RadioGroup
                       size={24}
                       thickness={2}
@@ -703,6 +702,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
                   <TextFieldComponent
                     style={styles.textFieldStyle}
+                   
+                    style={(this.state.controlValid[text] == null)?styles.validBorderColor:styles.errorBorderColor
+                    }
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}

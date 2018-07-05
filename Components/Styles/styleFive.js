@@ -126,5 +126,21 @@ checkBoxStyle : {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  validBorderColor:{
+borderColor:'grey',
+height: 30,
+borderWidth: 1,
+marginBottom: 10,
+paddingLeft: 5,
+fontSize: 10
+  },
+  errorBorderColor:{
+    borderColor:'red',
+    height: 30,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 5,
+    fontSize: 10
   }
 });
