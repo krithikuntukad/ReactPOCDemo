@@ -292,6 +292,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                 <FormItem
                   isRequired={isRequired == "true"?true:false}
                 >
+                                 {(
+  <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
+)}
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
                     labelStyle={labelStyle}
@@ -304,9 +307,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     style={styles.checkBoxLable}
                     value={innerItem.value}
                   />
-                 {(
-  <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
-)}
+
                 </FormItem>
               )
             }
@@ -581,6 +582,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   isRequired={true}
                   regExp={regex}
                 >
+                {(
+  <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
+)}
                   <View key={keyIndex}>
                     <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
                     />
@@ -596,9 +600,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                       {radioBtn}
                     </RadioGroup>
                   </View>
-                  {(
-  <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
-)}
+                  
                 </FormItem>
               )
             }
@@ -767,10 +769,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     maxLength={maxLength}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
-                     
-                      {(
+                                   {(
   <Text style={styles.error}>{this.state.controlValid[text]}</Text>
 )}
+
                 </FormItem>
               )
             }
@@ -934,13 +936,14 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
+                          {(
+  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
+)}
               <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
                 this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
 
               }} />
-              {(
-  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
-)}
+
             </FormItem>
           )
         }
