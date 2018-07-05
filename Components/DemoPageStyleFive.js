@@ -147,6 +147,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
   this.setState(statusCopy);
   this.validateControl(attributeKey, validityArray)
 }
+
+
   /**
     * Function : createCheckBoxControl
     * Description : Creates Check box controls
@@ -176,15 +178,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
           if (innerItem.name == "Visible") {
             visibility = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              stringVal = true
-              regtext = /^[a-zA-Z]+$/
-            } else {
-              regtext = /^\d+$/
-              stringVal = false
-            }
           }
           
           if (innerItem.name == "MaxLength") {
@@ -246,29 +239,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             }
                 })
               }
-              
-      
-      
             })
           }
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
-            labelStyle = {
-              color: 'black',
-              fontSize: 10
-            }
-            checkBoxStyle = {
-              width: 18,
-              height: 18
-            }
-            var labelStyle = {
-              color: 'black',
-              fontSize: 10
-            }
-            var checkBoxStyle = {
-              width: 18,
-              height: 18
-            }
             controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
@@ -293,12 +267,11 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               )}
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
-                    labelStyle={labelStyle}
-                    checkboxStyle={checkBoxStyle}
+                    labelStyle={styles.labelStyle}
+                    checkboxStyle={styles.checkBoxStyle}
                     onChange={(checked) =>
                       this.changeCheckboxAttributeValue(checked,innerItem.value,fieldId,validityArray)
                     }
-
                     numberOfLines={15}
                     style={styles.checkBoxLable}
                     value={this.getDisplayLabel(innerItem.value,isRequired)}
@@ -401,11 +374,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         return(
           <WebView
             source={{ html: y }}
-            style={{
-              flex: 1,
-              marginTop: 5,
-              height: 200,
-            }}
+            style={styles.webviewStyle}
           />
         )
       }
@@ -733,13 +702,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                 >
                   <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
                   <TextFieldComponent
-                    style={{
-                      height: 30,
-                      borderWidth: 1,
-                      marginBottom: 10,
-                      paddingLeft: 5,
-                      fontSize: 10
-                    }}
+                    style={styles.textFieldStyle}
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}

@@ -100,5 +100,26 @@ error:{
     fontSize:10, 
     //marginTop:-10,marginBottom:2
 
-}
+},
+checkBoxStyle : {
+    width: 18,
+    height: 18
+  },
+  labelStyle : {
+    color: 'red',
+    fontSize: 10
+  },
+  webviewStyle: {
+        flex: 1,
+        marginTop: 5,
+        height: 200, 
+  },
+
+  textFieldStyle:{
+    height: 30,
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 5,
+    fontSize: 10
+  }
 });
