@@ -7,7 +7,7 @@ import {
  
 const width = Dimensions.get('window').width;
  
-class ComponentWithValue extends Component{
+class TextFieldComponent extends Component{
   constructor(props){
     super(props);
   }
@@ -28,4 +28,4 @@ class ComponentWithValue extends Component{
   }
 }
 
-export default ComponentWithValue;
+export default TextFieldComponent;

@@ -11,7 +11,7 @@ const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
 import { Form, FormItem } from 'react-native-form-validation';
-import ComponentWithValue from './TextFieldComponent2'
+import TextFieldComponent from './TextFieldComponent'
 import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
@@ -752,7 +752,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   regExp={regex}
                 >
                   <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
-                  <ComponentWithValue
+                  <TextFieldComponent
                     style={{
                       height: 30,
                       borderWidth: 1,
