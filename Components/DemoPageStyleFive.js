@@ -305,7 +305,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
 
                     numberOfLines={15}
                     style={styles.checkBoxLable}
-                    value={innerItem.value}
+                    value={this.getDisplayLabel(innerItem.value,isRequired)}
                   />
 
                 </FormItem>
@@ -901,7 +901,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
           stateIndexVal = label
           //this.state.controlInputs[stateIndexVal] = ""
-
+          this.state.validityRules[label] = validityArray
           if (innerItem.name == "UserDefinedList") {
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
               if (dropdownItem.name == "ListItem") {
@@ -936,14 +936,14 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
-                          {(
-  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
-)}
-              <DropdownComponent key={keyIndex} label={label} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
+
+              <DropdownComponent key={keyIndex} label={this.getDisplayLabel(label,isRequired)} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
                 this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
 
               }} />
-
+                          {(
+  <Text style={styles.error}>{this.state.controlValid[label]}</Text>
+)}
             </FormItem>
           )
         }
