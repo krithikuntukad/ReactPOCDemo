@@ -121,5 +121,10 @@ checkBoxStyle : {
     marginBottom: 10,
     paddingLeft: 5,
     fontSize: 10
+  },
+  contentStyle:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });

@@ -1020,11 +1020,7 @@ var errorMessage=[]
             <Icon name="ios-menu" style={{ color: 'white' }} onPress={() =>
               this.props.navigation.openDrawer()} />
           </Left>
-          <Content contentContainerStyle={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+          <Content contentContainerStyle={styles.contentStyle}>
             <Text style={{ color: 'white', textAlign: 'center' }}> Style Five  </Text>
           </Content>
           <Right>
