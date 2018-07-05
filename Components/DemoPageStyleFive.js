@@ -161,6 +161,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
     var contolArray = []
     var fieldId = ""
     var controlActionsArray =[]
+    var stringVal = false
+    var keyboardType = ""
+    var ValidatorErrorMessage
+    var RequiredFieldErrorMessage
+    var Validator = ""
+    var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
        contolArray.push(outerItem)
 
@@ -175,16 +181,46 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
           }
           if (innerItem.name == "Validator") {
             if (innerItem.value == "String") {
-              regex = /^\d+$/
+              stringVal = true
+              regtext = /^[a-zA-Z]+$/
             } else {
-              regex = /^\d+$/
+              regtext = /^\d+$/
+              stringVal = false
             }
           }
+          
           if (innerItem.name == "MaxLength") {
-            maxLength = innerItem.value
+            maxLength =parseInt(innerItem.value) 
+          }
+          if (innerItem.name == "ValidatorErrorMessage") {
+            ValidatorErrorMessage = ""
           }
           if (innerItem.name == "RequiredField") {
             isRequired = innerItem.value
+          }
+          if (innerItem.name == "RequiredFieldErrorMessage") {
+            RequiredFieldErrorMessage = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            Validator = innerItem.value
+          }
+          if (innerItem.name == "Validator") {
+            if (innerItem.value == "String") {
+              regex =""
+            } else {
+              regex = ""
+            }
+
+          }
+
+          validityArray = {
+            "maxLength": maxLength,
+            "isRequired": isRequired,
+            "stringVal": stringVal,
+            "ValidatorErrorMessage" : ValidatorErrorMessage,
+            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
+            "regex": regex,
+            valid: true
           }
           if(innerItem.name == "ControlActions"){
             return innerItem.children.map((controlActions,controlActionsIndex) => {
@@ -249,6 +285,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
               })
             if (visibility == 'true') {
               //this.state.controlInputs[innerItem.value] = false
+              this.state.validityRules[innerItem.value] = validityArray
               return(
                 <FormItem
                   isRequired={isRequired == "true"?true:false}
@@ -265,7 +302,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
                     style={styles.checkBoxLable}
                     value={innerItem.value}
                   />
-
+                 {(
+  <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
+)}
                 </FormItem>
               )
             }
@@ -501,7 +540,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data) => {
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
 
            // this.state.controlInputs[innerItem.value] = ""
-           console.log("kkkk",JSON.stringify(validityArray))
+          
            this.state.validityRules[displayLabel] = validityArray
             displayTxt = '<p style="fontSize:10;margin-bottom:5">' + this.getDisplayLabel(text,isRequired) + '</p>'
 
@@ -1021,8 +1060,32 @@ var errorMessage=[]
           </Right>
         </Header>
         <View style={styles.pageStyle} >
-
-          <ScrollView >
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+{
+this.state.displayLoader ? <ActivityIndicator size="large" color="#0000ff" /> : null
+}
+{
+!this.state.displayLoader ?
+<ScrollView >
+<View style={styles.container}>
+<Form
+ref="form"
+shouldValidate={true}
+>
+{content}
+</Form>
+</View> 
+</ScrollView>: null
+}
+<DialogComponent
+ref={(dialogComponent) => { this.dialogComponent = dialogComponent; }}
+>
+<View>
+<Text>{this.state.values}</Text>
+</View>
+</DialogComponent>
+</View>
+          {/* <ScrollView >
           
           <View >
             {
@@ -1047,7 +1110,7 @@ var errorMessage=[]
             <View>
               <Text>{this.state.values}</Text>
             </View>
-          </DialogComponent>
+          </DialogComponent> */}
           <View >
             <Row size={12}>
               <Col sm={6} style={styles.buttonBorderColor}>

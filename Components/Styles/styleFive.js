@@ -98,7 +98,7 @@ BrowserStyle: {
 error:{
     color:'red',
     fontSize:10, 
-    marginTop:-10
+    //marginTop:-10,marginBottom:2
 
 }
 });
