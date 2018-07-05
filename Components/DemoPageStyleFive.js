@@ -16,7 +16,7 @@ import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
-var jsonData = require('./Constants/xmlDataStyleFive.json');
+var jsonData = require('./Constants/Interdependency.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
@@ -703,8 +703,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   <TextFieldComponent
                     style={styles.textFieldStyle}
                    
-                    style={(this.state.controlValid[text] == null)?styles.validBorderColor:styles.errorBorderColor
-                    }
+                    //style={(this.state.controlValid[text] == null)?styles.validBorderColor:styles.errorBorderColor
+                    //}
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}

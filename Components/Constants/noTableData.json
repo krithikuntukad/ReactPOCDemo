@@ -1,0 +1,1386 @@
+[{
+
+    "data" : `<Sections>
+
+  
+
+    <Section>
+
+   
+
+    <Title>Section 2</Title>
+
+   
+
+    <SectionId>Section 2</SectionId>
+
+   
+
+    <Alignment>Left</Alignment>
+
+   
+
+    <Visible>true</Visible>
+
+   
+
+    <Controls>
+
+   
+
+    
+
+    <Checkbox>
+
+   
+
+    <FieldHeader>With regard to the list of entities that follow; since 1 January 2013 neither I nor any Member of My Family nor any entity controlled by me or a Member of My Family has: (i) acted as a director / officer / or otherwise
+
+    received any compensation for services from any such entities; or (ii) had any direct or beneficial interest in 10% or more of any equity securities of any such entities. (The term &amp;quot;Member of My Family&amp;quot; includes any member of your family residing
+
+    with you as well as your parents or children regardless of their residence.)</FieldHeader>
+
+   
+
+    
+
+    <FieldId>CheckBox1</FieldId>
+
+   
+
+    <Visible>true</Visible>
+
+   
+
+    <RequiredField>true</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage >it's a required field</RequiredFieldErrorMessage>
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <MaxLength>0</MaxLength>
+
+   
+
+    <AppliesTo>Everyone</AppliesTo>
+
+   
+
+    </Checkbox>
+
+   
+
+    
+
+    </Controls>
+
+   
+
+    
+
+    </Section>
+
+    
+
+    <Section>
+
+   
+
+    <Title />
+
+   
+
+    <SectionId>Entertainment</SectionId>
+
+   
+
+    <Alignment>Left</Alignment>
+
+   
+
+    <Visible>true</Visible>
+
+   
+
+    <Controls>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;p&gt;&lt;d&gt;Is this an Event of &lt;dfn class="cke-definition" data-title="Examples of events of national prominence include, but is not limited to, the Super Bowl, World Cup soccer, major golf events, grand slam
+
+    tennis finals, Rugby World Cup, Cricket World Cup, and Olympic events. Please consult with your business unit compliance coordinator or email code_gift_reporting@client.com for guidance"&gt;National Prominence&lt;/dfn&gt;&amp;nbsp;&lt;em&gt;or one which does
+
+    not occur in the normal course of business?&lt;/em&gt;&lt;/d&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;em&gt;dfgdfg&lt;dfn class="cke-definition" data-title="egergergregregregregreg"&gt;​dfgdfg&lt;/dfn&gt;&lt;/em&gt;&amp;nbsp;&lt;/p&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>ENTNationalEvent</FieldId>
+
+   
+
+    <Visible>true</Visible>
+
+   
+
+    <RequiredField>true</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+    
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;In the context of this entertainment, please select the option which best describes the business contact&amp;#39;s relationship to client &lt;a href="https://attachment.pdf" target="_blank"&gt;(Business Contact
+
+    Definitions)&lt;/a&gt;.&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>ClientType</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>true</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="The contact as a Broker-Dealer" />
+
+   
+
+    <ListItem name="2" value="The contact as an ERISA covered Client/ Prospect/ Consultant/ Intermediary" />
+
+   
+
+    <ListItem name="3" value="The contact as a Non-ERISA covered Client/ Prospect/ Consultant/ Intermediary" />
+
+   
+
+    <ListItem name="5" value="The contact as a Portfolio Company" />
+
+   
+
+    <ListItem name="6" value="The contact as a Vendor" />
+
+   
+
+    <ListItem name="7" value="Other" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Is Broker-Dealer payment/reimbursement required? &lt;a href="https://attachment.pdf" target="_blank"&gt;(Broker-Dealer Reimbursement Guidelines)&lt;/a&gt;&lt;/d&gt;</FieldHeader>
+
+ 
+
+    <FieldId>BDReimbursement</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Indicate the method of broker payment.&lt;/d&gt;</FieldHeader>
+
+ 
+
+   
+
+    <FieldId>BDReimbursementMethod</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Corporate AMEX" />
+
+   
+
+    <ListItem name="2" value="Personal Check" />
+
+   
+
+    <ListItem name="3" value="Personal Credit Card" />
+
+   
+
+    <ListItem name="4" value="TRP Check" />
+
+   
+
+    <ListItem name="5" value="Other" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Please describe the method of payment (max 200 characters).&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>BDReimbursementOther</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>True</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage >this is text only validator error msg </ValidatorErrorMessage>
+
+   
+
+    <MaxLength>20</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>4</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Is this business entertainment a&amp;nbsp;meal being provided to a business contact(s) at an educational conference or in close association with a substantive business meeting (e.g., plan reviews, due diligence
+
+    visits, investment reviews, educational sessions)?&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>ERISAType</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Please describe the relationship with the Business Contact (max 200 characters).&lt;/d&gt;</FieldHeader>
+
+ 
+
+   
+
+    <FieldId>ContactTypeOther</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>true</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage> this is required field</RequiredFieldErrorMessage>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <ValidatorErrorMessage />
+
+   
+
+    <MaxLength>200</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>4</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Business Contact(s)&amp;nbsp;is a &lt;dfn class="cke-definition" data-title="This term encompasses a wide range of people, but generally includes: any officer or employee of a government, governmental agency,
+
+    or public international organization; any person acting as a representative in an official capacity; a member of a royal family; a member of a legislative body; a political party official; a candidate for political office; and an employee of a state-owned business
+
+    enterprise or institution. Contact the Legal Department if you are unsure whether someone you are working with qualifies as a government official."&gt;Government Official.&lt;/dfn&gt;&lt;/d&gt;</FieldHeader>
+
+
+    <FieldId>EntGovernmentOfficial</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Business Contact(s) is associated with a&amp;nbsp;Retirement Plan Services&amp;nbsp;Plan Number.&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>EntRPSPlanQuestion</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Enter&amp;nbsp;Retirement Plan Services Plan Number.&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>EntRPSPlanNumber</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage>Please enter a Plan Number</ValidatorErrorMessage>
+
+   
+
+    <MaxLength>6</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>1</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Business Contact(s) is a part of a &lt;dfn class="cke-definition" data-title="A retirement plan initiated via collective bargaining between an employer and a union or other employee representatives. Contact the
+
+    ERISA team within the Legal Department for guidance."&gt;Collectively Bargained Plan&lt;/dfn&gt;.&lt;/d&gt;</FieldHeader>
+
+   
+
+    <FieldId>EntBargainedPlan</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Business Contact(s) is a &lt;dfn class="cke-definition" data-title="Generally regarded as a person who is an officer, agent, shop steward, employee, or other representative of a union."&gt;Union Official&lt;/dfn&gt;.&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>EntUnionOfficial</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Are both ERISA and non-ERISA business contacts attending this event?&lt;/d&gt;</FieldHeader>
+
+ 
+
+    <FieldId>BusinessContactERISA</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Yes" />
+
+   
+
+    <ListItem name="2" value="No" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Enter the names of the&amp;nbsp;non-ERISA business contacts below. Please ensure they are also included in the &amp;#39;Entertainment Participants&amp;quot; section above&amp;nbsp;(max 200 characters).&lt;/d&gt;</FieldHeader>
+
+   
+
+    <FieldId>BusinessContactNonERISA</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage />
+
+   
+
+    <MaxLength>200</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>4</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <RadioButton>
+
+   
+
+    <FieldHeader>&lt;d&gt;Will a client associate or Business Contact bring a guest?&lt;/d&gt;</FieldHeader>
+
+   
+
+    <FieldId>EntGuestAttendProvided</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>true</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage>Please indicate a response</RequiredFieldErrorMessage>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="No Guest" />
+
+   
+
+    <ListItem name="2" value="Client associate guest" />
+
+   
+
+    <ListItem name="3" value="Business Contact guest" />
+
+   
+
+    <ListItem name="4" value="Both a client and Business Contact guest" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </RadioButton>
+
+   
+
+     
+
+    
+
+    <DropDownList>
+
+   
+
+    <FieldHeader>&lt;d&gt;Nature of the relationship with the client associate and guest.&lt;/d&gt;</FieldHeader>
+
+   
+
+  
+
+    <FieldId>EntNonTRPAssociateGuest</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Spouse or Domestic Partner" />
+
+   
+
+    <ListItem name="2" value="Child" />
+
+   
+
+    <ListItem name="3" value="Other" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </DropDownList>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Please describe the relationship between the client associate and their guest (max 200 characters).&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>EntGuestRelationshipOther</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage />
+
+   
+
+    <MaxLength>200</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>4</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <DropDownList>
+
+   
+
+    <FieldHeader>&lt;d&gt;Nature of the relationship with the Business Contact and guest.&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>EntBusinessContactGuest</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>Integer</Validator>
+
+   
+
+    <MaxLength>50</MaxLength>
+
+   
+
+    <UserDefinedList>
+
+   
+
+    <ListItem name="1" value="Spouse or Domestic Partner" />
+
+   
+
+    <ListItem name="2" value="Child" />
+
+   
+
+    <ListItem name="3" value="Other" />
+
+   
+
+    </UserDefinedList>
+
+   
+
+    <DefaultValue />
+
+   
+
+    </DropDownList>
+
+   
+
+     
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;Please describe the relationship between the Business Contact and their guest (max 200 characters).&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>ENTContactGuestOther</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage />
+
+   
+
+    <MaxLength>200</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>4</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+     
+
+    
+
+    <AttachmentControl>
+
+   
+
+    <FieldHeader>&lt;d&gt;If necessary, please attach any documentation about your&amp;nbsp;Entertainment declaration.&lt;/d&gt;
+
+   
+
+    &lt;ul&gt;
+
+   
+
+    &lt;li&gt;Click the magnifying glass icon to locate the document on your computer.&lt;/li&gt;
+
+   
+
+    &lt;li&gt;Click the &amp;quot;Open&amp;quot; button to attach the document to this form (max size = 40mb/attachment).&lt;/li&gt;
+
+   
+
+    &lt;/ul&gt;
+
+   
+
+    </FieldHeader>
+
+   
+
+    <FieldId>EntertainmentAttachment</FieldId>
+
+   
+
+    <Visible>false</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <MaxLength>0</MaxLength>
+
+   
+
+    <AttachmentRequired>false</AttachmentRequired>
+
+   
+
+    <AllowMultipleAttachments>true</AllowMultipleAttachments>
+
+   
+
+    <AttachmentsNeedTitle>true</AttachmentsNeedTitle>
+
+   
+
+    </AttachmentControl> 
+
+    
+
+    <Textbox>
+
+   
+
+    <FieldHeader>&lt;d&gt;myExpenses Report Key:&lt;/d&gt;</FieldHeader>
+
+   
+
+    
+
+    <FieldId>myExpenseReportKey</FieldId>
+
+   
+
+    <Visible>true</Visible>
+
+   
+
+    <RequiredField>false</RequiredField>
+
+   
+
+    <RequiredFieldErrorMessage />
+
+   
+
+    <Validator>String</Validator>
+
+   
+
+    <ValidatorErrorMessage />
+
+   
+
+    <MaxLength>10</MaxLength>
+
+   
+
+    <Size>50</Size>
+
+   
+
+    <NumberOfLines>1</NumberOfLines>
+
+   
+
+    </Textbox>
+
+   
+
+    </Controls>
+
+   
+
+    </Section>
+
+   
+
+    </Sections>`
+
+}]
