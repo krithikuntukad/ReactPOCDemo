@@ -20,6 +20,27 @@ var jsonData = require('./Constants/xmlData.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
+let FileValues = [{
+  value: 'xmlData',
+}, {
+  value: 'xmlDataStyleFive',
+}, {
+  value: 'xmlWithFiveControls',
+},{
+  value: 'xmlWithTenControls',
+},
+{
+  value: 'Interdependency',
+},{
+  value: 'noTableData',
+},
+{
+  value: 'originalxmlData',
+},
+{
+  value: 'sixControlData',
+}
+];
 export default class DemoPageStyleFive extends Component {
   constructor(props) {
     super(props);
@@ -59,6 +80,24 @@ export default class DemoPageStyleFive extends Component {
     componentWillUnmount(){
       console.log('unmounted Component');
       AsyncStorage.setItem('savedData',JSON.stringify(this.state.controlInputs));
+      }
+
+
+      changeFileValue=(val) => {
+        if(val == "xmlData"){
+         jsonData =require('./Constants/xmlData.json');
+        }else if(val == "xmlDataStyleFive"){
+          jsonData =require('./Constants/xmlDataStyleFive.json');
+        }else{
+          jsonData =require('./Constants/noTableData.json');
+        }
+      responseText = jsonData[0].data
+      var xml = new XMLParser().parseFromString(responseText);
+      var tempArray=[];
+      tempArray.push(xml)
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.xmlJson = tempArray;
+      this.setState(statusCopy);
       }
 
   controlHideShowAction=(innerItem)=>{
@@ -1072,6 +1111,9 @@ var errorMessage=[]
           </Right>
         </Header>
         <View style={styles.pageStyle} >
+        <DropdownComponent label="choose xml file/Data" dropDowValues={FileValues} onChangeText={(val) => {
+        this.changeFileValue(val)
+       }} />
        <View style={{ flex: 1, justifyContent: 'center' }}>
          {
         this.state.displayLoader ? <ActivityIndicator size="large" color="#0000ff" /> : null
