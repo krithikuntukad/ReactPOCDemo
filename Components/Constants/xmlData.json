@@ -1612,7 +1612,7 @@
      
      <UdfControlAction>
      
-     <Action>ShowAndRequiredField</Action>
+     <Action>Show</Action>
      
      <SourceField>EntGuestAttendProvided</SourceField>
      
@@ -1622,7 +1622,7 @@
      
      <UdfControlAction>
      
-     <Action>ShowAndRequiredField</Action>
+     <Action>Show</Action>
      
      <SourceField>EntGuestAttendProvided</SourceField>
      
@@ -1706,7 +1706,7 @@
      
      <UdfControlAction>
      
-     <Action>ShowAndRequiredField</Action>
+     <Action>Show</Action>
      
      <SourceField>EntGuestAttendProvided</SourceField>
      
@@ -1716,7 +1716,7 @@
      
      <UdfControlAction>
      
-     <Action>ShowAndRequiredField</Action>
+     <Action>Show</Action>
      
      <SourceField>EntGuestAttendProvided</SourceField>
      
