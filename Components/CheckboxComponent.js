@@ -13,6 +13,7 @@ class CheckboxComponent extends Component{
         
           <CheckBox  style={this.props.style}
             label = {this.props.label}
+            checked={this.props.checked}
             labelStyle={this.props.labelStyle}
             checkboxStyle={this.props.checkBoxStyle}
              onChange={this.props.onChange}

@@ -3226,7 +3226,7 @@
 
    
 
-    <Action>ShowAndRequiredField</Action>
+    <Action>Show</Action>
 
    
 
@@ -3274,7 +3274,7 @@
 
    
 
-    <RequiredField>true</RequiredField>
+    <RequiredField>false</RequiredField>
 
     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
 
@@ -3414,7 +3414,7 @@
 
    
 
-    <Action>ShowAndRequiredField</Action>
+    <Action>Show</Action>
 
    
 
@@ -3462,7 +3462,7 @@
 
    
 
-    <RequiredField>true</RequiredField>
+    <RequiredField>false</RequiredField>
 
     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
 

@@ -79,8 +79,13 @@ export default class DemoPageStyleFive extends Component {
  */
     componentWillUnmount(){
       console.log('unmounted Component');
+      console.log(Object.keys(this.state.controlInputs).length === 0)
+      if( !(Object.keys(this.state.controlInputs).length === 0)){
+     
       AsyncStorage.setItem('savedData',JSON.stringify(this.state.controlInputs));
+      AsyncStorage.setItem('visibilityData',JSON.stringify(this.state.visibilityInputs));
       }
+    }
 
 
       changeFileValue=(val) => {
@@ -147,6 +152,7 @@ export default class DemoPageStyleFive extends Component {
     }
   }
 
+
   /**
  * Function : displayData
  * Description : gets data from local storage
@@ -154,15 +160,22 @@ export default class DemoPageStyleFive extends Component {
 displayData=async ()=>{
   try {
   var value = await AsyncStorage.getItem('savedData');
+  var visibilityData =await AsyncStorage.getItem('visibilityData');
+  let parsedVisibilityData= JSON.parse(visibilityData)
   let parsed = JSON.parse(value);
-  console.log('parsed',parsed)
+  console.log('parsedVisibilityData',parsedVisibilityData)
   if(parsed){
   Alert.alert("Do you want to Replace previous data",'',
   [
   {text: 'Cancel', onPress: () =>AsyncStorage.removeItem('saveData')},
-  {text: 'OK', onPress: () =>this.setState({
+  {text: 'OK', onPress: () =>{this.setState({
   controlInputs:parsed
-  })},
+  })
+  this.setState({
+    visibilityInputs:parsedVisibilityData
+    })
+  }
+},
   ]
   )
   }
@@ -191,6 +204,7 @@ this.validateControl(attributeKey, validityArray)
  */
   changeRadioButtonAttributeValue = (value, attributeKey,fieldId,validityArray) => {
     let statusCopy = Object.assign({}, this.state);
+    //console.log("changeRadioButtonAttributeValue",value)
     statusCopy.controlInputs[attributeKey] = value;
     statusCopy.visibilityInputs[fieldId] = value
     this.setState(statusCopy);
@@ -203,6 +217,7 @@ this.validateControl(attributeKey, validityArray)
  */
 changeCheckboxAttributeValue = (value, attributeKey,fieldId,validityArray) => {
   let statusCopy = Object.assign({}, this.state);
+  console.log("changeRadioButtonAttributeValue",value)
   statusCopy.controlInputs[attributeKey] = value;
   statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
   this.setState(statusCopy);
@@ -337,6 +352,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               })
             if (visibility == 'true') {
               //this.state.controlInputs[innerItem.value] = false
+              console.log("cheeked",this.state.controlInputs[innerItem.value])
+             
+             // console.log(this.state.controlInputs[innerItem.value] === true)
               this.state.validityRules[innerItem.value] = validityArray
               return(
                 <FormItem
@@ -349,8 +367,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     label=""
                     labelStyle={styles.labelStyle}
                     checkboxStyle={styles.checkBoxStyle}
+                    checked={this.state.controlInputs[innerItem.value]}
                     onChange={(checked) =>
-                      this.changeCheckboxAttributeValue(checked,innerItem.value,fieldId,validityArray)
+                      this.changeCheckboxAttributeValue(checked?false:true,innerItem.value,fieldId,validityArray)
                     }
                     numberOfLines={15}
                     style={styles.checkBoxLable}
@@ -438,7 +457,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         y = new Entities().decode(y);
 
         controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
-        if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
+      console.log("it is table view Display action",this.state.visibilityInputs[visibilityAction.SourceField])
+          if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
           if(visibilityAction.Action == "Hide"){
             visibility = "false"
           }else if(visibilityAction.Action == "Show"){

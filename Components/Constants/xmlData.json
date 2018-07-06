@@ -833,7 +833,7 @@
      
      <RequiredField>true</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>Integer</Validator>
      
