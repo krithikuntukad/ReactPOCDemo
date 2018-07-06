@@ -163,7 +163,7 @@ displayData=async ()=>{
   var visibilityData =await AsyncStorage.getItem('visibilityData');
   let parsedVisibilityData= JSON.parse(visibilityData)
   let parsed = JSON.parse(value);
-  console.log('parsedVisibilityData',parsedVisibilityData)
+  console.log('parsedVisibilityData',parsed)
   if(parsed){
   Alert.alert("Do you want to Replace previous data",'',
   [
@@ -202,13 +202,14 @@ this.validateControl(attributeKey, validityArray)
  * Function : changeRadioButtonAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
  */
-  changeRadioButtonAttributeValue = (value, attributeKey,fieldId,validityArray) => {
+  changeRadioButtonAttributeValue = (selectedRadioVal) => {
     let statusCopy = Object.assign({}, this.state);
-    //console.log("changeRadioButtonAttributeValue",value)
-    statusCopy.controlInputs[attributeKey] = value;
-    statusCopy.visibilityInputs[fieldId] = value
+    console.log("changeRadioButtonAttributeValue Krithi",JSON.stringify(selectedRadioVal))
+    statusCopy.controlInputs[selectedRadioVal.displayLabel] = selectedRadioVal.value;
+    statusCopy.controlInputs[selectedRadioVal.displayLabel+"index"] = selectedRadioVal.index;
+    statusCopy.visibilityInputs[selectedRadioVal.fieldId] = selectedRadioVal.value
     this.setState(statusCopy);
-    this.validateControl(attributeKey, validityArray)
+    this.validateControl(selectedRadioVal.displayLabel, selectedRadioVal.validityArray)
   }
 
     /**
@@ -631,6 +632,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               }
               })
             if (visibility == "true") {
+              console.log("index of radio grp")
+              console.log(this.state.controlInputs[displayLabel+"index"])
               keyIndex = keyIndex + 1
       
               return(
@@ -648,8 +651,16 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                       size={24}
                       thickness={2}
                       color='#153875'
+                      selectedIndex={this.state.controlInputs[displayLabel+"index"]}
                       onSelect={(index, value) => {
-                        this.changeRadioButtonAttributeValue(value,displayLabel,fieldId,validityArray)
+                        let obj ={
+                          "index":index,
+                          "value":value,
+                          "displayLabel":displayLabel,
+                          "fieldId":fieldId,
+                          "validityArray":validityArray
+                        }
+                        this.changeRadioButtonAttributeValue(obj)
                       }}
                     >
                       {radioBtn}
