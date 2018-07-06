@@ -16,7 +16,7 @@ import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
-var jsonData = require('./Constants/xmlData.json');
+var jsonData = require('./Constants/xmlDataStyleFive.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
@@ -980,7 +980,11 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             isRequired={isRequired == "true"?true:false}
               regExp={regex}
             >
-              <DropdownComponent key={keyIndex} label={this.getDisplayLabel(label,isRequired)} dropDowValues={dropDowValues} onChangeText={(val,index,data) => {
+              <DropdownComponent key={keyIndex} 
+              label={this.getDisplayLabel(label,isRequired)} 
+              dropDowValues={dropDowValues} 
+              value={this.state.controlInputs[label]}
+              onChangeText={(val,index,data) => {
                 this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
 
               }} />
