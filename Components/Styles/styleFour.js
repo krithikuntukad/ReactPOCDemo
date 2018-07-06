@@ -92,4 +92,13 @@ module.exports = StyleSheet.create({
             justifyContent: 'center'
         
     },
+    swicthLable:{
+        fontSize:10,
+        color:'black',
+        //justifyContent: 'center', 
+        //alignItems: 'center' 
+        },
+        switchIcon:{
+        transform: [{ scaleX: 0.8 }, { scaleY: 0.6}]
+        },
 });

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Button, Image,ImageBackground, Alert, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { AppRegistry, Text, View, Button, Image,ImageBackground, Alert, ScrollView, TextInput, StyleSheet, Dimensions,Switch } from 'react-native';
+import { Column as Col, Row } from 'react-native-flexbox-grid';
 import CheckBox from 'react-native-checkbox';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import { Icon, Header, Content, Left, Right } from 'native-base';
@@ -96,50 +97,137 @@ createHTMLTable(keyIndex,controlItem,controlsArray){
 * Description : Creates Radio Button controls
 */
 createRadioButtonControl(keyIndex,controlItem,controlsArray){
-  controlItem.children.map((innerItem, innerItemIndex) => {
+  // controlItem.children.map((innerItem, innerItemIndex) => {
+  //   var text = ""
+  //   var radioBtn = []
+
+  //   if (innerItem.name == "FieldHeader") {
+  //     text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
+  //     text = new Entities().decode(text);
+  //     text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
+  //     text = '<p style="fontSize:12;margin-bottom:5;font-weight: bold;">' + text + '</p>'
+
+  //   }
+  //   if (innerItem.name == "UserDefinedList") {
+  //     innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+
+  //       if (radioBtnOption.name == "ListItem") {
+  //         keyIndex = keyIndex + 1
+  //         radioBtn.push(
+  //           <RadioButton value={radioBtnOption.attributes.name} >
+  //           <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
+  //           </RadioButton>
+  //         )
+  //       }
+  //     })
+  //   }
+  //   keyIndex = keyIndex + 1
+  //   controlsArray.push(
+  //     <View>
+  //     <View key={keyIndex}>
+  //     <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true} />
+  //     <RadioGroup
+  //             size={24}
+  //             thickness={2}
+  //             color='#153875'
+  //             //highlightColor='blue'
+  //     onSelect = {(index, value) => {
+  //    }}
+  // >
+  //     {radioBtn}
+  // </RadioGroup>
+  //     </View>
+  //     </View>
+  //   )
+  // })
+  controlItem.children.map(function (innerItem, innerItemIndex) {
     var text = ""
     var radioBtn = []
-
+    var SwitchFlag = false;
     if (innerItem.name == "FieldHeader") {
-      text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
+      text = innerItem.value
       text = new Entities().decode(text);
       text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
       text = '<p style="fontSize:12;margin-bottom:5;font-weight: bold;">' + text + '</p>'
-
     }
     if (innerItem.name == "UserDefinedList") {
-      innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
+      var switchOrRadioArray = []
+      var switchOrRadioControlArray = []
+      innerItem.children.map(function (radioBtnOption, radioBtnOptionIndex) {
 
-        if (radioBtnOption.name == "ListItem") {
-          keyIndex = keyIndex + 1
-          radioBtn.push(
-            <RadioButton value={radioBtnOption.attributes.name} >
-            <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
-            </RadioButton>
-          )
+        if (innerItem.children.length == 2) {
+          SwitchFlag = true;
+          var obj = {
+            value: radioBtnOption.attributes.value,
+            name: radioBtnOption.attributes.name
+          }
+          switchOrRadioArray.push(obj)
+          if (innerItem.children.length - 1 == radioBtnOptionIndex) {
+            radioBtn.push(
+              <View style={styles.radio} key={keyIndex}>
+                <Row size={12} style={styles.switchRow}>
+                  <Col sm={1} style={{ flex: 0.1, justifyContent: 'center' }}>  <Text style={styles.swicthLable}>{switchOrRadioArray[0].value}</Text></Col>
+                  <Col sm={2} ><Switch style={styles.switchIcon} tintColor='#0865a3'
+                    onValueChange={(val) => {
+                    }}
+                  /></Col>
+                  <Col sm={8} style={{ flex: 1, justifyContent: 'center' }}>  <Text style={styles.swicthLable}>{switchOrRadioArray[1].value}</Text></Col>
+                </Row>
+              </View>
+            )
+          }
+        } else {
+          SwitchFlag = false
+          switchOrRadioControlArray.push(radioBtnOption)
+          console.log("switchOrRadioControlArray")
+          if (innerItem.children.length - 1 == radioBtnOptionIndex) {
+            console.log(JSON.stringify(switchOrRadioControlArray))
+            switchOrRadioControlArray.map(function (rad, radBtnOptionIndex) {
+              if (rad.name == "ListItem") {
+                keyIndex = keyIndex + 1
+                radioBtn.push(
+                  <RadioButton value={rad.attributes.name} >
+                    <Text style={styles.radioText}>{rad.attributes.value}</Text>
+                  </RadioButton>
+                )
+              }
+            })
+          }
         }
+
       })
     }
-    keyIndex = keyIndex + 1
-    controlsArray.push(
-      <View>
-      <View key={keyIndex}>
-      <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true} />
-      <RadioGroup
-              size={24}
-              thickness={2}
-              color='#153875'
-              //highlightColor='blue'
-      onSelect = {(index, value) => {
-     }}
-  >
-      {radioBtn}
-  </RadioGroup>
-      </View>
-      </View>
-    )
-  })
 
+    keyIndex = keyIndex + 1
+    if (SwitchFlag) {
+      controlsArray.push(
+        <View key={keyIndex}>
+          <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+          />
+
+          {radioBtn}
+
+        </View>
+      )
+    } else {
+      controlsArray.push(
+        <View key={keyIndex}>
+          <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
+          />
+          <RadioGroup
+            size={24}
+            thickness={2}
+            color='#153875'
+            onSelect={(index, value) => {
+            }}
+          >
+            {radioBtn}
+          </RadioGroup>
+        </View>
+      )
+    }
+
+  })
 }
 
 /**
