@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, Button, Image, Alert,ActivityIndicator, ScrollView, TextInput, StyleSheet, Dimensions,AsyncStorage } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
