@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Button, Image, Alert,ActivityIndicator, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { AppRegistry, Text, View, Button, Image, Alert,ActivityIndicator, ScrollView, TextInput, StyleSheet, Dimensions,AsyncStorage } from 'react-native';
 import { Column as Col, Row } from 'react-native-flexbox-grid';
 import { Icon, Header, Content, Left, Right } from 'native-base';
 var XMLParser = require('react-xml-parser');
@@ -16,7 +16,7 @@ import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
-var jsonData = require('./Constants/Interdependency.json');
+var jsonData = require('./Constants/xmlData.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
@@ -41,11 +41,25 @@ export default class DemoPageStyleFive extends Component {
     
   }
 
+   /**
+ * Function : componentWillMount
+ * Description : react native component life cycle event
+ */
     componentWillMount(){
       setTimeout(() => {
         this.setState({displayLoader:false})
       }, 3000);
+      this.displayData()
     }
+
+     /**
+ * Function : componentWillUnmount
+ * Description : react native component life cycle event
+ */
+    componentWillUnmount(){
+      console.log('unmounted Component');
+      AsyncStorage.setItem('savedData',JSON.stringify(this.state.controlInputs));
+      }
 
   controlHideShowAction=(innerItem)=>{
     var controlActionsArray =[]
@@ -93,6 +107,33 @@ export default class DemoPageStyleFive extends Component {
       this.setState(statusCopy);
     }
   }
+
+  /**
+ * Function : displayData
+ * Description : gets data from local storage
+ */
+displayData=async ()=>{
+  try {
+  var value = await AsyncStorage.getItem('savedData');
+  let parsed = JSON.parse(value);
+  console.log('parsed',parsed)
+  if(parsed){
+  Alert.alert("Do you want to Replace previous data",'',
+  [
+  {text: 'Cancel', onPress: () =>AsyncStorage.removeItem('saveData')},
+  {text: 'OK', onPress: () =>this.setState({
+  controlInputs:parsed
+  })},
+  ]
+  )
+  }
+  }
+  catch(error){
+  Alert.alert('plzzz',error)
+  }
+  }
+  
+    
   /**
  * Function : changeStateAttributeValue
  * Description : Assigns user action  values to dynamic text fields 
