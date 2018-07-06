@@ -351,7 +351,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               }
               })
             if (visibility == 'true') {
-              //this.state.controlInputs[innerItem.value] = false
+              // this.state.controlInputs[innerItem.value] = false
               console.log("cheeked",this.state.controlInputs[innerItem.value])
              
              // console.log(this.state.controlInputs[innerItem.value] === true)
@@ -369,7 +369,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     checkboxStyle={styles.checkBoxStyle}
                     checked={this.state.controlInputs[innerItem.value]}
                     onChange={(checked) =>
-                      this.changeCheckboxAttributeValue(checked?false:true,innerItem.value,fieldId,validityArray)
+                       this.changeCheckboxAttributeValue(this.state.controlInputs[innerItem.value] == undefined?true:(checked?false:true),innerItem.value,fieldId,validityArray)
                     }
                     numberOfLines={15}
                     style={styles.checkBoxLable}
