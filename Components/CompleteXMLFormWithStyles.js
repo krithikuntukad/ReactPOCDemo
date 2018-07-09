@@ -38,9 +38,12 @@ export default class CompleteXMLFormWithStyles extends Component {
   }
 
   /**
-   * Function : createCheckBoxControl
-   * Description : Creates Check box controls
-   */
+  * Function : createCheckBoxControl
+  * Description : Creates Check box controls by pushing checkbox controls into controlsArray by using key index value
+                  and  applying external styles for each control 
+  * Params : KeyIndex is the unique value,controlItem holds controls globally,controlsArray holds checkbox controls, labelStyle is for styling checkbox label data
+  *             
+  */
   createCheckBoxControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
@@ -78,10 +81,11 @@ export default class CompleteXMLFormWithStyles extends Component {
     });
   }
 
-  /**
-   * Function : createHTMLTable
-   * Description : Creates HTML Table controls
-   */
+   /**
+  * Function : createHTMLTable
+  * Description : Creates HTML Table controls and displays in webview
+  * params : KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds HtmlTable controls, innerItem indicates the table data
+  */
   createHTMLTable(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
@@ -103,9 +107,11 @@ export default class CompleteXMLFormWithStyles extends Component {
   }
 
   /**
-   * Function : createRadioButtonControl
-   * Description : Creates Radio Button controls
-   */
+  * Function : createRadioButtonControl
+  * Description : Creates Radio Button controls and displays switch control if innerItem lenght is 2
+  * params: KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds radioButton controls, FieldHeader is for label data, UseDefinedList is the list of values for dropdown
+  *          switchFlag is true if length is 2 , radioBtnOptionIndex is the unique index value for radio button options
+  */
   createRadioButtonControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map(function(innerItem, innerItemIndex) {
       var text = "";
@@ -228,9 +234,10 @@ export default class CompleteXMLFormWithStyles extends Component {
   }
 
   /**
-   * Function : createTextFieldControl
-   * Description : Creates Text Field  controls
-   */
+  * Function : createTextFieldControl
+  * Description : Creates Text Field  controls
+  * params: KeyIndex is the unique value, controlItem holds controls globally,controlsArray holds TextInput controls, replace removes all unnecessary tags , FieldHeader is the label for TextInput
+  */
   createTextFieldControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
@@ -270,9 +277,11 @@ export default class CompleteXMLFormWithStyles extends Component {
   }
 
   /**
-   * Function : createDropdownControl
-   * Description : Creates Dropdown Controls
-   */
+  * Function : createDropdownControl
+  * Description : Creates Dropdown Controls
+  * params : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds dropdown controls, dropDownValues are values to be displayed in the dropdownlist, ControlActions indicates interdependency actions
+  */
+
   createDropdownControl(keyIndex, controlItem, controlsArray) {
     var dropDowValues = [];
     var obj = {};
@@ -340,10 +349,11 @@ export default class CompleteXMLFormWithStyles extends Component {
     );
   }
 
-  /**
-   * Function : createAttachmentControl
-   * Description : Creates Attachment Controls
-   */
+/**
+* Function : createAttachmentControl
+* Description : Creates Attachment Controls
+Params : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Attacment controls
+*/
   createAttachmentControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
@@ -382,10 +392,11 @@ export default class CompleteXMLFormWithStyles extends Component {
       }
     });
   }
-  /**
-   * Function : constructControls
-   * Description : Creates Controls from JSON
-   */
+ 
+   /**
+  * Function : constructControls
+  * Description : Creates Controls from JSON
+  */
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
 
@@ -435,6 +446,40 @@ export default class CompleteXMLFormWithStyles extends Component {
     this.state.controlsArray = controlsArray;
   }
 
+    /**
+   * Function : browsing
+   * Description : Browses files from iOS and Android devices.
+   */
+  browsing = () => {
+    DocumentPicker.show(
+      {
+        filetype: [DocumentPickerUtil.allFiles()]
+      },
+      (error, res) => {
+        // Android
+
+        this.setState({
+          Url: res.uri,
+
+          display: true
+        });
+
+        // this.setS = res.uri
+
+        Alert.alert(this.state.Url);
+
+        console.log(
+          res.uri,
+
+          res.type, // mime type
+
+          res.fileName,
+
+          res.fileSize
+        );
+      }
+    );
+  };
   render() {
     return (
       <Container>

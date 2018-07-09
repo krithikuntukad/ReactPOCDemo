@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import {
   AppRegistry,
   Text,
@@ -13,84 +14,120 @@ import {
   ImageBackground,
   Dimensions
 } from "react-native";
+
 import { Column as Col, Row } from "react-native-flexbox-grid";
+
 import CheckBox from "react-native-checkbox";
+
 import { Icon, Header, Content, Left, Right } from "native-base";
+
 import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
+
 import { Dropdown } from "react-native-material-dropdown";
+
 import { WebView } from "react-native";
+
 var XMLParser = require("react-xml-parser");
+
 import HTML from "react-native-render-html";
+
 import styles from "./Styles/accordianStyle";
+
 import { Container } from "native-base";
+
 const Entities = require("html-entities").AllHtmlEntities;
+
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
+
 import {
   DocumentPicker,
   DocumentPickerUtil
 } from "react-native-document-picker";
 
 var jsonData = require("./Constants/xmlData.json");
+
 export default class Accordian extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       displayedSection: false,
+
       displayedSectionTwo: false,
+
       controlsArrayOne: [],
+
       controlsArrayTwo: [],
+
       controlsArray: []
     };
+
     var responseText = jsonData[0].data;
+
     this.constructControls(responseText);
   }
 
   /**
-   * Function : sectionOne
-   * Description : displays section One
-   */
+
+* Function : sectionOne
+
+* Description :displays section one
+
+* Parameters : null
+
+*/
+
   sectionOne = () => {
     this.setState({
       displayedSection: !this.state.displayedSection,
+
       displayedSectionTwo: false
     });
   };
+
   /**
-   * Function : sectionTwo
-   * Description : displays section Two
-   */
+
+* Function : sectionTwo
+
+* Description : displays section Two
+
+* Parameters : null
+
+*/
+
   sectionTwo = () => {
     this.setState({
       displayedSectionTwo: !this.state.displayedSectionTwo,
+
       displayedSection: false
     });
   };
 
   /**
-   * Function : createCheckBoxControl
-   * Description : Creates Check box controls
-   */
+
+* Function : createCheckBoxControl
+
+* Description : Creates Check box controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Checkbox Controls
+
+*/
+
   createCheckBoxControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
         keyIndex = keyIndex + 1;
-        labelStyle = {
-          color: "black",
-          fontSize: 10
-        };
-        checkBoxStyle = {
-          width: 18,
-          height: 18
-        };
+
         controlsArray.push(
           <View key={keyIndex} style={{ flexDirection: "row" }}>
             <CheckBox
               style={styles.checkBox}
               label=""
-              labelStyle={labelStyle}
-              checkboxStyle={checkBoxStyle}
+              labelStyle={styles.labelStyle}
+              checkboxStyle={styles.checkBoxStyle}
               onChange={checked => console.log("I am checked", checked)}
             />
+
             <Text numberOfLines={15} style={styles.checkBoxLable}>
               {innerItem.value}
             </Text>
@@ -101,23 +138,28 @@ export default class Accordian extends Component {
   }
 
   /**
-   * Function : createHTMLTable
-   * Description : Creates HTML Table controls
-   */
+
+* Function : createHTMLTable
+
+* Description : Creates HTML Table controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Table Controls
+
+*/
+
   createHTMLTable(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
         keyIndex = keyIndex + 1;
-        var y = innerItem.value;
-        y = new Entities().decode(y);
+
+        var fieldHeaderVal = innerItem.value;
+
+        fieldHeaderVal = new Entities().decode(fieldHeaderVal);
+
         controlsArray.push(
           <WebView
-            source={{ html: y }}
-            style={{
-              flex: 1,
-              marginTop: 5,
-              height: 200
-            }}
+            source={{ html: fieldHeaderVal }}
+            style={styles.webViewStyle}
           />
         );
       }
@@ -125,16 +167,26 @@ export default class Accordian extends Component {
   }
 
   /**
-   * Function : createRadioButtonControl
-   * Description : Creates Radio Button controls
-   */
+
+* Function : createRadioButtonControl
+
+* Description : Creates Radio Button controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Radio Button Controls
+
+*/
+
   createRadioButtonControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       var text = "";
+
       var radioBtn = [];
+
       if (innerItem.name == "FieldHeader") {
         text = innerItem.value;
+
         text = new Entities().decode(text);
+
         text = text
           .replace("<p>", "")
           .replace("</p>", "")
@@ -145,12 +197,15 @@ export default class Accordian extends Component {
           .replace("</em>", "")
           .replace("</d>", "")
           .replace("&nbsp;", "");
+
         text = '<p style="fontSize:10;margin-bottom:5">' + text + "</p>";
       }
+
       if (innerItem.name == "UserDefinedList") {
         innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
           if (radioBtnOption.name == "ListItem") {
             keyIndex = keyIndex + 1;
+
             radioBtn.push(
               <RadioButton value={radioBtnOption.attributes.name}>
                 <Text style={styles.radioText}>
@@ -161,7 +216,9 @@ export default class Accordian extends Component {
           }
         });
       }
+
       keyIndex = keyIndex + 1;
+
       controlsArray.push(
         <View key={keyIndex}>
           <HTML
@@ -170,6 +227,7 @@ export default class Accordian extends Component {
             decodeEntities={true}
             debug={true}
           />
+
           <RadioGroup
             size={24}
             thickness={2}
@@ -186,14 +244,22 @@ export default class Accordian extends Component {
   }
 
   /**
-   * Function : createTextFieldControl
-   * Description : Creates Text Field  controls
-   */
+
+* Function : createTextFieldControl
+
+* Description : Creates Text Field controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Text Box Controls
+
+*/
+
   createTextFieldControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
         keyIndex = keyIndex + 1;
+
         var text = new AllHtmlEntities().decode(innerItem.value);
+
         text = text
           .replace("<d>", "")
           .replace("</d>", "")
@@ -201,17 +267,13 @@ export default class Accordian extends Component {
           .replace("&nbsp;", "")
           .replace("&quot;", "'")
           .replace("&#39;", "'");
+
         controlsArray.push(
           <View key={keyIndex}>
             <Text style={styles.textBox}>{text}</Text>
+
             <TextInput
-              style={{
-                height: 30,
-                borderWidth: 1,
-                marginBottom: 10,
-                paddingLeft: 5,
-                fontSize: 10
-              }}
+              style={styles.textFieldControl}
               placeholder="Enter Text Here"
             />
           </View>
@@ -221,28 +283,43 @@ export default class Accordian extends Component {
   }
 
   /**
-   * Function : createDropdownControl
-   * Description : Creates Dropdown Controls
-   */
+
+* Function : createDropdownControl
+
+* Description : Creates Dropdown Controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Dropdown Controls
+
+*/
+
   createDropdownControl(keyIndex, controlItem, controlsArray) {
     var dropDowValues = [];
+
     var obj = {};
+
     var text = "";
+
     var label = "";
+
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
-        var y = innerItem.value;
-        y = new Entities().decode(innerItem.value);
-        y = y
+        var fieldHeaderVal = innerItem.value;
+
+        fieldHeaderVal = new Entities().decode(innerItem.value);
+
+        fieldHeaderVal = fieldHeaderVal
           .replace("<d>", "")
           .replace("</d>", "")
           .replace("&amp;", "&")
           .replace("&nbsp;", "")
           .replace("&quot;", "'")
           .replace("&#39;", "'");
-        text = <Text>{y}</Text>;
-        label = y;
+
+        text = <Text>{fieldHeaderVal}</Text>;
+
+        label = fieldHeaderVal;
       }
+
       if (innerItem.name == "ControlActions") {
         innerItem.children.map((dropdownItem, dropdownItemIndex) => {
           if (dropdownItem.name == "UdfControlAction") {
@@ -254,6 +331,7 @@ export default class Accordian extends Component {
                 obj = {
                   value: udfControlAction.value
                 };
+
                 dropDowValues.push(obj);
               }
             });
@@ -261,7 +339,9 @@ export default class Accordian extends Component {
         });
       }
     });
+
     keyIndex = keyIndex + 1;
+
     controlsArray.push(
       <View key={keyIndex}>
         <Dropdown
@@ -277,14 +357,22 @@ export default class Accordian extends Component {
   }
 
   /**
-   * Function : createAttachmentControl
-   * Description : Creates Attachment Controls
-   */
+
+* Function : createAttachmentControl
+
+* Description : Creates Attachment Controls
+
+* parameters : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Attachment Controls
+
+*/
+
   createAttachmentControl(keyIndex, controlItem, controlsArray) {
     controlItem.children.map((innerItem, innerItemIndex) => {
       if (innerItem.name == "FieldHeader") {
         keyIndex = keyIndex + 1;
+
         var text = new AllHtmlEntities().decode(innerItem.value);
+
         text = text
           .replace("<d>", "")
           .replace("</d>", "")
@@ -299,6 +387,7 @@ export default class Accordian extends Component {
           .replace("<li>", "")
           .replace("</li>", "")
           .replace("&quot;", "");
+
         controlsArray.push(
           <View key={keyIndex}>
             <Text style={styles.textBox}>{text}</Text>
@@ -318,23 +407,37 @@ export default class Accordian extends Component {
       }
     });
   }
+
   /**
-   * Function : constructControls
-   * Description : Creates Controls from JSON
-   */
+
+* Function : constructControls
+
+* Description :Convert XML to JSON and Creates Controls from JSON 
+
+* Parameters : response text holds the XML file
+
+*/
+
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
 
     var mainArray = [];
+
     var xmlJson = [];
+
     var controlsArrayOne = [];
+
     var controlsArrayTwo = [];
+
     xmlJson.push(xml);
+
     var keyIndex = 0;
+
     var radioVal = 0;
 
     xmlJson[0].children.map((currentSection, index) => {
       controlsArray = [];
+
       currentSection.children.map((currentItem, itemIndex) => {
         if (currentItem.name == "Controls") {
           currentSection.children.map((currentControl, controlIndex) => {
@@ -378,19 +481,29 @@ export default class Accordian extends Component {
           });
         }
       });
+
       obj = {
         key: controlsArray
       };
+
       mainArray.push(obj);
     });
+
     this.state.controlsArrayOne = mainArray[0].key;
+
     this.state.controlsArrayTwo = mainArray[1].key;
   }
 
   /**
-   * Function : browsing
-   * Description : Browses files from iOS andAndroid devices.
-   */
+
+* Function : browsing
+
+* Description : Browses files from iOS and Android devices.
+
+* Parameters : null
+
+*/
+
   browsing = () => {
     DocumentPicker.show(
       {
@@ -398,16 +511,24 @@ export default class Accordian extends Component {
       },
       (error, res) => {
         // Android
+
         this.setState({
           Url: res.uri,
+
           display: true
         });
+
         // this.setS = res.uri
+
         Alert.alert(this.state.Url);
+
         console.log(
           res.uri,
+
           res.type, // mime type
+
           res.fileName,
+
           res.fileSize
         );
       }
@@ -418,109 +539,93 @@ export default class Accordian extends Component {
     var section1 = this.state.displayedSection
       ? this.state.controlsArrayOne
       : null;
+
     var section2 = this.state.displayedSectionTwo
       ? this.state.controlsArrayTwo
       : null;
+
     return (
       <Container>
         <ImageBackground
-          style={{
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            justifyContent: "center"
-          }}
+          style={styles.imageStyle}
           source={require("./images/BackgroundImage.jpg")}
         >
-          <Header style={{ backgroundColor: "#0865a3" }}>
+          <Header style={styles.headerBackgroundStyle}>
             <Left>
               <Icon
                 name="ios-menu"
-                style={{ color: "white" }}
+                style={styles.iconStyle}
                 onPress={() => this.props.navigation.openDrawer()}
               />
             </Left>
+
             <Content
               contentContainerStyle={{
                 flex: 1,
+
                 alignItems: "center",
+
                 justifyContent: "center"
               }}
             >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                {" "}
-                Style Three{" "}
-              </Text>
+              <Text style={styles.headerTextStyle}> Style Three </Text>
             </Content>
+
             <Right>
               <Image
-                style={{ width: 30, height: 30 }}
+                style={styles.saveImage}
                 source={require("./images/Save-White.png")}
               />
             </Right>
           </Header>
+
           <View style={styles.pageStyle}>
             <View style={styles.container}>
-              <View style={{ marginBottom: 10, borderColor: "grey" }}>
+              <View style={styles.buttonView}>
                 <TouchableOpacity
-                  style={{ backgroundColor: "#0865a3", height: 30 }}
+                  style={styles.buttonStyle}
                   onPress={this.sectionOne}
                 >
                   <Row size={12}>
                     <Col sm={11}>
-                      <Text
-                        style={{
-                          color: "white",
-                          paddingLeft: 5,
-                          paddingTop: 5
-                        }}
-                      >
-                        Section 2
-                      </Text>
+                      <Text style={styles.buttonText}>Section 2</Text>
                     </Col>
+
                     <Col sm={1}>
                       <Image
-                        style={{ width: 20, height: 20, marginTop: 5 }}
+                        style={styles.buttonImage}
                         source={require("./images/Arrow.png")}
                       />
                     </Col>
                   </Row>
                 </TouchableOpacity>
+
                 <View>
-                  <ScrollView style={{ padding: 5, borderColor: "grey" }}>
-                    {section1}
-                  </ScrollView>
+                  <ScrollView style={styles.sectionView}>{section1}</ScrollView>
                 </View>
               </View>
-              <View style={{ marginBottom: 10, borderColor: "gray" }}>
+
+              <View style={styles.buttonView}>
                 <TouchableOpacity
-                  style={{ backgroundColor: "#0865a3", height: 30 }}
+                  style={styles.buttonStyle}
                   onPress={this.sectionTwo}
                 >
                   <Row size={12}>
                     <Col sm={11}>
-                      <Text
-                        style={{
-                          color: "white",
-                          paddingLeft: 5,
-                          paddingTop: 5
-                        }}
-                      >
-                        Entertainment
-                      </Text>
+                      <Text style={styles.buttonText}>Entertainment</Text>
                     </Col>
+
                     <Col sm={1}>
                       <Image
-                        style={{ width: 20, height: 20, marginTop: 5 }}
+                        style={styles.buttonImage}
                         source={require("./images/Arrow.png")}
                       />
                     </Col>
                   </Row>
                 </TouchableOpacity>
+
                 <View>
-                  <ScrollView style={{ padding: 5, backgroundColor: "white" }}>
-                    {section2}
-                  </ScrollView>
+                  <ScrollView style={styles.sectionView}>{section2}</ScrollView>
                 </View>
               </View>
             </View>

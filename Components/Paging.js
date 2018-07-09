@@ -104,13 +104,9 @@ export default class Paging extends Component {
   }
 
   /**
-
   * Function : createHTMLTable
-
   * Description : Creates HTML Table controls and displays in webview
-
   * params : KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds HtmlTable controls, innerItem indicates the table data
-
   */
 
   createHTMLTable(keyIndex, controlItem, controlsArray) {
@@ -385,16 +381,11 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   * Function : constructControls
   * Description : Creates Controls from JSON
   */
-
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
-
     var xmlJson = [];
-
     var controlsArray = [];
-
     xmlJson.push(xml);
-
     var keyIndex = 0;
 
     xmlJson[0].children.map((currentSection, index) => {
@@ -438,7 +429,6 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
    * Function : browsing
    * Description : Browses files from iOS and Android devices.
    */
-
   browsing = () => {
     DocumentPicker.show(
       {
