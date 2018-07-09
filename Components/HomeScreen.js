@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, StyleSheet, Image, TextInput } from 'react-native';
-import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
-import { Column as Col, Row } from 'react-native-flexbox-grid';
+import { AppRegistry, View, Text, Image } from 'react-native';
+import { Icon,  Container, Header, Content, Left, Right } from 'native-base';
  
 import styles from './Styles/styleHome';
 import commonStyles from "./Styles/commonStyles";
