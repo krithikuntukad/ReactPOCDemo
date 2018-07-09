@@ -32,6 +32,8 @@ import HTML from "react-native-render-html";
 
 import styles from "./Styles/demoPaginationStyle";
 
+import commonStyles from "./Styles/commonStyles";
+
 import { Container } from "native-base";
 
 import Swiper from "react-native-swiper";
@@ -463,23 +465,17 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: "#153875" }}>
+        <Header style={commonStyles.headrBgColor}>
           <Left>
             <Icon
               name="ios-menu"
-              style={{ color: "white" }}
+              style={commonStyles.menuIcon}
               onPress={() => this.props.navigation.openDrawer()}
             />
           </Left>
 
           <Content
-            contentContainerStyle={{
-              flex: 1,
-
-              alignItems: "center",
-
-              justifyContent: "center"
-            }}
+            contentContainerStyle={commonStyles.contentStyle}
           >
             <Text style={{ color: "white", textAlign: "center" }}>
               {" "}

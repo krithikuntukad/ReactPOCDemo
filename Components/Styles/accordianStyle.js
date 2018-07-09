@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-
-
-
+import theme from '../Styles/theme.style'
 
 module.exports = StyleSheet.create({
 
@@ -25,7 +22,7 @@ paddingTop: 20,
 
 backgroundColor: "#153875",
 
-color: 'white',
+color: theme.COLOR_WHITE,
 
 textAlign: 'center',
 
@@ -221,13 +218,13 @@ backgroundColor: "#0865a3"
 
 iconStyle:{
 
-color: 'white'
+color: theme.COLOR_WHITE
 
 },
 
 headerTextStyle:{
 
-color: 'white', 
+color: theme.COLOR_WHITE, 
 
 textAlign: 'center'
 
@@ -259,7 +256,7 @@ height: 30
 
 buttonText:{
 
-color: 'white', 
+color: theme.COLOR_WHITE, 
 
 paddingLeft: 5,
 
@@ -279,7 +276,7 @@ marginTop:5
 
 sectionView:{
 
-padding: 5, backgroundColor: 'white' 
+padding: 5, backgroundColor: theme.COLOR_WHITE 
 
 },
 

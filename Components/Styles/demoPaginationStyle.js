@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-
+import theme from '../Styles/theme.style'
 
 module.exports = StyleSheet.create({
 
@@ -13,7 +13,7 @@ margin:20,
 header: {
 paddingTop:20,
 backgroundColor: "#153875",
-color: 'white',
+color: theme.COLOR_WHITE,
 textAlign: 'center',
 height:50
 },
@@ -62,7 +62,7 @@ backgroundColor:'#153875',
 },
 pageStyle:{
     flex:1,
-    backgroundColor:'white',
+    backgroundColor:theme.COLOR_WHITE,
   
 },
 

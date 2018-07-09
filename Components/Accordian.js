@@ -9,7 +9,6 @@ import {
   Alert,
   ScrollView,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
   ImageBackground,
   Dimensions
@@ -32,6 +31,8 @@ var XMLParser = require("react-xml-parser");
 import HTML from "react-native-render-html";
 
 import styles from "./Styles/accordianStyle";
+
+import commonStyles from "./Styles/commonStyles";
 
 import { Container } from "native-base";
 
@@ -550,30 +551,24 @@ export default class Accordian extends Component {
           style={styles.imageStyle}
           source={require("./images/BackgroundImage.jpg")}
         >
-          <Header style={styles.headerBackgroundStyle}>
+          <Header style={commonStyles.headrBgColor}>
             <Left>
               <Icon
                 name="ios-menu"
-                style={styles.iconStyle}
+                style={commonStyles.menuIcon}
                 onPress={() => this.props.navigation.openDrawer()}
               />
             </Left>
 
             <Content
-              contentContainerStyle={{
-                flex: 1,
-
-                alignItems: "center",
-
-                justifyContent: "center"
-              }}
+              contentContainerStyle={commonStyles.contentStyle}
             >
-              <Text style={styles.headerTextStyle}> Style Three </Text>
+              <Text style={commonStyles.contentLabel}> Style Three </Text>
             </Content>
 
             <Right>
               <Image
-                style={styles.saveImage}
+                style={commonStyles.contentImage}
                 source={require("./images/Save-White.png")}
               />
             </Right>

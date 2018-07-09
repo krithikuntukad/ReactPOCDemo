@@ -8,29 +8,46 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
-  TextInput,
-  StyleSheet,
   Dimensions,
   AsyncStorage
 } from "react-native";
+
 import { Column as Col, Row } from "react-native-flexbox-grid";
+
 import { Icon, Header, Content, Left, Right } from "native-base";
+
 var XMLParser = require("react-xml-parser");
+
 import HTML from "react-native-render-html";
+
 import styles from "./Styles/mainXMLFormStyle";
+
 import validationStyles from "./Styles/validationStyle";
+
 import commonStyles from "./Styles/commonStyles";
+
 import { Container } from "native-base";
+
 const Entities = require("html-entities").AllHtmlEntities;
+
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
+
 import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
+
 import { Form, FormItem } from "react-native-form-validation";
+
 import TextFieldComponent from "./controls/TextFieldComponent";
+
 import LabelComponent from "./controls/LabelComponent";
+
 import CheckboxComponent from "./controls/CheckboxComponent";
+
 import DropdownComponent from "./controls/DropdownComponent";
+
 import { DialogComponent } from "react-native-dialog-component";
+
 var jsonData = require("./Constants/xmlDataStyleFive.json");
+
 import { WebView } from "react-native";
 
 var responseText;

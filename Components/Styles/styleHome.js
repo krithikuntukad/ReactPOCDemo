@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
- 
+import theme from '../Styles/theme.style'
 export default StyleSheet.create({
  
 FlexBoxStyle: {

@@ -23,6 +23,7 @@ import { WebView } from "react-native";
 var XMLParser = require("react-xml-parser");
 import HTML from "react-native-render-html";
 import styles from "./Styles/accordianStyle";
+import commonStyles from "./Styles/commonStyles";
 import { Container } from "native-base";
 const Entities = require("html-entities").AllHtmlEntities;
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
@@ -484,28 +485,19 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
     return (
       <Container>
         <ImageBackground
-          style={{
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            justifyContent: "center"
-          }}
+          style={commonStyles.imageBgStyle}
           source={require("./images/BackgroundImage.jpg")}
         >
-          <Header style={{ backgroundColor: "#0865a3" }}>
+          <Header style={commonStyles.headrBgColor}>
             <Left>
               <Icon
                 name="ios-menu"
-                style={{ color: "white" }}
+                style={commonStyles.menuIcon}
                 onPress={() => this.props.navigation.openDrawer()}
               />
             </Left>
             <Content
-              contentContainerStyle={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center"
-              }}
+              contentContainerStyle={commonStyles.contentStyle}
             >
               <Text style={{ color: "white", textAlign: "center" }}>
                 {" "}

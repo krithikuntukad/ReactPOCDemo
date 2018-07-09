@@ -1,11 +1,13 @@
 import {StyleSheet} from 'react-native';
+
+import theme from '../Styles/theme.style'
 module.exports = StyleSheet.create({
 
     headrBgColor:{
         backgroundColor: "#153875"
     },
     menuIcon:{
-     color: 'white' 
+     color: theme.COLOR_WHITE 
     },
     contentStyle:{
         flex: 1,
@@ -13,7 +15,7 @@ module.exports = StyleSheet.create({
         justifyContent: 'center'
       },
     contentLabel:{ 
-      color: 'white', 
+      color: theme.COLOR_WHITE , 
       textAlign: 'center' 
       },
     contentImage:{ 
@@ -22,7 +24,7 @@ module.exports = StyleSheet.create({
     },
     pageStyle:{
         flex:1,
-        backgroundColor:'white',
+        backgroundColor:theme.COLOR_WHITE ,
       
     },
     viewStyle:{ 
@@ -55,5 +57,11 @@ module.exports = StyleSheet.create({
         marginTop: 5,
         height: 200, 
       },
+    imageBgStyle:{
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        justifyContent: "center"
+      }
 
 })

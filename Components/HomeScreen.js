@@ -4,6 +4,7 @@ import { Icon, Button, Container, Header, Content, Left, Right } from 'native-ba
 import { Column as Col, Row } from 'react-native-flexbox-grid';
  
 import styles from './Styles/styleHome';
+import commonStyles from "./Styles/commonStyles";
 export default class HomeScreen extends Component {
  
   static navigationOptions = {
@@ -11,16 +12,12 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: "#0865a3", }}>
+        <Header style={commonStyles.headrBgColor}>
           <Left>
-            <Icon name="ios-menu" style={{ color: 'white' }} onPress={() =>
+            <Icon name="ios-menu" style={commonStyles.menuIcon} onPress={() =>
               this.props.navigation.openDrawer()} />
           </Left>
-          <Content contentContainerStyle={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+          <Content contentContainerStyle={commonStyles.contentStyle}>
             <Text style={{ color: 'white', textAlign: 'center' }}> Home  </Text>
           </Content>
           <Right>
