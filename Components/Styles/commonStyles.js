@@ -4,7 +4,7 @@ import theme from '../Styles/theme.style'
 module.exports = StyleSheet.create({
 
     headrBgColor:{
-        backgroundColor: "#153875"
+        backgroundColor: theme.COLOR_BLUE
     },
     menuIcon:{
      color: theme.COLOR_WHITE 
@@ -33,7 +33,7 @@ module.exports = StyleSheet.create({
     },
     browseButtonStyle:{
         borderWidth:1,
-        borderColor:'#153875',
+        borderColor:theme.COLOR_BLUE,
         width: 150, height: 80,flex: 0.30,
         flexDirection: 'row',
         justifyContent: 'flex-end'
@@ -41,13 +41,13 @@ module.exports = StyleSheet.create({
     },
     browseButtonStyle:{
         borderWidth:1,
-        borderColor:'#153875',
+        borderColor:theme.COLOR_BLUE,
         width: 100, height: 30
     
     },
     BrowserStyle: {
         borderWidth:1,
-        backgroundColor:'#153875',
+        backgroundColor:theme.COLOR_BLUE,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'

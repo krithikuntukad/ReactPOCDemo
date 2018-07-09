@@ -147,6 +147,27 @@ export default class MainXMLForm extends Component {
   };
 
   /**
+   * Function : formateText
+   * Description : removes all html tags from a string
+   * Params : text to be formated
+   */ 
+
+  formateText=(text)=>{
+   return  text.replace("<p>", "")
+    .replace("</p>", "")
+    .replace("<d>", "")
+    .replace("</d>", "")
+    .replace("<dfn>", "")
+    .replace("</dfn>", "")
+    .replace("<em>", "")
+    .replace("</em>", "")
+    .replace("&nbsp;", "")
+    .replace("&amp;", "&")
+    .replace("&quot;", "'")
+    .replace("&#39;", "'")
+
+  }
+  /**
    * Function : visibilityPropertyOnControlAction
    * Description : Defines Visibility Property of eacj control based on Action,SourceField and Source value.
    * Params : innerItem is the object holding Action,SourceField and Source value of eact control
@@ -279,7 +300,6 @@ export default class MainXMLForm extends Component {
       var visibilityData = await AsyncStorage.getItem("visibilityData");
       let parsedVisibilityData = JSON.parse(visibilityData);
       let parsed = JSON.parse(value);
-      console.log("parsedVisibilityData", parsed);
       if (parsed) {
         Alert.alert("Do you want to Replace previous data", "", [
           {
@@ -310,7 +330,6 @@ export default class MainXMLForm extends Component {
    * Params : valueObj holds the user entered text field value,validity rules.
    */
   changeStateAttributeValue = (valueObj) => {
-    console.log(valueObj)
     let statusCopy = Object.assign({}, this.state);
     let evt =   valueObj.event
     statusCopy.controlInputs[valueObj.attributeKey] =
@@ -350,7 +369,7 @@ export default class MainXMLForm extends Component {
     let statusCopy = Object.assign({}, this.state);
     statusCopy.controlInputs[checkedAttributes.attributeKey] =
       checkedAttributes.value;
-    statusCopy.visibilityInputs[checkedAttributes.fieldId] =
+    statusCopy.visibilityInputs[checkedAttributes.validityArray.fieldId] =
       checkedAttributes.value == true ? "true" : "false";
     this.setState(statusCopy);
     this.validateControl(
@@ -406,7 +425,6 @@ export default class MainXMLForm extends Component {
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
             validityArray = this.getValidationRules(tempArray);
-            console.log("validityArray", validityArray);
           }
 
           visibility = validityArray["visibility"];
@@ -498,7 +516,7 @@ export default class MainXMLForm extends Component {
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
             validityArray = this.getValidationRules(tempArray);
-            console.log("validityArray", validityArray);
+            console.log("validityArray Table", validityArray);
           }
 
           visibility = validityArray["visibility"];
@@ -513,6 +531,7 @@ export default class MainXMLForm extends Component {
             keyIndex = keyIndex + 1;
             var y = innerItem.value;
             y = new Entities().decode(y);
+            console.log("controlActionsArray",controlActionsArray)
             controlActionsArray.length > 0 &&
               controlActionsArray.map(
                 (visibilityAction, visibilityActionIndex) => {
@@ -569,7 +588,6 @@ export default class MainXMLForm extends Component {
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
             validityArray = this.getValidationRules(tempArray);
-            console.log("validityArray", validityArray);
           }
 
           visibility = validityArray["visibility"];
@@ -584,16 +602,7 @@ export default class MainXMLForm extends Component {
             displayLabel = innerItem.value;
             text = innerItem.value; //<Text style={styles.Header }>{innerItem.value}</Text>
             text = new Entities().decode(text);
-            text = text
-              .replace("<p>", "")
-              .replace("</p>", "")
-              .replace("<d>", "")
-              .replace("<dfn>", "")
-              .replace("</dfn>", "")
-              .replace("<em>", "")
-              .replace("</em>", "")
-              .replace("</d>", "")
-              .replace("&nbsp;", "");
+            text = this.formateText(text)
 
             this.state.validityRules[displayLabel] = validityArray;
             displayTxt =
@@ -618,7 +627,6 @@ export default class MainXMLForm extends Component {
             );
           }
           if (tempArray.length - 1 == innerItemIndex) {
-            console.log("controlActionsArray hide", controlActionsArray);
             controlActionsArray.length > 0 &&
               controlActionsArray.map(
                 (visibilityAction, visibilityActionIndex) => {
@@ -640,8 +648,6 @@ export default class MainXMLForm extends Component {
                 }
               );
             if (visibility == "true") {
-              console.log("index of radio grp");
-              console.log(this.state.controlInputs[displayLabel + "index"]);
               keyIndex = keyIndex + 1;
 
               return (
@@ -727,13 +733,7 @@ export default class MainXMLForm extends Component {
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1;
             var text = new AllHtmlEntities().decode(innerItem.value);
-            text = text
-              .replace("<d>", "")
-              .replace("</d>", "")
-              .replace("&amp;", "&")
-              .replace("&nbsp;", "")
-              .replace("&quot;", "'")
-              .replace("&#39;", "'");
+            text = this.formateText(text)
             this.state.validityRules[text] = validityArray;
             controlActionsArray.length > 0 &&
               controlActionsArray.map(
@@ -828,13 +828,7 @@ export default class MainXMLForm extends Component {
           if (innerItem.name == "FieldHeader") {
             var y = innerItem.value;
             y = new Entities().decode(innerItem.value);
-            y = y
-              .replace("<d>", "")
-              .replace("</d>", "")
-              .replace("&amp;", "&")
-              .replace("&nbsp;", "")
-              .replace("&quot;", "'")
-              .replace("&#39;", "'");
+            y = this.formateText(y)
             text = <Text>{y}</Text>;
             label = y;
           }
@@ -962,16 +956,7 @@ export default class MainXMLForm extends Component {
       if (Array[key] != "") {
         var text = key; 
         text = new Entities().decode(text);
-        text = text
-          .replace("<p>", "")
-          .replace("</p>", "")
-          .replace("<d>", "")
-          .replace("<dfn>", "")
-          .replace("</dfn>", "")
-          .replace("<em>", "")
-          .replace("</em>", "")
-          .replace("</d>", "")
-          .replace("&nbsp;", "");
+        text = this.formateText(text)
         obj = {
           Question: text,
           Answer: Array[key]

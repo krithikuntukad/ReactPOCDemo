@@ -10,7 +10,7 @@ margin:20,
 
 header: {
 paddingTop:20,
-backgroundColor: "#153875",
+backgroundColor: theme.COLOR_BLUE,
 color: theme.COLOR_WHITE,
 textAlign: 'center',
 height:50
@@ -52,10 +52,10 @@ inputText: {
 
 buttonBorderColor:{
     borderWidth:1,
-borderTopColor:'#153875'
+borderTopColor:theme.COLOR_BLUE
 },
 createButtonColor:{
-backgroundColor:'#153875',
+backgroundColor:theme.COLOR_BLUE,
 },
 pageStyle:{
     flex:1,
@@ -79,13 +79,13 @@ switchRow:{
 },
 browseButtonStyle:{
     borderWidth:1,
-    borderColor:'#153875',
+    borderColor:theme.COLOR_BLUE,
     width: 100, height: 30
 
 },
 BrowserStyle: {
     borderWidth:1,
-    backgroundColor:'#153875',
+    backgroundColor:theme.COLOR_BLUE,
     flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'

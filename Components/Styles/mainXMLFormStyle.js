@@ -10,7 +10,7 @@ margin:20,
 
 header: {
 paddingTop:20,
-backgroundColor: "#153875",
+backgroundColor: theme.COLOR_BLUE,
 color: theme.COLOR_WHITE,
 textAlign: 'center',
 height:50
@@ -40,11 +40,15 @@ paddingBottom:0
 
 buttonBorderColor:{
 borderWidth:1,
-borderTopColor:'#153875'
+borderTopColor:theme.COLOR_BLUE
 },
 
 createButtonColor:{
-backgroundColor:'#153875',
+backgroundColor:theme.COLOR_BLUE,
 },
- 
+webviewStyle: {
+    flex: 1,
+    marginTop: 5,
+    height: 200, 
+}
 });
