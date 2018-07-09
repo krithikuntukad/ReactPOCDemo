@@ -7,7 +7,7 @@ textFieldStyle:{
     borderWidth: 1,
     marginBottom: 10,
     paddingLeft: 5,
-    fontSize: 10
+    fontSize: theme.FONT_SIZE
   },
 
 })

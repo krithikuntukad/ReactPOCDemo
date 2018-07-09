@@ -28,7 +28,7 @@ textBox:{
 color:"black",
 marginTop:5,
 paddingBottom:5,
-fontSize:10
+fontSize:theme.FONT_SIZE
 },
 
 label:{
@@ -42,7 +42,7 @@ paddingBottom:5,
 },
 
 radioText:{
-fontSize:10,
+fontSize:theme.FONT_SIZE,
 paddingLeft:5,
 paddingBottom:0
 
@@ -67,7 +67,7 @@ pageStyle:{
 },
 
 checkBoxLable:{
-fontSize:10,
+fontSize:theme.FONT_SIZE,
 color:'black',
 marginLeft:5
 },

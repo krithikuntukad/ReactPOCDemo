@@ -78,7 +78,7 @@ paddingBottom: 5,
 
 radioText: {
 
-fontSize: 10,
+fontSize: theme.FONT_SIZE,
 
 paddingLeft: 5,
 
@@ -162,7 +162,7 @@ justifyContent: 'center'
 
 swicthLable:{
 
-fontSize:10,
+fontSize:theme.FONT_SIZE,
 
 color:'black',
 
@@ -194,7 +194,7 @@ marginBottom: 10,
 
 paddingLeft: 5,
 
-fontSize: 10
+fontSize: theme.FONT_SIZE
 
 },
 
@@ -284,7 +284,7 @@ labelStyle : {
 
 color: 'black',
 
-fontSize: 10
+fontSize: theme.FONT_SIZE
 
 },
 

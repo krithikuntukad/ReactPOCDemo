@@ -3,7 +3,7 @@ import theme from '../Styles/theme.style'
 module.exports = StyleSheet.create({
 
     checkBoxLable:{
-        fontSize:10,
+        fontSize:theme.FONT_SIZE,
         color:'black',
         marginLeft:5
     },
