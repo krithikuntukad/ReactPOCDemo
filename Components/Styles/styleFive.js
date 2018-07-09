@@ -60,11 +60,7 @@ borderTopColor:'#153875'
 createButtonColor:{
 backgroundColor:'#153875',
 },
-pageStyle:{
-    flex:1,
-    backgroundColor:'white',
-  
-},
+
 browseButtonStyle:{
     borderWidth:1,
     borderColor:'#153875',
@@ -94,10 +90,6 @@ BrowserStyle: {
         marginTop: 5,
         height: 200, 
   },
-  contentStyle:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+
  
 });

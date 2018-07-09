@@ -6,6 +6,7 @@ var XMLParser = require('react-xml-parser');
 import HTML from 'react-native-render-html';
 import styles from './Styles/styleFive';
 import validationStyles from './Styles/validationStyle';
+import commonStyles from './Styles/commonStyles';
 import { Container } from 'native-base';
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
@@ -825,24 +826,24 @@ var errorMessage=[]
  
     return (
       <Container>
-        <Header style={{ backgroundColor: "#153875", }}>
+        <Header style={commonStyles.headrBgColor}>
           <Left>
-            <Icon name="ios-menu" style={{ color: 'white' }} onPress={() =>
+            <Icon name="ios-menu" style={commonStyles.menuIcon} onPress={() =>
               this.props.navigation.openDrawer()} />
           </Left>
-          <Content contentContainerStyle={styles.contentStyle}>
-            <Text style={{ color: 'white', textAlign: 'center' }}> Style Five  </Text>
+          <Content contentContainerStyle={commonStyles.contentStyle}>
+            <Text style={commonStyles.contentLabel}> Style Five  </Text>
           </Content>
           <Right>
-            <Image style={{ width: 30, height: 30, }}
+            <Image style={commonStyles.contentImage}
               source={require('./images/Save-White.png')} />
           </Right>
         </Header>
-        <View style={styles.pageStyle} >
+        <View style={commonStyles.pageStyle} >
         <DropdownComponent label="choose xml file/Data" dropDowValues={FileValues} onChangeText={(val) => {
         this.changeFileValue(val)
        }} />
-       <View style={{ flex: 1, justifyContent: 'center' }}>
+       <View style={commonStyles.viewStyle}>
          {
         this.state.displayLoader ? <ActivityIndicator size="large" color="#0000ff" /> : null
         }
