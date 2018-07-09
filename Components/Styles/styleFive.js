@@ -101,13 +101,7 @@ error:{
         height: 200, 
   },
 
-  textFieldStyle:{
-    height: 30,
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 5,
-    fontSize: 10
-  },
+
   contentStyle:{
     flex: 1,
     alignItems: 'center',

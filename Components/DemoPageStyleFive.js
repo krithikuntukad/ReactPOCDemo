@@ -571,9 +571,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
           validityArray = this.getValidationRules(tempArray);
-          console.log("validityArray",validityArray)
           }
-         
           visibility = validityArray["visibility"]
           isRequired = validityArray["isRequired"]
           if(innerItem.name == "ControlActions"){
@@ -602,10 +600,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                 <FormItem>
                   <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
                   <TextFieldComponent
-                    style={styles.textFieldStyle}
-                   
-                    //style={(this.state.controlValid[text] == null)?styles.validBorderColor:styles.errorBorderColor
-                    //}
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}
@@ -613,9 +607,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     maxLength={validityArray["maxLength"]}
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,validityArray["fieldId"])} />
-                {(
-                  <Text style={styles.error}>{this.state.controlValid[text]}</Text>
-                )}
+                    {(
+                      <Text style={styles.error}>{this.state.controlValid[text]}</Text>
+                    )}
 
                 </FormItem>
               )
@@ -649,7 +643,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
             validityArray = this.getValidationRules(tempArray);
-            console.log("validityArray",validityArray)
             }
             visibility = validityArray["visibility"]
             isRequired = validityArray["isRequired"]
@@ -671,10 +664,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             return innerItem.children.map((dropdownItem, dropdownItemIndex) => {
               if (dropdownItem.name == "ListItem") {
                 obj = {
-                        value: dropdownItem.attributes.value,
-                        name:dropdownItem.attributes.name
-                      }
-                      dropDowValues.push(obj)
+                    value: dropdownItem.attributes.value,
+                    name:dropdownItem.attributes.name
+                  }
+                  dropDowValues.push(obj)
               }
             })
           }

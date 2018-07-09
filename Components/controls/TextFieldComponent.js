@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {
   View,
-  TextInput,
-  Dimensions
+  TextInput
 } from 'react-native';
- 
-const width = Dimensions.get('window').width;
+import styles from '../Styles/textFieldStyle';
+
  
 class TextFieldComponent extends Component{
   constructor(props){
@@ -16,7 +15,7 @@ class TextFieldComponent extends Component{
     return (
       <View key = {this.props.key}>
         <TextInput
-        style={this.props.style}
+          style={styles.textFieldStyle}
           value={this.props.value}
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}
