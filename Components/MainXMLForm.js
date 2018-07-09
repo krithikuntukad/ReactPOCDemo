@@ -1038,7 +1038,7 @@ export default class MainXMLForm extends Component {
             ) : null}
             {!this.state.displayLoader ? (
               <ScrollView>
-                <View style={styles.container}>
+                <View style={commonStyles.container}>
                   <Form ref="form" shouldValidate={true}>
                     {content}
                   </Form>

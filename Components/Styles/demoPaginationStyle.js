@@ -3,13 +3,6 @@ import {StyleSheet} from 'react-native';
 import theme from '../Styles/theme.style'
 
 module.exports = StyleSheet.create({
-
-container: {
-flex:1,
-margin:20,
-
-},
-
 header: {
 paddingTop:20,
 backgroundColor: theme.COLOR_BLUE,

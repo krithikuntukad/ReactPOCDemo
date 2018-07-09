@@ -580,7 +580,7 @@ export default class DemoPageStyleTwo extends Component {
 
         <View style={styles.pageStyle}>
           <ScrollView>
-            <View style={styles.container}>{this.state.controlsArray}</View>
+            <View style={commonStyles.container}>{this.state.controlsArray}</View>
           </ScrollView>
 
           <View>

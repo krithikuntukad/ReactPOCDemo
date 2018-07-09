@@ -513,7 +513,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
           </Header>
           <View style={styles.pageStyle}>
             <ScrollView>
-              <View style={styles.container}>
+              <View style={commonStyles.container}>
                 {this.state.controlsArray}
                 <View
                   style={{
