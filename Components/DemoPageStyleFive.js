@@ -10,14 +10,13 @@ const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
 import { Form, FormItem } from 'react-native-form-validation';
-import TextFieldComponent from './TextFieldComponent'
-import LabelComponent from './LabelComponent'
-import CheckboxComponent from './CheckboxComponent'
-import DropdownComponent from './DropdownComponent'
+import TextFieldComponent from './controls/TextFieldComponent'
+import LabelComponent from './controls/LabelComponent'
+import CheckboxComponent from './controls/CheckboxComponent'
+import DropdownComponent from './controls/DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
 var jsonData = require('./Constants/xmlDataStyleFive.json');
 import { WebView } from 'react-native';
-var regtext;
 var responseText;
 let FileValues = [{
   value: 'xmlData',
@@ -61,7 +60,7 @@ export default class DemoPageStyleFive extends Component {
     
   }
 
-   /**
+/**
  * Function : componentWillMount
  * Description : react native component life cycle event
  */
@@ -72,7 +71,7 @@ export default class DemoPageStyleFive extends Component {
       this.displayData()
     }
 
-     /**
+/**
  * Function : componentWillUnmount
  * Description : react native component life cycle event
  */
@@ -87,9 +86,9 @@ export default class DemoPageStyleFive extends Component {
     }
 
 
-      /**
+    /**
      * Function : changeFileValue
-     * Description : dynamically requires xml File
+     * Description : dynamically requires xml File based on dropdown select values.
      */
       changeFileValue=(val) => {
         if(val == "xmlData"){
@@ -110,7 +109,7 @@ export default class DemoPageStyleFive extends Component {
 
     /**
      * Function : controlHideShowAction
-     * Description : creates Hide and Show object based on KEys and values form XML Data
+     * Description : creates Hide and Show object based on Keys and values form XML Data
      */
       controlHideShowAction=(innerItem)=>{
         var arrayObj =[]
@@ -152,7 +151,7 @@ export default class DemoPageStyleFive extends Component {
 
     /**
      * Function : getValidationRules
-     * Description : defines validation rules
+     * Description : defines validation rules for each control
      */
       getValidationRules=(arrayObj)=>{
         var validityArray={}
