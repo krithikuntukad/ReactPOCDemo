@@ -966,6 +966,8 @@ export default class MainXMLForm extends Component {
     }
     if (this.state.validForm == true) {
       this.dialogComponent.show();
+    }else{
+      Alert.alert("Please fill all mandatory fields")
     }
   };
 
@@ -1042,16 +1044,18 @@ export default class MainXMLForm extends Component {
                 </View>
               </ScrollView>
             ) : null}
-            <DialogComponent
+          </View>
+          <DialogComponent height={0.9} width={0.8} dialogStyle={styles.dialogStyle}
               ref={dialogComponent => {
                 this.dialogComponent = dialogComponent;
               }}
             >
-              <View>
-                <Text>{this.state.values}</Text>
-              </View>
+             
+              <ScrollView>
+                <Text style={styles.dialogFontStyle}>{this.state.values}</Text>
+              </ScrollView>
+              
             </DialogComponent>
-          </View>
           <View>
             <Row size={12}>
               <Col sm={6} style={styles.buttonBorderColor}>

@@ -565,8 +565,7 @@ export default class DemoPageStyleTwo extends Component {
             contentContainerStyle={commonStyles.contentStyle}
           >
             <Text style={commonStyles.contentLabel}>
-              {" "}
-              Style Two{" "}
+              Style Two
             </Text>
           </Content>
 

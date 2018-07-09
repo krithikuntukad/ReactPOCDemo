@@ -45,5 +45,16 @@ webviewStyle: {
     flex: 1,
     marginTop: 5,
     height: 200, 
+},
+
+dialogStyle:{
+marginLeft:10,
+marginTop:0,
+backgroundColor:theme.COLOR_WHITE,
+borderWidth:1,
+marginBottom:100
+},
+dialogFontStyle:{
+fontSize:theme.FONT_SIZE,
 }
 });
