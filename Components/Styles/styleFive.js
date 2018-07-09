@@ -88,39 +88,16 @@ BrowserStyle: {
         justifyContent: 'center'
     
 },
-error:{
-    color:'red',
-    fontSize:10, 
-    //marginTop:-10,marginBottom:2
-
-},
 
   webviewStyle: {
         flex: 1,
         marginTop: 5,
         height: 200, 
   },
-
-
   contentStyle:{
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  validBorderColor:{
-borderColor:'grey',
-height: 30,
-borderWidth: 1,
-marginBottom: 10,
-paddingLeft: 5,
-fontSize: 10
-  },
-  errorBorderColor:{
-    borderColor:'red',
-    height: 30,
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 5,
-    fontSize: 10
-  }
+ 
 });

@@ -5,6 +5,7 @@ import { Icon, Header, Content, Left, Right } from 'native-base';
 var XMLParser = require('react-xml-parser');
 import HTML from 'react-native-render-html';
 import styles from './Styles/styleFive';
+import validationStyles from './Styles/validationStyle';
 import { Container } from 'native-base';
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
@@ -354,7 +355,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                   isRequired={isRequired == "true"?true:false}
                 >
               {(
-                <Text style={styles.error}>{this.state.controlValid[innerItem.value]}</Text>
+                <Text style={validationStyles.error}>{this.state.controlValid[innerItem.value]}</Text>
               )}
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
@@ -510,7 +511,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               return(
                 <FormItem>
                 {(
-               <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
+               <Text style={validationStyles.error}>{this.state.controlValid[displayLabel]}</Text>
                 )}
                   <View key={keyIndex}>
                     <HTML html={displayTxt} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true}
@@ -608,7 +609,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     onChange={(event) =>
                       this.changeStateAttributeValue(event, text, validityArray,validityArray["fieldId"])} />
                     {(
-                      <Text style={styles.error}>{this.state.controlValid[text]}</Text>
+                      <Text style={validationStyles.error}>{this.state.controlValid[text]}</Text>
                     )}
 
                 </FormItem>
@@ -697,7 +698,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
 
               }} />
               {(
-              <Text style={styles.error}>{this.state.controlValid[label]}</Text>
+              <Text style={validationStyles.error}>{this.state.controlValid[label]}</Text>
               )}
             </FormItem>
           )
