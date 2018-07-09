@@ -50,6 +50,8 @@ var jsonData = require("./Constants/xmlDataStyleFive.json");
 
 import { WebView } from "react-native";
 
+import * as commonFn from './utility/commonJs'
+
 var responseText;
 let FileValues = [
   {
@@ -923,12 +925,7 @@ export default class MainXMLForm extends Component {
       var rules = validationCheckRules[key];
 
       if (
-        rules["isRequired"] == "true" &&
-        (Array[key] == undefined ||
-          Array[key] == "undefined" ||
-          Array[key] == "null" ||
-          Array[key] == null ||
-          Array[key] == "")
+        rules["isRequired"] == "true" && commonFn.checkForUndefinedORNull(Array[key])
       ) {
         let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = rules["requiredFieldErrorMessage"];
