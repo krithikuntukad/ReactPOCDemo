@@ -15,7 +15,7 @@ import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
-var jsonData = require('./Constants/xmlData.json');
+var jsonData = require('./Constants/xmlDataStyleFive.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
@@ -150,14 +150,63 @@ export default class DemoPageStyleFive extends Component {
       }
       }
 
+    /**
+     * Function : getValidationRules
+     * Description : defines validation rules
+     */
+      getValidationRules=(arrayObj)=>{
+        var validityArray={}
+        for(index=0;index<arrayObj.length;index++){
+          let innerItem = arrayObj[index]
+        if (innerItem.name == "FieldId") {
+          validityArray["fieldId"] = innerItem.value
+        }
+        if (innerItem.name == "Visible") {
+          validityArray["visibility"] = innerItem.value
+        }
+        if (innerItem.name == "Validator") {
+          if (innerItem.value == "String") {
+            validityArray["regtext"] = /^[a-zA-Z]+$/
+          } else {
+            validityArray["regtext"] = /^\d+$/
+          }
+        }
+        if (innerItem.name == "MaxLength") {
+          validityArray["maxLength"] =parseInt(innerItem.value) 
+        }
+        if (innerItem.name == "ValidatorErrorMessage") {
+          validityArray["validatorErrorMessage"] = innerItem.value
+        }
+        if (innerItem.name == "RequiredField") {
+          validityArray["isRequired"] = innerItem.value
+        }
+        if (innerItem.name == "RequiredFieldErrorMessage") {
+          validityArray["requiredFieldErrorMessage"] = innerItem.value
+        }
 
+        if (innerItem.name == "Validator") {
+          if (innerItem.value == "String") {
+            validityArray["keyboardType"] = 'default'
+          }
+          else if (innerItem.value == "Integer") {
+            validityArray["keyboardType"] = 'numeric'
+          }
+        }
+      }
+       return validityArray
+      }
+
+ /**
+ * Function : validateControl
+ * Description : validates controls
+ */
   validateControl = (attributeKey, validityArray) =>{
     let statusCopy = Object.assign({}, this.state);
-    if (this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true") {
-      statusCopy.controlValid[attributeKey] = validityArray["RequiredFieldErrorMessage"];
+    if (this.state.controlInputs[attributeKey].length == 0 && validityArray["isRequired"] == "true") {
+      statusCopy.controlValid[attributeKey] = validityArray["requiredFieldErrorMessage"];
       this.setState(statusCopy);
-    }  else if (this.state.controlInputs[attributeKey].length > 0 && validityArray.regExp != "" && !regtext.test(this.state.controlInputs[attributeKey])) {
-      statusCopy.controlValid[attributeKey] =validityArray["ValidatorErrorMessage"]
+    }  else if (this.state.controlInputs[attributeKey].length > 0 && validityArray["regExp"] != "" && !validityArray["regtext"].test(this.state.controlInputs[attributeKey])) {
+      statusCopy.controlValid[attributeKey] =validityArray["validatorErrorMessage"]
       this.setState(statusCopy);
     }
     else {
@@ -209,7 +258,7 @@ displayData=async ()=>{
     statusCopy.controlInputs[attributeKey] = event.nativeEvent.text;
     statusCopy.visibilityInputs[fieldId] =event.nativeEvent.text;
     this.setState(statusCopy);
-this.validateControl(attributeKey, validityArray)
+    this.validateControl(attributeKey, validityArray)
   }
 
   /**
@@ -232,7 +281,6 @@ this.validateControl(attributeKey, validityArray)
  */
 changeCheckboxAttributeValue = (value, attributeKey,fieldId,validityArray) => {
   let statusCopy = Object.assign({}, this.state);
-  console.log("changeRadioButtonAttributeValue",value)
   statusCopy.controlInputs[attributeKey] = value;
   statusCopy.visibilityInputs[fieldId] = (value==true)?"true":"false";
   this.setState(statusCopy);
@@ -252,7 +300,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
   }
   let statusCopy = Object.assign({}, this.state);
   statusCopy.controlInputs[attributeKey] = value;
-  //statusCopy.visibilityInputs[fieldId] =value;
   statusCopy.visibilityInputs[fieldId] = name
   this.setState(statusCopy);
   this.validateControl(attributeKey, validityArray)
@@ -265,17 +312,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
     */
   createCheckBoxControl(keyIndex, controlItem) {
     var visibility = false
-    var regex = ""
-    var maxLength = 0
     var isRequired = false
     var contolArray = []
-    var fieldId = ""
     var controlActionsArray =[]
-    var stringVal = false
-    var keyboardType = ""
-    var ValidatorErrorMessage
-    var RequiredFieldErrorMessage
-    var Validator = ""
     var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
        contolArray.push(outerItem)
@@ -284,45 +323,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
-            fieldId = innerItem.value
-          }
-          if (innerItem.name == "Visible") {
-            visibility = innerItem.value
-          }
-          
-          if (innerItem.name == "MaxLength") {
-            maxLength =parseInt(innerItem.value) 
-          }
-          if (innerItem.name == "ValidatorErrorMessage") {
-            ValidatorErrorMessage = ""
-          }
-          if (innerItem.name == "RequiredField") {
-            isRequired = innerItem.value
-          }
-          if (innerItem.name == "RequiredFieldErrorMessage") {
-            RequiredFieldErrorMessage = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            Validator = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              regex =""
-            } else {
-              regex = ""
+            validityArray = this.getValidationRules(tempArray);
+            console.log("validityArray",validityArray)
             }
-
-          }
-
-          validityArray = {
-            "maxLength": maxLength,
-            "isRequired": isRequired,
-            "stringVal": stringVal,
-            "ValidatorErrorMessage" : ValidatorErrorMessage,
-            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
-            "regex": regex,
-            valid: true
-          }
+           
+            visibility = validityArray["visibility"]
+            isRequired = validityArray["isRequired"]
 
           if(innerItem.name == "ControlActions"){
             controlActionsArray =this.controlHideShowAction(innerItem)
@@ -343,10 +349,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               }
               })
             if (visibility == 'true') {
-              // this.state.controlInputs[innerItem.value] = false
-              console.log("cheeked",this.state.controlInputs[innerItem.value])
-             
-             // console.log(this.state.controlInputs[innerItem.value] === true)
               this.state.validityRules[innerItem.value] = validityArray
               return(
                 <FormItem
@@ -361,7 +363,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     checkboxStyle={styles.checkBoxStyle}
                     checked={this.state.controlInputs[innerItem.value]}
                     onChange={(checked) =>
-                       this.changeCheckboxAttributeValue(this.state.controlInputs[innerItem.value] == undefined?true:(checked?false:true),innerItem.value,fieldId,validityArray)
+                       this.changeCheckboxAttributeValue(this.state.controlInputs[innerItem.value] == undefined?true:(checked?false:true),innerItem.value, validityArray["fieldId"],validityArray)
                     }
                     numberOfLines={15}
                     style={styles.checkBoxLable}
@@ -383,12 +385,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
   */
  createHTMLTable(keyIndex,controlItem){
   var visibility = false
-  var regex = ""
-  var maxLength = 0
   var isRequired = false
-  var fieldId = ""
   var contolArray = []
   var controlActionsArray=[]
+  var validityArray = {}
   return controlItem.children.map((outerItem, outerItemIndex) => {
     contolArray.push(outerItem)
 
@@ -396,24 +396,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
       var tempArray = contolArray.reverse()
       return tempArray.map((innerItem, innerItemIndex) => {
         if (innerItem.name == "FieldId") {
-          fieldId = innerItem.value
-        }
-        if (innerItem.name == "Visible") {
-          visibility = innerItem.value
-        }
-        if (innerItem.name == "Validator") {
-          if (innerItem.value == "String") {
-            regex = /^\d+$/
-          } else {
-            regex = /^\d+$/
+          validityArray = this.getValidationRules(tempArray);
+          console.log("validityArray",validityArray)
           }
-        }
-        if (innerItem.name == "MaxLength") {
-          maxLength = innerItem.value
-        }
-        if (innerItem.name == "RequiredField") {
-          isRequired = innerItem.value
-        }
+         
+          visibility = validityArray["visibility"]
+          isRequired = validityArray["isRequired"]
         if(innerItem.name == "ControlActions"){
           controlActionsArray =this.controlHideShowAction(innerItem)
         }
@@ -422,10 +410,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         keyIndex = keyIndex + 1
         var y = innerItem.value
         y = new Entities().decode(y);
-
-        console.log("table,",controlActionsArray)
         controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
-      console.log("it is table view Display action",this.state.visibilityInputs[visibilityAction.SourceField])
           if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
           if(visibilityAction.Action == "Hide"){
             visibility = "false"
@@ -458,21 +443,13 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
     */
   createRadioButtonControl(keyIndex, controlItem) {
     var visibility = false
-    var regex = ""
-    var maxLength = 0
     var isRequired = false
     var contolArray = []
     var text = ""
     var radioBtn = []
     var displayTxt = ""
     var displayLabel = ""
-    var fieldId = ""
     var controlActionsArray=[]
-    var stringVal = false
-    var keyboardType = ""
-    var ValidatorErrorMessage
-    var RequiredFieldErrorMessage
-    var Validator = ""
     var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
@@ -482,55 +459,13 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
 
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
-            fieldId = innerItem.value
-          }
-          if (innerItem.name == "Visible") {
-            visibility = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              stringVal = true
-              regtext = /^[a-zA-Z]+$/
-            } else {
-              regtext = /^\d+$/
-              stringVal = false
+            validityArray = this.getValidationRules(tempArray);
+            console.log("validityArray",validityArray)
             }
-          }
-          
-          if (innerItem.name == "MaxLength") {
-            maxLength =parseInt(innerItem.value) 
-          }
-          if (innerItem.name == "ValidatorErrorMessage") {
-            ValidatorErrorMessage = ""
-          }
-          if (innerItem.name == "RequiredField") {
-            isRequired = innerItem.value
-          }
-          if (innerItem.name == "RequiredFieldErrorMessage") {
-            RequiredFieldErrorMessage = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            Validator = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              regex =""
-            } else {
-              regex = ""
-            }
-
-          }
-
-          validityArray = {
-            "maxLength": maxLength,
-            "isRequired": isRequired,
-            "stringVal": stringVal,
-            "ValidatorErrorMessage" : ValidatorErrorMessage,
-            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
-            "regex": regex,
-            valid: true
-          }
-
+           
+            visibility = validityArray["visibility"]
+            isRequired = validityArray["isRequired"]
+         
           if(innerItem.name == "ControlActions"){
               controlActionsArray =this.controlHideShowAction(innerItem)
           }
@@ -540,8 +475,6 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             text = new Entities().decode(text);
             text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
 
-           // this.state.controlInputs[innerItem.value] = ""
-          
            this.state.validityRules[displayLabel] = validityArray
             displayTxt = '<p style="fontSize:10;margin-bottom:5">' + this.getDisplayLabel(text,isRequired) + '</p>'
 
@@ -579,10 +512,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               keyIndex = keyIndex + 1
       
               return(
-                <FormItem
-                  isRequired={true}
-                  regExp={regex}
-                >
+                <FormItem>
                 {(
                <Text style={styles.error}>{this.state.controlValid[displayLabel]}</Text>
                 )}
@@ -599,7 +529,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                           "index":index,
                           "value":value,
                           "displayLabel":displayLabel,
-                          "fieldId":fieldId,
+                          "fieldId":validityArray["fieldId"],
                           "validityArray":validityArray
                         }
                         this.changeRadioButtonAttributeValue(obj)
@@ -619,10 +549,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
     })
   }
 
+/**
+ * Function : getDisplayLabel
+ * Description : Appends * for mandatory field's label
+ */
   getDisplayLabel(text,isRequired){
-
     return  labelVal = isRequired == "true"?text+"*":text
-
   }
 
   /**
@@ -631,17 +563,9 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
  */
   createTextFieldControl(keyIndex, controlItem) {
     var visibility = false
-    var regex = ""
-    var maxLength = 0
     var isRequired = false
     var contolArray = []
-    var stringVal = false
-    var keyboardType = ""
-    var ValidatorErrorMessage
-    var RequiredFieldErrorMessage
-    var Validator = ""
     var validityArray = {}
-    var fieldId = ""
     var controlActionsArray = [];
     return controlItem.children.map((outerItem, outerItemIndex) => {
       contolArray.push(outerItem)
@@ -650,56 +574,12 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
-            fieldId = innerItem.value
-          }
-          if (innerItem.name == "Visible") {
-            visibility = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              stringVal = true
-              regtext = /^[a-zA-Z]+$/
-            } else {
-              regtext = /^\d+$/
-              stringVal = false
-            }
-          }
-
-          
-          if (innerItem.name == "MaxLength") {
-            maxLength =parseInt(innerItem.value) 
-          }
-          if (innerItem.name == "ValidatorErrorMessage") {
-            ValidatorErrorMessage = innerItem.value
-          }
-          if (innerItem.name == "RequiredField") {
-            isRequired = innerItem.value
-          }
-          if (innerItem.name == "RequiredFieldErrorMessage") {
-            RequiredFieldErrorMessage = innerItem.value
-          }
-
-          if (innerItem.name == "Validator") {
-            Validator = innerItem.value
-          }
-
-          if (Validator == "String") {
-            keyboardType = 'default'
-          }
-
-          else if (Validator == "Integer") {
-            keyboardType = 'numeric'
-          }
-          validityArray = {
-            "maxLength": maxLength,
-            "isRequired": isRequired,
-            "stringVal": stringVal,
-            "ValidatorErrorMessage" : ValidatorErrorMessage,
-            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
-            "regex": regex,
-            valid: true
+          validityArray = this.getValidationRules(tempArray);
+          console.log("validityArray",validityArray)
           }
          
+          visibility = validityArray["visibility"]
+          isRequired = validityArray["isRequired"]
           if(innerItem.name == "ControlActions"){
             controlActionsArray =this.controlHideShowAction(innerItem)
           }
@@ -723,10 +603,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               })
             if (visibility == "true") {
               return(
-                <FormItem
-                isRequired= {true}
-                  regExp={regex}
-                >
+                <FormItem>
                   <LabelComponent style={styles.textBox} value={this.getDisplayLabel(text,isRequired)} />
                   <TextFieldComponent
                     style={styles.textFieldStyle}
@@ -736,10 +613,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
                     value={this.state.controlInputs[text]}//.xmlJson[0].children[a].children[b].children[c].children[d].value}
                     placeholder= "Enter Text Here"
                     key={keyIndex}
-                    keyboardType={keyboardType}
-                    maxLength={maxLength}
+                    keyboardType={validityArray["keyboardType"]}
+                    maxLength={validityArray["maxLength"]}
                     onChange={(event) =>
-                      this.changeStateAttributeValue(event, text, validityArray,fieldId)} />
+                      this.changeStateAttributeValue(event, text, validityArray,validityArray["fieldId"])} />
                 {(
                   <Text style={styles.error}>{this.state.controlValid[text]}</Text>
                 )}
@@ -759,17 +636,10 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
   */
   createDropdownControl(keyIndex, controlItem) {
     var visibility = false
-    var regex = ""
-    var maxLength = 0
     var isRequired = false
     var contolArray = []
     var stateIndexVal = ""
     var controlActionsArray = [];
-    var stringVal = false
-    var keyboardType = ""
-    var ValidatorErrorMessage
-    var RequiredFieldErrorMessage
-    var Validator = ""
     var validityArray = {}
     return controlItem.children.map((outerItem, outerItemIndex) => {
       var dropDowValues = []
@@ -782,54 +652,11 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         var tempArray = contolArray.reverse()
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
-            fieldId = innerItem.value
-          }
-          if (innerItem.name == "Visible") {
-            visibility = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              stringVal = true
-              regtext = /^[a-zA-Z]+$/
-            } else {
-              regtext = /^\d+$/
-              stringVal = false
+            validityArray = this.getValidationRules(tempArray);
+            console.log("validityArray",validityArray)
             }
-          }
-          
-          if (innerItem.name == "MaxLength") {
-            maxLength =parseInt(innerItem.value) 
-          }
-          if (innerItem.name == "ValidatorErrorMessage") {
-            ValidatorErrorMessage = ""
-          }
-          if (innerItem.name == "RequiredField") {
-            isRequired = innerItem.value
-          }
-          if (innerItem.name == "RequiredFieldErrorMessage") {
-            RequiredFieldErrorMessage = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            Validator = innerItem.value
-          }
-          if (innerItem.name == "Validator") {
-            if (innerItem.value == "String") {
-              regex =""
-            } else {
-              regex = ""
-            }
-
-          }
-
-          validityArray = {
-            "maxLength": maxLength,
-            "isRequired": isRequired,
-            "stringVal": stringVal,
-            "ValidatorErrorMessage" : ValidatorErrorMessage,
-            "RequiredFieldErrorMessage":RequiredFieldErrorMessage,
-            "regex": regex,
-            valid: true
-          }
+            visibility = validityArray["visibility"]
+            isRequired = validityArray["isRequired"]
           
           if(innerItem.name == "ControlActions"){
             controlActionsArray =this.controlHideShowAction(innerItem)
@@ -871,16 +698,13 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             })
         if (visibility == "true") {
           return (
-            <FormItem
-            isRequired={isRequired == "true"?true:false}
-              regExp={regex}
-            >
+            <FormItem>
               <DropdownComponent key={keyIndex} 
               label={this.getDisplayLabel(label,isRequired)} 
               dropDowValues={dropDowValues} 
               value={this.state.controlInputs[label]}
               onChangeText={(val,index,data) => {
-                this.changeDropDownAttributeValue(val,label,fieldId,data,validityArray)
+                this.changeDropDownAttributeValue(val,label,validityArray["fieldId"],data,validityArray)
 
               }} />
               {(
@@ -911,23 +735,14 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
 var errorMessage=[]
     var validationCheckRules =[]
     validationCheckRules = this.state.validityRules
-    console.log(validationCheckRules)
     var Array = this.state.controlInputs
     for (var key in validationCheckRules) {
-      console.log("key")
-      console.log(key)
      var  rules = validationCheckRules[key]
-     console.log("rules")
-      console.log(rules)
-      console.log(Array[key])
 
     if(rules["isRequired"] == "true" && (Array[key] == undefined||Array[key] == 'undefined' || Array[key] == 'null' || Array[key] ==null || Array[key] =="")){
-     
-     console.log("checking validity")
       let statusCopy = Object.assign({}, this.state);
-        statusCopy.controlValid[key] = rules["RequiredFieldErrorMessage"];
+        statusCopy.controlValid[key] = rules["requiredFieldErrorMessage"];
         errorMessage.push(statusCopy.controlValid[key])
-        console.log("errorMessage",errorMessage)
         this.setState(statusCopy);
      }else{
       let statusCopy = Object.assign({}, this.state);
@@ -951,26 +766,20 @@ var errorMessage=[]
     
     var nonNullArray = []
     this.state.values = []
-    
     for (var key in Array) {
-     
       if (Array[key] != "") {
-
         var text = key //<Text style={styles.Header }>{innerItem.value}</Text>
         text = new Entities().decode(text);
         text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
         obj = {
           "Question": text,
           "Answer": Array[key]
-
         }
         nonNullArray.push(obj)
       }
       this.setState({
         values: JSON.stringify(nonNullArray)
       })
-
-
     }
     if(this.state.validForm == true){
     this.dialogComponent.show();
@@ -1000,7 +809,6 @@ var errorMessage=[]
     var keyIndex = 0;
     content = this.state.xmlJson[0].children.map((currentSection, index) => {
       return currentSection.children.map((currentItem, itemIndex) => {
-
         if (currentItem.name == "Controls") {
           return currentSection.children.map((currentControl, controlIndex) => {
             if (currentControl.name == "Controls") {
