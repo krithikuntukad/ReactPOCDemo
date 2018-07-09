@@ -870,15 +870,7 @@
      
      </UdfControlAction>
      
-     <UdfControlAction>
      
-     <Action>ShowAndRequiredField</Action>
-     
-     <SourceField>ENTNationalEvent</SourceField>
-     
-     <SourceValue>2</SourceValue>
-     
-     </UdfControlAction>
      
      </ControlActions>
      
