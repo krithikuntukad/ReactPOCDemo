@@ -15,7 +15,7 @@ import LabelComponent from './LabelComponent'
 import CheckboxComponent from './CheckboxComponent'
 import DropdownComponent from './DropdownComponent'
 import { DialogComponent } from 'react-native-dialog-component';
-var jsonData = require('./Constants/xmlDataStyleFive.json');
+var jsonData = require('./Constants/xmlData.json');
 import { WebView } from 'react-native';
 var regtext;
 var responseText;
@@ -87,6 +87,10 @@ export default class DemoPageStyleFive extends Component {
     }
 
 
+      /**
+     * Function : changeFileValue
+     * Description : dynamically requires xml File
+     */
       changeFileValue=(val) => {
         if(val == "xmlData"){
          jsonData =require('./Constants/xmlData.json');
@@ -104,38 +108,49 @@ export default class DemoPageStyleFive extends Component {
       this.setState(statusCopy);
       }
 
-  controlHideShowAction=(innerItem)=>{
-    var controlActionsArray =[]
-    if(innerItem.name == "ControlActions"){
-      return innerItem.children.map((controlActions,controlActionsIndex) => {
-        if(controlActions.name=="UdfControlAction"){
-          var Action="",SourceField="",SourceValue=""
-          controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-       
-        if(udfControlAction.name=="Action"){
-        Action=udfControlAction.value
-       }
-       if(udfControlAction.name=="SourceField"){
-        SourceField=udfControlAction.value
-       }
+    /**
+     * Function : controlHideShowAction
+     * Description : creates Hide and Show object based on KEys and values form XML Data
+     */
+      controlHideShowAction=(innerItem)=>{
+        var arrayObj =[]
+        if(innerItem.name == "ControlActions" && innerItem.children.length>0){
+            for(index=0;index<innerItem.children.length;index++){
+                var controlActions = innerItem.children[index]
+                if(controlActions.name=="UdfControlAction"){
+                 var Action="",SourceField="",SourceValue=""
+                 for(subIndex=0;subIndex<controlActions.children.length;subIndex++){
+                   var udfControlAction = controlActions.children[subIndex]
+                   if(udfControlAction.name=="Action"){
+                     Action=udfControlAction.value
+                    }
+                    if(udfControlAction.name=="SourceField"){
+                     SourceField=udfControlAction.value
+                    }
+             
+                   if(udfControlAction.name=="SourceValue"){
+                     SourceValue=udfControlAction.value
+                   }
+                   if(controlActions.children.length-1 == subIndex){
+                     let obj ={
+                       "Action":Action,
+                       "SourceField":SourceField,
+                       "SourceValue":SourceValue
+                     }
+                     arrayObj.push(obj)
+                   }
+                 }
+                 if(innerItem.children.length-1 == index ){
+                   return arrayObj
+                   }
+              }
+           }
+      }else{
+        return arrayObj
+      }
+      }
 
-      if(udfControlAction.name=="SourceValue"){
-        SourceValue=udfControlAction.value
-      }
-      if(controlActions.children.length-1 == udfControlActionIndex){
-        let obj ={
-          "Action":Action,
-          "SourceField":SourceField,
-          "SourceValue":SourceValue
-        }
-        controlActionsArray.push(obj)
-      }
-          })
-        }
-      })
-      return controlActionsArray
-    }
-  }
+
   validateControl = (attributeKey, validityArray) =>{
     let statusCopy = Object.assign({}, this.state);
     if (this.state.controlInputs[attributeKey].length == 0 && validityArray.isRequired == "true") {
@@ -308,37 +323,14 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             "regex": regex,
             valid: true
           }
+
           if(innerItem.name == "ControlActions"){
-            return innerItem.children.map((controlActions,controlActionsIndex) => {
-              if(controlActions.name=="UdfControlAction"){
-                var Action="",SourceField="",SourceValue=""
-                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-             
-              if(udfControlAction.name=="Action"){
-              Action=udfControlAction.value
-             }
-             if(udfControlAction.name=="SourceField"){
-              SourceField=udfControlAction.value
-             }
-      
-            if(udfControlAction.name=="SourceValue"){
-              SourceValue=udfControlAction.value
-            }
-            if(controlActions.children.length-1 == udfControlActionIndex){
-              let obj ={
-                "Action":Action,
-                "SourceField":SourceField,
-                "SourceValue":SourceValue
-              }
-              controlActionsArray.push(obj)
-            }
-                })
-              }
-            })
-          }
+            controlActionsArray =this.controlHideShowAction(innerItem)
+          } 
+
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
-            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+            controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
                   visibility = "false"
@@ -423,32 +415,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           isRequired = innerItem.value
         }
         if(innerItem.name == "ControlActions"){
-          innerItem.children.map((controlActions,controlActionsIndex) => {
-            if(controlActions.name=="UdfControlAction"){
-              var Action="",SourceField="",SourceValue=""
-              controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-          
-            if(udfControlAction.name=="Action"){
-            Action=udfControlAction.value
-           }
-           if(udfControlAction.name=="SourceField"){
-            SourceField=udfControlAction.value
-           }
-    
-          if(udfControlAction.name=="SourceValue"){
-            SourceValue=udfControlAction.value
-          }
-          if(controlActions.children.length-1 == udfControlActionIndex){
-            let obj ={
-              "Action":Action,
-              "SourceField":SourceField,
-              "SourceValue":SourceValue
-            }
-            controlActionsArray.push(obj)
-          }
-              })
-            }
-          })
+          controlActionsArray =this.controlHideShowAction(innerItem)
         }
         
         if (innerItem.name == "FieldHeader") {
@@ -456,7 +423,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
         var y = innerItem.value
         y = new Entities().decode(y);
 
-        controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+        console.log("table,",controlActionsArray)
+        controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
       console.log("it is table view Display action",this.state.visibilityInputs[visibilityAction.SourceField])
           if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
           if(visibilityAction.Action == "Hide"){
@@ -564,33 +532,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
 
           if(innerItem.name == "ControlActions"){
-            innerItem.children.map((controlActions,controlActionsIndex) => {
-              if(controlActions.name=="UdfControlAction"){
-                var Action="",SourceField="",SourceValue=""
-                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-             
-              if(udfControlAction.name=="Action"){
-              Action=udfControlAction.value
-             }
-             if(udfControlAction.name=="SourceField"){
-              SourceField=udfControlAction.value
-             }
-      
-            if(udfControlAction.name=="SourceValue"){
-              SourceValue=udfControlAction.value
-            }
-            if(controlActions.children.length-1 == udfControlActionIndex){
-              let obj ={
-                "Action":Action,
-                "SourceField":SourceField,
-                "SourceValue":SourceValue
-              }
-              controlActionsArray.push(obj)
-            }
-                })
-              }
-            })
-  
+              controlActionsArray =this.controlHideShowAction(innerItem)
           }
           if (innerItem.name == "FieldHeader") {
             displayLabel = innerItem.value
@@ -618,7 +560,8 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             })
           }
           if(tempArray.length-1 == innerItemIndex){
-            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+            console.log("controlActionsArray hide",controlActionsArray)
+            controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
                   visibility = "false"
@@ -758,40 +701,15 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
          
           if(innerItem.name == "ControlActions"){
-            innerItem.children.map((controlActions,controlActionsIndex) => {
-              if(controlActions.name=="UdfControlAction"){
-                var Action="",SourceField="",SourceValue=""
-                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-             
-              if(udfControlAction.name=="Action"){
-              Action=udfControlAction.value
-             }
-             if(udfControlAction.name=="SourceField"){
-              SourceField=udfControlAction.value
-             }
-      
-            if(udfControlAction.name=="SourceValue"){
-              SourceValue=udfControlAction.value
-            }
-            if(controlActions.children.length-1 == udfControlActionIndex){
-              let obj ={
-                "Action":Action,
-                "SourceField":SourceField,
-                "SourceValue":SourceValue
-              }
-              controlActionsArray.push(obj)
-            }
-                })
-              }
-            })
-  
+            controlActionsArray =this.controlHideShowAction(innerItem)
           }
+
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1
             var text = new AllHtmlEntities().decode(innerItem.value);
             text = text.replace("<d>", "").replace("</d>", "").replace("&amp;", "&").replace("&nbsp;", "").replace("&quot;", "'").replace("&#39;", "'")
             this.state.validityRules[text] = validityArray
-            controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+            controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
               if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
                 if(visibilityAction.Action == "Hide"){
                   visibility = "false"
@@ -912,33 +830,11 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
             "regex": regex,
             valid: true
           }
+          
           if(innerItem.name == "ControlActions"){
-            innerItem.children.map((controlActions,controlActionsIndex) => {
-              if(controlActions.name=="UdfControlAction"){
-                var Action="",SourceField="",SourceValue=""
-                controlActions.children.map((udfControlAction,udfControlActionIndex)=>{
-              if(udfControlAction.name=="Action"){
-              Action=udfControlAction.value
-             }
-             if(udfControlAction.name=="SourceField"){
-              SourceField=udfControlAction.value
-             }
-      
-            if(udfControlAction.name=="SourceValue"){
-              SourceValue=udfControlAction.value
-            }
-            if(controlActions.children.length-1 == udfControlActionIndex){
-              let obj ={
-                "Action":Action,
-                "SourceField":SourceField,
-                "SourceValue":SourceValue
-              }
-              controlActionsArray.push(obj)
-             }
-            })
-              }
-            })
+            controlActionsArray =this.controlHideShowAction(innerItem)
           }
+
           if (innerItem.name == "FieldHeader") {
             var y = innerItem.value
             y = new Entities().decode(innerItem.value);
@@ -961,7 +857,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
           }
        if(tempArray.length-1 == innerItemIndex){
           keyIndex = keyIndex + 1
-          controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
+          controlActionsArray.length>0 && controlActionsArray.map((visibilityAction,visibilityActionIndex)=>{
             if(this.state.visibilityInputs[visibilityAction.SourceField] == visibilityAction.SourceValue){
               if(visibilityAction.Action == "Hide"){
                 visibility = "false"
