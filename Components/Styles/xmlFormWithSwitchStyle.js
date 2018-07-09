@@ -3,11 +3,9 @@ import {StyleSheet} from 'react-native';
 
 
 module.exports = StyleSheet.create({
-
 container: {
 flex:1,
 margin:20,
-
 },
 
 header: {
@@ -38,7 +36,6 @@ color:"#a8a8a8"
 radio:{
 flex:1,
 paddingBottom:5,
-//paddingRight:10
 },
 
 radioText:{
@@ -74,15 +71,11 @@ checkBoxLable:{
 swicthLable:{
 fontSize:10,
 color:'black',
-//justifyContent: 'center', 
-//alignItems: 'center' 
 },
 switchIcon:{
 transform: [{ scaleX: 0.8 }, { scaleY: 0.6}]
 },
 switchRow:{
-    //flex: 1,
-   // flexDirection: 'row',
 },
 browseButtonStyle:{
     borderWidth:1,
@@ -93,7 +86,6 @@ browseButtonStyle:{
 BrowserStyle: {
     borderWidth:1,
     backgroundColor:'#153875',
-    //height:30,
     flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'

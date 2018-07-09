@@ -9,21 +9,18 @@ import {
   Platform,
   StyleSheet,
   Text,
-  Image,
-  View
 } from 'react-native';
 
 import HomeScreen from './Components/HomeScreen';
 
-import { DrawerNavigator , DrawerItems, StackNavigator} from 'react-navigation';
-import DemoPageStyleOne from './Components/DemoPageStyleOne';
-import DemoPageStyleTwo from './Components/DemoPageStyleTwo';
-import { Icon, Button, Container, Header, Body, Content, Left } from 'native-base';
+import { DrawerNavigator , DrawerItems} from 'react-navigation';
+import XMLFormWithSwitch from './Components/XMLFormWithSwitch';
+import {Container, Header, Body, Content } from 'native-base';
 import MainXMLForm from './Components/MainXMLForm';
 
 import DemoPagination from './Components/DemoPagination';
-import DemoPageStyleFour from './Components/DemoPageStyleFour';
-import DemoPageStyleThree from './Components/DemoPageStyleThree';
+import DemoPageStyleFour from './Components/CompleteXMLFormWithStyles';
+import Accordian from './Components/Accordian';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -41,13 +38,7 @@ export default class App extends Component {
  
   render() {
     return (
- 
         <MyApp />
-   
-      // <View>
-      //   <FlexBox />
-      //   </View>
- 
     );
   }
 }
@@ -56,8 +47,6 @@ const CustomDrawerContentComponent = (props) => (
   <Container>
     <Header style={{ height: 50, backgroundColor:'white'}}>
       <Body>
-        {/* <Image style={{ width: 50, height: 50, borderRadius:50  }}
-          source={require('./Components/images/Entertainment.png')} /> */}
           <Text>Welcome</Text>
       </Body>
     </Header>
@@ -72,17 +61,14 @@ const MyApp = DrawerNavigator({
   Home: {
     screen: HomeScreen
   },
-  // "Style one - Complete XML form" : {
-  //   screen: DemoPageStyleOne
-  // },
   "Main XML form":{
     screen: MainXMLForm
   },
   " XML form with Switch" : {
-    screen: DemoPageStyleTwo
+    screen: XMLFormWithSwitch
   },
   "Accordion" : {
-    screen: DemoPageStyleThree
+    screen: Accordian
   },
   "Complete XML form with styles"  :{
     screen:DemoPageStyleFour

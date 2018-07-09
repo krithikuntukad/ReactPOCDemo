@@ -16,7 +16,7 @@ var XMLParser = require('react-xml-parser');
 
 import HTML from 'react-native-render-html';
 
-import styles from './Styles/styleTwo';
+import styles from './Styles/xmlFormWithSwitchStyle';
 
 import { Container } from 'native-base';
 
@@ -826,4 +826,4 @@ export default class DemoPageStyleTwo extends Component {
 
  
 
-AppRegistry.registerComponent('DemoPageStyleTwo', () => DemoPageStyleTwo);
+AppRegistry.registerComponent('XMLFormWithSwitch', () => XMLFormWithSwitch);

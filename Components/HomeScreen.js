@@ -7,11 +7,6 @@ import styles from './Styles/styleHome';
 export default class HomeScreen extends Component {
  
   static navigationOptions = {
-    // drawerIcon: (
-    //   <Button iconLeft style={{ width: 50, height: 50 }}>
-    //   <Icon name='home' />
-    // </Button>
-    // )
   }
   render() {
     return (

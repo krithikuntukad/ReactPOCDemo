@@ -18,7 +18,7 @@ var XMLParser = require('react-xml-parser');
 
 import HTML from 'react-native-render-html';
 
-import styles from './Styles/styleOne';
+import styles from './Styles/demoPaginationStyle';
 
 import { Container } from 'native-base';
 

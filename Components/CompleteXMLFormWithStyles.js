@@ -9,12 +9,12 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { WebView } from 'react-native';
 var XMLParser = require('react-xml-parser');
 import HTML from 'react-native-render-html';
-import styles from './Styles/styleFour';
+import styles from './Styles/accordianStyle';
 import { Container } from 'native-base';
 const Entities = require('html-entities').AllHtmlEntities;
 const AllHtmlEntities = require('html-entities').AllHtmlEntities;
 var jsonData = require('./Constants/xmlData.json');
-export default class DemoPageStyleFour extends Component {
+export default class CompleteXMLFormWithStyles extends Component {
  
   constructor(props) {
     super(props);
@@ -97,49 +97,7 @@ createHTMLTable(keyIndex,controlItem,controlsArray){
 * Description : Creates Radio Button controls
 */
 createRadioButtonControl(keyIndex,controlItem,controlsArray){
-  // controlItem.children.map((innerItem, innerItemIndex) => {
-  //   var text = ""
-  //   var radioBtn = []
 
-  //   if (innerItem.name == "FieldHeader") {
-  //     text = innerItem.value //<Text style={styles.Header }>{innerItem.value}</Text>
-  //     text = new Entities().decode(text);
-  //     text = text.replace("<p>", "").replace("</p>", "").replace("<d>", "").replace("<dfn>", "").replace("</dfn>", "").replace("<em>", "").replace("</em>", "").replace("</d>", "").replace("&nbsp;", "")
-  //     text = '<p style="fontSize:12;margin-bottom:5;font-weight: bold;">' + text + '</p>'
-
-  //   }
-  //   if (innerItem.name == "UserDefinedList") {
-  //     innerItem.children.map((radioBtnOption, radioBtnOptionIndex) => {
-
-  //       if (radioBtnOption.name == "ListItem") {
-  //         keyIndex = keyIndex + 1
-  //         radioBtn.push(
-  //           <RadioButton value={radioBtnOption.attributes.name} >
-  //           <Text style={styles.radioText}>{radioBtnOption.attributes.value}</Text>
-  //           </RadioButton>
-  //         )
-  //       }
-  //     })
-  //   }
-  //   keyIndex = keyIndex + 1
-  //   controlsArray.push(
-  //     <View>
-  //     <View key={keyIndex}>
-  //     <HTML html={text} imagesMaxWidth={Dimensions.get('window').width} decodeEntities={true} debug={true} />
-  //     <RadioGroup
-  //             size={24}
-  //             thickness={2}
-  //             color='#153875'
-  //             //highlightColor='blue'
-  //     onSelect = {(index, value) => {
-  //    }}
-  // >
-  //     {radioBtn}
-  // </RadioGroup>
-  //     </View>
-  //     </View>
-  //   )
-  // })
   controlItem.children.map(function (innerItem, innerItemIndex) {
     var text = ""
     var radioBtn = []
@@ -433,4 +391,4 @@ if (innerItem.name == "FieldHeader") {
   }
 }
  
-AppRegistry.registerComponent('DemoPageStyleFour', () => DemoPageStyleFour);
+AppRegistry.registerComponent('CompleteXMLFormWithStyles', () => CompleteXMLFormWithStyles);
