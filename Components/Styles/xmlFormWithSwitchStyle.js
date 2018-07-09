@@ -23,14 +23,14 @@ checkBox:{
 flexWrap: 'wrap'
 },
 textBox:{
-color:"black",
+color:theme.COLOR_BLACK,
 marginTop:5,
 paddingBottom:5,
 fontSize:10
 },
 
 label:{
-color:"#a8a8a8"
+color:theme.COLOR_LIGHTGREY
 },
 
 radio:{
@@ -65,12 +65,12 @@ pageStyle:{
 
 checkBoxLable:{
     fontSize:10,
-    color:'black',
+    color:theme.COLOR_BLACK,
     marginLeft:5
 },
 swicthLable:{
 fontSize:10,
-color:'black',
+color:theme.COLOR_BLACK,
 },
 switchIcon:{
 transform: [{ scaleX: 0.8 }, { scaleY: 0.6}]

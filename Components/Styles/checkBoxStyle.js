@@ -4,7 +4,7 @@ module.exports = StyleSheet.create({
 
     checkBoxLable:{
         fontSize:theme.FONT_SIZE,
-        color:'black',
+        color:theme.COLOR_BLACK,
         marginLeft:5
     },
     checkBoxStyle : {

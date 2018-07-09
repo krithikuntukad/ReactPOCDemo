@@ -45,7 +45,7 @@ flexWrap: 'wrap',
 
 textBox: {
 
-color: "black",
+color:theme.COLOR_BLACK,
 
 marginTop: 5,
 
@@ -62,7 +62,7 @@ fontSize: 12
 
 label: {
 
-color: "#a8a8a8"
+color: theme.COLOR_LIGHTGREY
 
 },
 
@@ -127,7 +127,7 @@ checkBoxLable: {
 
 fontSize: 11,
 
-color: 'black',
+color: theme.COLOR_BLACK,
 
 marginLeft: 5
 
@@ -164,7 +164,7 @@ swicthLable:{
 
 fontSize:theme.FONT_SIZE,
 
-color:'black',
+color:theme.COLOR_BLACK,
 
 },
 
@@ -282,7 +282,7 @@ padding: 5, backgroundColor: theme.COLOR_WHITE
 
 labelStyle : {
 
-color: 'black',
+color: theme.COLOR_BLACK,
 
 fontSize: theme.FONT_SIZE
 

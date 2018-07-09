@@ -25,14 +25,14 @@ checkBox:{
 flexWrap: 'wrap'
 },
 textBox:{
-color:"black",
+color:theme.COLOR_BLACK,
 marginTop:5,
 paddingBottom:5,
 fontSize:theme.FONT_SIZE
 },
 
 label:{
-color:"#a8a8a8"
+color:theme.COLOR_LIGHTGREY
 },
 
 radio:{
@@ -68,7 +68,7 @@ pageStyle:{
 
 checkBoxLable:{
 fontSize:theme.FONT_SIZE,
-color:'black',
+color:theme.COLOR_BLACK,
 marginLeft:5
 },
 
