@@ -6,5 +6,6 @@ textFieldStyle:{
     marginBottom: 10,
     paddingLeft: 5,
     fontSize: 10
-  }
+  },
+
 })

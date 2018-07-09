@@ -19,7 +19,7 @@ import { DrawerNavigator , DrawerItems, StackNavigator} from 'react-navigation';
 import DemoPageStyleOne from './Components/DemoPageStyleOne';
 import DemoPageStyleTwo from './Components/DemoPageStyleTwo';
 import { Icon, Button, Container, Header, Body, Content, Left } from 'native-base';
-import DemoPageStyleFive from './Components/DemoPageStyleFive';
+import MainXMLForm from './Components/MainXMLForm';
 
 import DemoPagination from './Components/DemoPagination';
 import DemoPageStyleFour from './Components/DemoPageStyleFour';
@@ -76,7 +76,7 @@ const MyApp = DrawerNavigator({
   //   screen: DemoPageStyleOne
   // },
   "Main XML form":{
-    screen: DemoPageStyleFive
+    screen: MainXMLForm
   },
   " XML form with Switch" : {
     screen: DemoPageStyleTwo

@@ -4,7 +4,7 @@ import { Column as Col, Row } from 'react-native-flexbox-grid';
 import { Icon, Header, Content, Left, Right } from 'native-base';
 var XMLParser = require('react-xml-parser');
 import HTML from 'react-native-render-html';
-import styles from './Styles/styleFive';
+import styles from './Styles/mainXMLFormStyle';
 import validationStyles from './Styles/validationStyle';
 import commonStyles from './Styles/commonStyles';
 import { Container } from 'native-base';
@@ -41,7 +41,7 @@ let FileValues = [{
   value: 'sixControlData',
 }
 ];
-export default class DemoPageStyleFive extends Component {
+export default class MainXMLForm extends Component {
   constructor(props) {
     super(props);
    
@@ -358,7 +358,7 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               {(
                 <Text style={validationStyles.error}>{this.state.controlValid[innerItem.value]}</Text>
               )}
-                  <CheckboxComponent key={keyIndex} style={styles.checkBox}
+                  <CheckboxComponent key={keyIndex}
                     label=""
                     checked={this.state.controlInputs[innerItem.value]}
                     onChange={(checked) =>
@@ -832,7 +832,7 @@ var errorMessage=[]
               this.props.navigation.openDrawer()} />
           </Left>
           <Content contentContainerStyle={commonStyles.contentStyle}>
-            <Text style={commonStyles.contentLabel}> Style Five  </Text>
+            <Text style={commonStyles.contentLabel}>Main XML Form </Text>
           </Content>
           <Right>
             <Image style={commonStyles.contentImage}
@@ -899,4 +899,4 @@ var errorMessage=[]
   }
 }
 
-AppRegistry.registerComponent('DemoPageStyleFive', () => DemoPageStyleFive);
+AppRegistry.registerComponent('MainXMLForm', () => MainXMLForm);
