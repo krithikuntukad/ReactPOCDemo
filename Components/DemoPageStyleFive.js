@@ -358,14 +358,11 @@ changeDropDownAttributeValue = (value, attributeKey,fieldId,data,validityArray) 
               )}
                   <CheckboxComponent key={keyIndex} style={styles.checkBox}
                     label=""
-                    labelStyle={styles.labelStyle}
-                    checkboxStyle={styles.checkBoxStyle}
                     checked={this.state.controlInputs[innerItem.value]}
                     onChange={(checked) =>
                        this.changeCheckboxAttributeValue(this.state.controlInputs[innerItem.value] == undefined?true:(checked?false:true),innerItem.value, validityArray["fieldId"],validityArray)
                     }
                     numberOfLines={15}
-                    style={styles.checkBoxLable}
                     value={this.getDisplayLabel(innerItem.value,isRequired)}
                   />
 

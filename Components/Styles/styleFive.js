@@ -65,13 +65,6 @@ pageStyle:{
     backgroundColor:'white',
   
 },
-
-checkBoxLable:{
-fontSize:10,
-color:'black',
-marginLeft:5
-},
-
 browseButtonStyle:{
     borderWidth:1,
     borderColor:'#153875',
@@ -101,14 +94,7 @@ error:{
     //marginTop:-10,marginBottom:2
 
 },
-checkBoxStyle : {
-    width: 18,
-    height: 18
-  },
-  labelStyle : {
-    color: 'red',
-    fontSize: 10
-  },
+
   webviewStyle: {
         flex: 1,
         marginTop: 5,
