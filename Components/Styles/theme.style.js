@@ -2,6 +2,13 @@ export default {
     FONT_SIZE: 10,
     COLOR_WHITE:'white',
     COLOR_BLUE:'#153875',
-    COLOR_RED:'red'
+    COLOR_RED:'red',
+    COLOR_WHITEFONT:'#F2F2F2',
+
+    COLOR_BLUESHADEONE:'#3ec4c1',
+    COLOR_BLUESHADETWO:'#4da6cc',
+    COLOR_BLUESHADETHREE:'#4677ae',
+    COLOR_BLUESHADEFOUR:'#5b508f',
+    COLOR_BLUESHADEFIVE:'#593f6e'
 
   };

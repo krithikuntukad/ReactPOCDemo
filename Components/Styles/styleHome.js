@@ -37,6 +37,24 @@ backgroundImage: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-  }
+  },
+  flexBlueShadeOne:{
+    backgroundColor: theme.COLOR_BLUESHADEONE
+
+  },
+  flexBlueShadeTwo:{ 
+    backgroundColor: theme.COLOR_BLUESHADETWO 
+  },
+  flexBlueShadeThree:{ 
+    backgroundColor: theme.COLOR_BLUESHADETHREE 
+  },
+  flexBlueShadeFour:{ 
+    backgroundColor: theme.COLOR_BLUESHADEFOUR 
+  },
+  flexBlueShadeFive:{ 
+    backgroundColor: theme.COLOR_BLUESHADEFIVE 
+  },
+  fontColor:
+  { color: theme.COLOR_WHITEFONT }
  
 });

@@ -506,7 +506,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
             </Content>
             <Right>
               <Image
-                style={{ width: 30, height: 30 }}
+                style={commonStyles.contentImage}
                 source={require("./images/Save-White.png")}
               />
             </Right>

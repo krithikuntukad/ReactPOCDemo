@@ -477,7 +477,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
           <Content
             contentContainerStyle={commonStyles.contentStyle}
           >
-            <Text style={{ color: "white", textAlign: "center" }}>
+            <Text style={commonStyles.contentLabel}>
               {" "}
               Demo Pagination
             </Text>
@@ -485,7 +485,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
 
           <Right>
             <Image
-              style={{ width: 30, height: 30 }}
+              style={commonStyles.contentImage}
               source={require("./images/Save-White.png")}
             />
           </Right>
