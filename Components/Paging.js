@@ -42,7 +42,7 @@ const AllHtmlEntities = require("html-entities").AllHtmlEntities;
 
 var jsonData = require("./Constants/xmlData.json");
 
-export default class DemoPagination extends Component {
+export default class Paging extends Component {
   constructor(props) {
     super(props);
 
@@ -60,17 +60,11 @@ export default class DemoPagination extends Component {
   }
 
   /**
-
   * Function : createCheckBoxControl
-
   * Description : Creates Check box controls by pushing checkbox controls into controlsArray by using key index value
-
                   and  applying external styles for each control 
-
   * Params : KeyIndex is the unique value,controlItem holds controls globally,controlsArray holds checkbox controls, labelStyle is for styling checkbox label data
-
   *             
-
   */
 
   createCheckBoxControl(keyIndex, controlItem, controlsArray) {
@@ -145,15 +139,10 @@ export default class DemoPagination extends Component {
   }
 
   /**
-
   * Function : createRadioButtonControl
-
   * Description : Creates Radio Button controls and displays switch control if innerItem lenght is 2
-
   * params: KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds radioButton controls, FieldHeader is for label data, UseDefinedList is the list of values for dropdown
-
   *          switchFlag is true if length is 2 , radioBtnOptionIndex is the unique index value for radio button options
-
   */
 
   createRadioButtonControl(keyIndex, controlItem, controlsArray) {
@@ -224,13 +213,9 @@ export default class DemoPagination extends Component {
   }
 
   /**
-
   * Function : createTextFieldControl
-
   * Description : Creates Text Field  controls
-
   * params: KeyIndex is the unique value, controlItem holds controls globally,controlsArray holds TextInput controls, replace removes all unnecessary tags , FieldHeader is the label for TextInput
-
   */
 
   createTextFieldControl(keyIndex, controlItem, controlsArray) {
@@ -273,13 +258,9 @@ export default class DemoPagination extends Component {
   }
 
   /**
-
   * Function : createDropdownControl
-
   * Description : Creates Dropdown Controls
-
   * params : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds dropdown controls, dropDownValues are values to be displayed in the dropdownlist, ControlActions indicates interdependency actions
-
   */
 
   createDropdownControl(keyIndex, controlItem, controlsArray) {
@@ -352,14 +333,10 @@ export default class DemoPagination extends Component {
     );
   }
 
-  /**
-
+/**
 * Function : createAttachmentControl
-
 * Description : Creates Attachment Controls
-
 Params : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds Attacment controls
-
 */
 
   createAttachmentControl(keyIndex, controlItem, controlsArray) {
@@ -405,11 +382,8 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   }
 
   /**
-
   * Function : constructControls
-
   * Description : Creates Controls from JSON
-
   */
 
   constructControls(responseText) {
@@ -461,11 +435,8 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   }
 
   /**
-
    * Function : browsing
-
    * Description : Browses files from iOS and Android devices.
-
    */
 
   browsing = () => {
@@ -534,8 +505,6 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
           </Right>
         </Header>
 
-        {/* displays controls in different pages */}
-
         <View style={styles.pageStyle}>
           <Swiper style={styles.wrapper} showsButtons={true}>
             {this.state.controlsArray}
@@ -546,4 +515,4 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   }
 }
 
-AppRegistry.registerComponent("DemoPagination", () => DemoPagination);
+AppRegistry.registerComponent("Paging", () => Paging);

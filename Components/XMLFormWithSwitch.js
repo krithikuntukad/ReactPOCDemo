@@ -62,17 +62,11 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createCheckBoxControl
-
   * Description : Creates Check box controls by pushing checkbox controls into controlsArray by using key index value
-
                   and  applying external styles for each control 
-
   * Params : KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds checkbox controls,
-
               labelStyle is for styling checkbox label data            
-
   */
 
   createCheckBoxControl(keyIndex, controlItem, controlsArray) {
@@ -112,13 +106,9 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createHTMLTable
-
   * Description : Creates HTML Table controls and displays in webview
-
   * params : KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds HTML table controls, innerItem indicates the table data
-
   */
 
   createHTMLTable(keyIndex, controlItem, controlsArray) {
@@ -147,15 +137,10 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createRadioButtonControl
-
   * Description : Creates Radio Button controls and displays switch control if innerItem lenght is 2
-
   * params: KeyIndex is the unique value, controlItem holds controls globally, controlsArray holds radio button controls, FieldHeader is for label data, UseDefinedList is the list of values for dropdown
-
   *          switchFlag is true if length is 2 , radioBtnOptionIndex is the unique index value for radio button options
-
   */
 
   createRadioButtonControl(keyIndex, controlItem, controlsArray) {
@@ -298,13 +283,9 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createTextFieldControl
-
   * Description : Creates Text Field  controls
-
   * params: KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds TextInput controls, replace removes all unnecessary tags , FieldHeader is the label for TextInput
-
   */
 
   createTextFieldControl(keyIndex, controlItem, controlsArray) {
@@ -347,13 +328,9 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createDropdownControl
-
   * Description : Creates Dropdown Controls
-
   * params :KeyIndex is the unique value,controlItem holds controls globally, controlsArray holds DropDown controls, dropDownValues are values to be displayed in the dropdownlist, ControlActions indicates interdependency actions
-
   */
 
   createDropdownControl(keyIndex, controlItem, controlsArray) {
@@ -421,13 +398,9 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : createAttachmentControl
-
   * Description : Creates Attachment Controls
-
   * Params : KeyIndex is the unique value, controlItem holds controls globally,controlsArray holds attachment controls
-
   */
 
   createAttachmentControl(keyIndex, controlItem, controlsArray) {
@@ -473,16 +446,12 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : constructControls
-
   * Description : Creates Controls from JSON
-
   */
 
   constructControls(responseText) {
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
-
     var xmlJson = [];
 
     var controlsArray = [];
@@ -543,11 +512,8 @@ export default class DemoPageStyleTwo extends Component {
   }
 
   /**
-
   * Function : browsing
-
   * Description : Browses files from iOS andAndroid devices.
-
   */
 
   browsing = () => {

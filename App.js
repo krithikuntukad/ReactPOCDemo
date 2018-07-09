@@ -18,8 +18,8 @@ import XMLFormWithSwitch from './Components/XMLFormWithSwitch';
 import {Container, Header, Body, Content } from 'native-base';
 import MainXMLForm from './Components/MainXMLForm';
 
-import DemoPagination from './Components/DemoPagination';
-import DemoPageStyleFour from './Components/CompleteXMLFormWithStyles';
+import Paging from './Components/Paging';
+import CompleteXMLFormWithStyles from './Components/CompleteXMLFormWithStyles';
 import Accordian from './Components/Accordian';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -71,10 +71,10 @@ const MyApp = DrawerNavigator({
     screen: Accordian
   },
   "Complete XML form with styles"  :{
-    screen:DemoPageStyleFour
+    screen:CompleteXMLFormWithStyles
   },
   "Paging":{
-    screen:DemoPagination
+    screen:Paging
   }
 
   
