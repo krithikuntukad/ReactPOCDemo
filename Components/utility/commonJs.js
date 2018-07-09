@@ -9,3 +9,25 @@ export function checkForUndefinedORNull(data) {
     data == null ||
     data == "")
 }
+
+/**
+   * Function : formateText
+   * Description : removes all html tags from a string
+   * Params : text to be formated
+   */ 
+
+  export function formateText(text){
+    return  text.replace("<p>", "")
+     .replace("</p>", "")
+     .replace("<d>", "")
+     .replace("</d>", "")
+     .replace("<dfn>", "")
+     .replace("</dfn>", "")
+     .replace("<em>", "")
+     .replace("</em>", "")
+     .replace("&nbsp;", "")
+     .replace("&amp;", "&")
+     .replace("&quot;", "'")
+     .replace("&#39;", "'")
+ 
+   }

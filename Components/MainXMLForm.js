@@ -148,27 +148,7 @@ export default class MainXMLForm extends Component {
     this.setState(statusCopy);
   };
 
-  /**
-   * Function : formateText
-   * Description : removes all html tags from a string
-   * Params : text to be formated
-   */ 
-
-  formateText=(text)=>{
-   return  text.replace("<p>", "")
-    .replace("</p>", "")
-    .replace("<d>", "")
-    .replace("</d>", "")
-    .replace("<dfn>", "")
-    .replace("</dfn>", "")
-    .replace("<em>", "")
-    .replace("</em>", "")
-    .replace("&nbsp;", "")
-    .replace("&amp;", "&")
-    .replace("&quot;", "'")
-    .replace("&#39;", "'")
-
-  }
+  
   /**
    * Function : visibilityPropertyOnControlAction
    * Description : Defines Visibility Property of eacj control based on Action,SourceField and Source value.
@@ -604,7 +584,7 @@ export default class MainXMLForm extends Component {
             displayLabel = innerItem.value;
             text = innerItem.value; //<Text style={styles.Header }>{innerItem.value}</Text>
             text = new Entities().decode(text);
-            text = this.formateText(text)
+            text = commonFn.formateText(text)
 
             this.state.validityRules[displayLabel] = validityArray;
             displayTxt =
@@ -735,7 +715,7 @@ export default class MainXMLForm extends Component {
           if (innerItem.name == "FieldHeader") {
             keyIndex = keyIndex + 1;
             var text = new AllHtmlEntities().decode(innerItem.value);
-            text = this.formateText(text)
+            text = commonFn.formateText(text)
             this.state.validityRules[text] = validityArray;
             controlActionsArray.length > 0 &&
               controlActionsArray.map(
@@ -830,7 +810,7 @@ export default class MainXMLForm extends Component {
           if (innerItem.name == "FieldHeader") {
             var y = innerItem.value;
             y = new Entities().decode(innerItem.value);
-            y = this.formateText(y)
+            y = commonFn.formateText(y)
             text = <Text>{y}</Text>;
             label = y;
           }
@@ -953,7 +933,7 @@ export default class MainXMLForm extends Component {
       if (Array[key] != "") {
         var text = key; 
         text = new Entities().decode(text);
-        text = this.formateText(text)
+        text = commonFn.formateText(text)
         obj = {
           Question: text,
           Answer: Array[key]
