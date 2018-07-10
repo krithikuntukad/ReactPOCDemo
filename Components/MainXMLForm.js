@@ -1019,11 +1019,9 @@ export default class MainXMLForm extends Component {
    * params : responseText is the XML Data to be converted.
    */
   convertXMLDataToJson(responseText) {
-    console.time("convertXMLDataToJson")
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
     this.state.xmlJson = [];
     this.state.xmlJson.push(xml);
-    console.timeEnd("convertXMLDataToJson")
   }
 
   /**
