@@ -2708,7 +2708,7 @@
 
     <Validator>Integer</Validator>
 
-   
+    <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
 
     <MaxLength>50</MaxLength>
 
@@ -2896,7 +2896,7 @@
 
     <RequiredField>false</RequiredField>
 
-   
+    <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
 
     <Validator>Integer</Validator>
 

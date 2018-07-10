@@ -1343,7 +1343,7 @@
      <Visible>false</Visible>
      
      <RequiredField>false</RequiredField>
-     
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      <Validator>Integer</Validator>
      
      <MaxLength>50</MaxLength>
@@ -1439,7 +1439,7 @@
      <Visible>false</Visible>
      
      <RequiredField>false</RequiredField>
-     
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      <Validator>Integer</Validator>
      
      <MaxLength>50</MaxLength>
