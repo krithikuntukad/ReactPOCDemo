@@ -46,11 +46,13 @@ import DropdownComponent from "./controls/DropdownComponent";
 
 import { DialogComponent } from "react-native-dialog-component";
 
-var jsonData = require("./Constants/xmlDataStyleFive.json");
+var jsonData = require("./Constants/xmlData.json");
 
 import { WebView } from "react-native";
 
-import * as commonFn from './utility/commonJs'
+import * as commonFn from './utility/commonJs';
+
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 
 var responseText;
 let FileValues = [
@@ -388,8 +390,8 @@ export default class MainXMLForm extends Component {
 
   /**
   * Function : createCheckBoxControl
-  * Description : Creates Check box controls by pushing checkbox controls into controlsArray by using key index value
-                  and  applying external styles for each control 
+  * Description : Creates Check box controls by pushing checkbox controls 
+                  and  applys external styles for each control 
   * Params : KeyIndex is the unique value,controlItem holds control attributes.
   *             
   */
@@ -441,6 +443,8 @@ export default class MainXMLForm extends Component {
                 }
               );
             if (visibility == "true") {
+              validityArray["isRequired"] = isRequired
+              validityArray["visibility"] = visibility
               this.state.validityRules[innerItem.value] = validityArray;
               return (
                 <FormItem isRequired={isRequired == "true" ? true : false}>
@@ -498,7 +502,6 @@ export default class MainXMLForm extends Component {
         return tempArray.map((innerItem, innerItemIndex) => {
           if (innerItem.name == "FieldId") {
             validityArray = this.getValidationRules(tempArray);
-            console.log("validityArray Table", validityArray);
           }
 
           visibility = validityArray["visibility"];
@@ -513,7 +516,6 @@ export default class MainXMLForm extends Component {
             keyIndex = keyIndex + 1;
             var y = innerItem.value;
             y = new Entities().decode(y);
-            console.log("controlActionsArray",controlActionsArray)
             controlActionsArray.length > 0 &&
               controlActionsArray.map(
                 (visibilityAction, visibilityActionIndex) => {
@@ -585,8 +587,6 @@ export default class MainXMLForm extends Component {
             text = innerItem.value; //<Text style={styles.Header }>{innerItem.value}</Text>
             text = new Entities().decode(text);
             text = commonFn.formateText(text)
-
-            this.state.validityRules[displayLabel] = validityArray;
             displayTxt =
               '<p style="fontSize:10;margin-bottom:5">' +
               this.getDisplayLabel(text, isRequired) +
@@ -625,13 +625,24 @@ export default class MainXMLForm extends Component {
                     ) {
                       visibility = "true";
                       isRequired = "true";
+                      displayTxt =
+                      '<p style="fontSize:10;margin-bottom:5">' +
+                      this.getDisplayLabel(text, isRequired) +
+                      "</p>";
+                      console.log("isRequired",isRequired)
+                      validityArray["isRequired"] = isRequired
+                      validityArray["visibility"] = visibility
+                      this.state.validityRules[displayLabel] = validityArray;
+                      
                     }
                   }
                 }
               );
             if (visibility == "true") {
               keyIndex = keyIndex + 1;
-
+              validityArray["isRequired"] = isRequired
+              validityArray["visibility"] = visibility
+              this.state.validityRules[displayLabel] = validityArray;
               return (
                 <FormItem>
                   {
@@ -738,6 +749,9 @@ export default class MainXMLForm extends Component {
                 }
               );
             if (visibility == "true") {
+              validityArray["isRequired"] = isRequired
+              validityArray["visibility"] = visibility
+              this.state.validityRules[text] = validityArray;
               return (
                 <FormItem>
                   <LabelComponent
@@ -850,6 +864,9 @@ export default class MainXMLForm extends Component {
                 }
               );
             if (visibility == "true") {
+              validityArray["isRequired"] = isRequired
+              validityArray["visibility"] = visibility
+              this.state.validityRules[label] = validityArray;
               return (
                 <FormItem>
                   <DropdownComponent
@@ -881,6 +898,121 @@ export default class MainXMLForm extends Component {
     });
   }
 
+    /**
+  * Function : createAttachmentControl
+  * Description : Creates Attachment  controls
+                  and  applys external styles for each control 
+  * Params : KeyIndex is the unique value,controlItem holds control attributes.
+  *             
+  */
+ createAttachmentControl(keyIndex, controlItem) {
+  var visibility = false;
+  var isRequired = false;
+  var contolArray = [];
+  var controlActionsArray = [];
+  var validityArray = {};
+  return controlItem.children.map((outerItem, outerItemIndex) => {
+    contolArray.push(outerItem);
+
+    if (controlItem.children.length - 1 == outerItemIndex) {
+      var tempArray = contolArray.reverse();
+      return tempArray.map((innerItem, innerItemIndex) => {
+        if (innerItem.name == "FieldId") {
+          validityArray = this.getValidationRules(tempArray);
+        }
+
+        visibility = validityArray["visibility"];
+        isRequired = validityArray["isRequired"];
+
+        if (innerItem.name == "ControlActions") {
+          controlActionsArray = this.visibilityPropertyOnControlAction(
+            innerItem
+          );
+        }
+
+        if (innerItem.name == "FieldHeader") {
+          keyIndex = keyIndex + 1;
+          var text = new AllHtmlEntities().decode(innerItem.value);
+          text = commonFn.formateText(text)
+          console.log("controlActionsArray",controlActionsArray)
+          controlActionsArray.length > 0 &&
+            controlActionsArray.map(
+              (visibilityAction, visibilityActionIndex) => {
+                if (
+                  this.state.visibilityInputs[visibilityAction.SourceField] ==
+                  visibilityAction.SourceValue
+                ) {
+                  if (visibilityAction.Action == "Hide") {
+                    visibility = "false";
+                  } else if (visibilityAction.Action == "Show") {
+                    visibility = "true";
+                  } else if (
+                    visibilityAction.Action == "ShowAndRequiredField"
+                  ) {
+                    visibility = "true";
+                    isRequired = "true";
+                  }
+                }
+              }
+            );
+          if (visibility == "true") {
+            validityArray["isRequired"] = isRequired
+            validityArray["visibility"] = visibility
+            this.state.validityRules[text] = validityArray;
+            let obj={
+              "attributeKey":text,
+              "fieldId":visibility["fieldId"],
+              "visibility":visibility
+             }
+            return (
+              <FormItem isRequired={isRequired == "true" ? true : false}>
+                <View key={keyIndex}>
+         <Text style={styles.textBox}>{text}</Text>
+ 
+         <View style={styles.BrowserStyle}>
+           <Button key={keyIndex}
+             title="Open Button"
+             color="white"
+             style={styles.browseButtonStyle}
+             onPress={()=>this.browsing(obj)}
+             accessibilityLabel="Learn more about this purple button"
+           />
+         </View>
+ 
+       </View>
+              </FormItem>
+            );
+          }
+        }
+      });
+    }
+  });
+}
+
+    /**
+   * Function : browsing
+   * Description : Browses files from iOS andAndroid devices.
+   */
+  browsing = (fileObject) => {
+    console.log("browse fnlity")
+    DocumentPicker.show({
+      filetype: [DocumentPickerUtil.allFiles()],
+    }, (error, res) => {
+      // Android
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.controlInputs[fileObject.attributeKey] = res.uri;
+      statusCopy.visibilityInputs[fileObject.fieldId] = res.uri;
+      statusCopy.display = true
+      this.setState(statusCopy)
+      Alert.alert(res.uri)
+      console.log(
+        res.uri,
+        res.type, // mime type
+        res.fileName,
+        res.fileSize
+      );
+    });
+  }
   /**
    * Function : convertXMLDataToJson
    * Description : Converts XML Data to Required JSON Object
@@ -905,10 +1037,11 @@ export default class MainXMLForm extends Component {
       var rules = validationCheckRules[key];
 
       if (
-        rules["isRequired"] == "true" && commonFn.checkForUndefinedORNull(Array[key])
+        rules["isRequired"] == "true" && rules["visibility"] == "true" &&commonFn.checkForUndefinedORNull(Array[key])
       ) {
         let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = rules["requiredFieldErrorMessage"];
+        console.log("key",key)
         errorMessage.push(statusCopy.controlValid[key]);
         this.setState(statusCopy);
       } else {
@@ -918,6 +1051,7 @@ export default class MainXMLForm extends Component {
       }
     }
     if (errorMessage.length > 0) {
+      console.log("errorMessage",errorMessage)
       let statusCopy = Object.assign({}, this.state);
       statusCopy.validForm = false;
       this.setState(statusCopy);
@@ -974,6 +1108,8 @@ export default class MainXMLForm extends Component {
                     return this.createTextFieldControl(keyIndex, controlItem);
                   } else if (controlItem.name == "DropDownList") {
                     return this.createDropdownControl(keyIndex, controlItem);
+                  }else if (controlItem.name == "AttachmentControl") {
+                    //return this.createAttachmentControl(keyIndex,controlItem)
                   } 
                 }
               );
