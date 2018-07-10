@@ -26,8 +26,14 @@ export function checkForUndefinedORNull(data) {
      .replace("<em>", "")
      .replace("</em>", "")
      .replace("&nbsp;", "")
-     .replace("&amp;", "&")
-     .replace("&quot;", "'")
-     .replace("&#39;", "'")
+     .replace("&amp;", "")
+     .replace("&quot;", "")
+     .replace("&#39;", "")
+     .replace("<ul>", "")
+     .replace("</ul>", "")
+     .replace("<li>", "")
+     .replace("</li>", "")
+     .replace("<li>", "")
+     .replace("</li>", "")
  
    }

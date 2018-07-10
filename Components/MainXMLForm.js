@@ -967,13 +967,12 @@ export default class MainXMLForm extends Component {
             return (
               <FormItem isRequired={isRequired == "true" ? true : false}>
                 <View key={keyIndex}>
-         <Text style={styles.textBox}>{text}</Text>
- 
-         <View style={styles.BrowserStyle}>
-           <Button key={keyIndex}
+              <Text style={styles.textBox}>{text}</Text>
+              <View style={commonStyles.BrowserStyle}>
+             <Button key={keyIndex}
              title="Open Button"
              color="white"
-             style={styles.browseButtonStyle}
+             style={commonStyles.browseButtonStyle}
              onPress={()=>this.browsing(obj)}
              accessibilityLabel="Learn more about this purple button"
            />
@@ -1109,7 +1108,7 @@ export default class MainXMLForm extends Component {
                   } else if (controlItem.name == "DropDownList") {
                     return this.createDropdownControl(keyIndex, controlItem);
                   }else if (controlItem.name == "AttachmentControl") {
-                    //return this.createAttachmentControl(keyIndex,controlItem)
+                    return this.createAttachmentControl(keyIndex,controlItem)
                   } 
                 }
               );
