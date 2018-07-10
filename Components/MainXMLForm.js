@@ -1078,7 +1078,7 @@ export default class MainXMLForm extends Component {
         values: JSON.stringify(nonNullArray)
       });
     }
-    if (this.state.validForm == true) {
+    if (errorMessage.length<=0) {
       this.dialogComponent.show();
     }else{
       Alert.alert("Please fill all mandatory fields")
