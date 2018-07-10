@@ -285,13 +285,13 @@ export default class MainXMLForm extends Component {
       let parsedVisibilityData = JSON.parse(visibilityData);
       let parsed = JSON.parse(value);
       if (parsed) {
-        Alert.alert("Do you want to Replace previous data", "", [
+        Alert.alert("Data is recovered from Main XML form. Do you want to load the recovered data?", "", [
           {
-            text: "Cancel",
+            text: "No",
             onPress: () => AsyncStorage.removeItem("saveData")
           },
           {
-            text: "OK",
+            text: "Yes",
             onPress: () => {
               this.setState({
                 controlInputs: parsed
@@ -1019,9 +1019,11 @@ export default class MainXMLForm extends Component {
    * params : responseText is the XML Data to be converted.
    */
   convertXMLDataToJson(responseText) {
+    console.time("convertXMLDataToJson")
     var xml = new XMLParser().parseFromString(responseText); // Assume xmlText contains the example XML
     this.state.xmlJson = [];
     this.state.xmlJson.push(xml);
+    console.timeEnd("convertXMLDataToJson")
   }
 
   /**
