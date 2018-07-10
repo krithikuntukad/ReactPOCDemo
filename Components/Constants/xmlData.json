@@ -29,7 +29,7 @@
      
      <RequiredField>true</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
@@ -880,7 +880,7 @@
      
      <RequiredField>true</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>Integer</Validator>
      
@@ -1000,7 +1000,7 @@
      
      <Textbox>
      
-     <FieldHeader>&lt;d&gt;Please describe the method of payment (max 200 characters).&lt;/d&gt;</FieldHeader>
+     <FieldHeader>&lt;d&gt;Please describe the method of payment (max 4 characters).&lt;/d&gt;</FieldHeader>
      
      <ControlActions>
      
@@ -1022,13 +1022,13 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
      
-     <MaxLength>200</MaxLength>
+     <MaxLength>4</MaxLength>
      
      <Size>50</Size>
      
@@ -1083,7 +1083,7 @@
      
      <Textbox>
      
-     <FieldHeader>&lt;d&gt;Please describe the relationship with the Business Contact (max 200 characters).&lt;/d&gt;</FieldHeader>
+     <FieldHeader>&lt;d&gt;Please describe the relationship with the Business Contact (max 5 characters).&lt;/d&gt;</FieldHeader>
      
      <ControlActions>
      
@@ -1105,13 +1105,13 @@
      
      <RequiredField>true</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
      
-     <MaxLength>200</MaxLength>
+     <MaxLength>5</MaxLength>
      
      <Size>50</Size>
      
@@ -1197,7 +1197,7 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>Integer</Validator>
      
@@ -1293,7 +1293,7 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
@@ -1396,7 +1396,7 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>Integer</Validator>
      
@@ -1460,7 +1460,7 @@
      
      <Textbox>
      
-     <FieldHeader>&lt;d&gt;Enter the names of the&amp;nbsp;non-ERISA business contacts below. Please ensure they are also included in the &amp;#39;Entertainment Participants&amp;quot; section above&amp;nbsp;(max 200 characters).&lt;/d&gt;</FieldHeader>
+     <FieldHeader>&lt;d&gt;Enter the names of the&amp;nbsp;non-ERISA business contacts below. Please ensure they are also included in the &amp;#39;Entertainment Participants&amp;quot; section above&amp;nbsp;(max 5 characters).&lt;/d&gt;</FieldHeader>
      
      <ControlActions>
      
@@ -1482,13 +1482,13 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
      
-     <MaxLength>200</MaxLength>
+     <MaxLength>5</MaxLength>
      
      <Size>50</Size>
      
@@ -1652,7 +1652,7 @@
      
      <Textbox>
      
-     <FieldHeader>&lt;d&gt;Please describe the relationship between the client associate and their guest (max 200 characters).&lt;/d&gt;</FieldHeader>
+     <FieldHeader>&lt;d&gt;Please describe the relationship between the client associate and their guest (max 3 characters).&lt;/d&gt;</FieldHeader>
      
      <ControlActions>
      
@@ -1674,13 +1674,13 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
-     <Validator>String</Validator>
+     <Validator>Integer</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is Number only error msg </ValidatorErrorMessage>
      
-     <MaxLength>200</MaxLength>
+     <MaxLength>3</MaxLength>
      
      <Size>50</Size>
      
@@ -1746,7 +1746,7 @@
      
      <Textbox>
      
-     <FieldHeader>&lt;d&gt;Please describe the relationship between the Business Contact and their guest (max 200 characters).&lt;/d&gt;</FieldHeader>
+     <FieldHeader>&lt;d&gt;Please describe the relationship between the Business Contact and their guest (max 6 characters).&lt;/d&gt;</FieldHeader>
      
      <ControlActions>
      
@@ -1768,13 +1768,13 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
      
-     <MaxLength>200</MaxLength>
+     <MaxLength>6</MaxLength>
      
      <Size>50</Size>
      
@@ -1956,11 +1956,11 @@
      
      <RequiredField>false</RequiredField>
      
-     <RequiredFieldErrorMessage />
+     <RequiredFieldErrorMessage>This field is required</RequiredFieldErrorMessage>
      
      <Validator>String</Validator>
      
-     <ValidatorErrorMessage />
+     <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
      
      <MaxLength>10</MaxLength>
      

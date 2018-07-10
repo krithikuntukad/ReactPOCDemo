@@ -2018,7 +2018,7 @@
 
    
 
-    <FieldHeader>&lt;d&gt;Please describe the method of payment (max 200 characters).&lt;/d&gt;</FieldHeader>
+    <FieldHeader>&lt;d&gt;Please describe the method of payment (max 20 characters).&lt;/d&gt;</FieldHeader>
 
    
 
@@ -2070,7 +2070,7 @@
 
    
 
-    <ValidatorErrorMessage >this is text only error msg </ValidatorErrorMessage>
+    <ValidatorErrorMessage>This is text only error msg </ValidatorErrorMessage>
 
    
 
