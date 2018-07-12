@@ -33,14 +33,7 @@ paddingBottom:0
 
 },
 
-buttonBorderColor:{
-borderWidth:1,
-borderTopColor:theme.COLOR_BLUE
-},
 
-createButtonColor:{
-backgroundColor:theme.COLOR_BLUE,
-},
 webviewStyle: {
     flex: 1,
     marginTop: 5,

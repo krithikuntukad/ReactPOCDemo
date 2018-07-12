@@ -40,7 +40,7 @@ const AllHtmlEntities = require("html-entities").AllHtmlEntities;
 import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
 
 var jsonData = require("./Constants/xmlData.json");
-
+import FooterComponent from './controls/FooterComponent';
 import {
   DocumentPicker,
   DocumentPickerUtil
@@ -566,31 +566,11 @@ export default class DemoPageStyleTwo extends Component {
             <View style={commonStyles.container}>{this.state.controlsArray}</View>
           </ScrollView>
 
-          <View>
-            <Row size={12}>
-              <Col sm={6} style={styles.buttonBorderColor}>
-                <Button
-                  title="Cancel"
-                  color="#153875"
-                  onPress={() => {
+          <FooterComponent cancelTitle="Cancel" cancelColor="#153875" cancelAction ={() => {
                     Alert.alert("You tapped the button!");
-                  }}
-                  accessibilityLabel="Learn more about this purple button"
-                />
-              </Col>
-
-              <Col style={styles.createButtonColor} sm={6}>
-                <Button
-                  title="Create"
-                  color="white"
-                  onPress={() => {
-                    Alert.alert("You tapped the button!");
-                  }}
-                  accessibilityLabel="Learn more about this purple button"
-                />
-              </Col>
-            </Row>
-          </View>
+                  }} proceedTitle="Create" proceedColor="white" proceedAction={() => {
+                    this.submit();
+                  }}/> 
         </View>
       </Container>
     );

@@ -66,6 +66,14 @@ module.exports = StyleSheet.create({
       container:{
         flex:1,
         margin:20,
-      }
+      },
+      passiveButtonColor:{
+        borderWidth:1,
+        borderTopColor:theme.COLOR_BLUE
+        },
+        
+        activeButtonColor:{
+        backgroundColor:theme.COLOR_BLUE,
+        },
 
 })

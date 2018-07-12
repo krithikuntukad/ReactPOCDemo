@@ -53,7 +53,7 @@ import { WebView } from "react-native";
 import * as commonFn from './utility/commonJs';
 
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-
+import FooterComponent from './controls/FooterComponent';
 var responseText;
 let FileValues = [
   {
@@ -658,13 +658,13 @@ export default class MainXMLForm extends Component {
                     </Text>
                   }
                   <View key={keyIndex}>
-                    {/* <HTML
+                    <HTML
                       html={displayTxt}
                       imagesMaxWidth={Dimensions.get("window").width}
                       decodeEntities={true}
                       debug={true}
-                    /> */}
-                    {displayTxt}
+                    />
+
                     <RadioGroup
                       size={24}
                       thickness={2}
@@ -1169,30 +1169,11 @@ export default class MainXMLForm extends Component {
               </ScrollView>
               
             </DialogComponent>
-          <View>
-            <Row size={12}>
-              <Col sm={6} style={styles.buttonBorderColor}>
-                <Button
-                  title="Cancel"
-                  color="#153875"
-                  onPress={() => {
+             <FooterComponent cancelTitle="Cancel" cancelColor="#153875" cancelAction ={() => {
                     Alert.alert("You tapped the button!");
-                  }}
-                  accessibilityLabel="Learn more about this purple button"
-                />
-              </Col>
-              <Col style={styles.createButtonColor} sm={6}>
-                <Button
-                  title="Create"
-                  color="white"
-                  onPress={() => {
+                  }} proceedTitle="Create" proceedColor="white" proceedAction={() => {
                     this.submit();
-                  }}
-                  accessibilityLabel="Learn more about this purple button"
-                />
-              </Col>
-            </Row>
-          </View>
+                  }}/> 
         </View>
       </Container>
     );
