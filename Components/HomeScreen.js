@@ -4,6 +4,7 @@ import { Icon,  Container, Header, Content, Left, Right } from 'native-base';
  
 import styles from './Styles/styleHome';
 import commonStyles from "./Styles/commonStyles";
+import HeaderComponent from './controls/HeaderComponent';
 export default class HomeScreen extends Component {
  
   static navigationOptions = {
@@ -11,19 +12,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <Container>
-        <Header style={commonStyles.headrBgColor}>
-          <Left>
-            <Icon name="ios-menu" style={commonStyles.menuIcon} onPress={() =>
-              this.props.navigation.openDrawer()} />
-          </Left>
-          <Content contentContainerStyle={commonStyles.contentStyle}>
-            <Text style={commonStyles.contentLabel}> Home  </Text>
-          </Content>
-          <Right>
-            <Image style={commonStyles.contentImage}
-              source={require('./images/Save-White.png')} />
-          </Right>
-        </Header>
+        <HeaderComponent title="Home" onPress={() => this.props.navigation.openDrawer()} />
  
         <Content contentContainerStyle={{
           flex: 1,

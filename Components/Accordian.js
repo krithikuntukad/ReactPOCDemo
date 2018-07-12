@@ -39,7 +39,7 @@ import { Container } from "native-base";
 const Entities = require("html-entities").AllHtmlEntities;
 
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
-
+import HeaderComponent from './controls/HeaderComponent';
 import {
   DocumentPicker,
   DocumentPickerUtil
@@ -536,28 +536,7 @@ export default class Accordian extends Component {
           style={styles.imageStyle}
           source={require("./images/BackgroundImage.jpg")}
         >
-          <Header style={commonStyles.headrBgColor}>
-            <Left>
-              <Icon
-                name="ios-menu"
-                style={commonStyles.menuIcon}
-                onPress={() => this.props.navigation.openDrawer()}
-              />
-            </Left>
-
-            <Content
-              contentContainerStyle={commonStyles.contentStyle}
-            >
-              <Text style={commonStyles.contentLabel}> Style Three </Text>
-            </Content>
-
-            <Right>
-              <Image
-                style={commonStyles.contentImage}
-                source={require("./images/Save-White.png")}
-              />
-            </Right>
-          </Header>
+          <HeaderComponent title="Accordian" onPress={() => this.props.navigation.openDrawer()} />
 
           <View style={styles.pageStyle}>
             <View style={styles.container}>

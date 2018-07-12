@@ -41,6 +41,7 @@ import { RadioGroup, RadioButton } from "react-native-flexi-radio-button";
 
 var jsonData = require("./Constants/xmlData.json");
 import FooterComponent from './controls/FooterComponent';
+import HeaderComponent from './controls/HeaderComponent';
 import {
   DocumentPicker,
   DocumentPickerUtil
@@ -536,30 +537,7 @@ export default class DemoPageStyleTwo extends Component {
   render() {
     return (
       <Container>
-        <Header style={commonStyles.headrBgColor}>
-          <Left>
-            <Icon
-              name="ios-menu"
-              style={commonStyles.menuIcon}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-          </Left>
-
-          <Content
-            contentContainerStyle={commonStyles.contentStyle}
-          >
-            <Text style={commonStyles.contentLabel}>
-              Style Two
-            </Text>
-          </Content>
-
-          <Right>
-            <Image
-              style={commonStyles.contentImage}
-              source={require("./images/Save-White.png")}
-            />
-          </Right>
-        </Header>
+    <HeaderComponent title="Style Two" onPress={() => this.props.navigation.openDrawer()} />
 
         <View style={styles.pageStyle}>
           <ScrollView>

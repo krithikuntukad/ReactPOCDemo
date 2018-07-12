@@ -28,6 +28,7 @@ import { Container } from "native-base";
 const Entities = require("html-entities").AllHtmlEntities;
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
 var jsonData = require("./Constants/xmlData.json");
+import HeaderComponent from './controls/HeaderComponent';
 export default class CompleteXMLFormWithStyles extends Component {
   constructor(props) {
     super(props);
@@ -473,29 +474,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
           style={commonStyles.imageBgStyle}
           source={require("./images/BackgroundImage.jpg")}
         >
-          <Header style={commonStyles.headrBgColor}>
-            <Left>
-              <Icon
-                name="ios-menu"
-                style={commonStyles.menuIcon}
-                onPress={() => this.props.navigation.openDrawer()}
-              />
-            </Left>
-            <Content
-              contentContainerStyle={commonStyles.contentStyle}
-            >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                {" "}
-                Style Four{" "}
-              </Text>
-            </Content>
-            <Right>
-              <Image
-                style={commonStyles.contentImage}
-                source={require("./images/Save-White.png")}
-              />
-            </Right>
-          </Header>
+         <HeaderComponent title="Complete XML With Styles" onPress={() => this.props.navigation.openDrawer()} />
           <View style={styles.pageStyle}>
             <ScrollView>
               <View style={commonStyles.container}>

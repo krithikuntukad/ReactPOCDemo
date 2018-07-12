@@ -43,7 +43,7 @@ const Entities = require("html-entities").AllHtmlEntities;
 const AllHtmlEntities = require("html-entities").AllHtmlEntities;
 
 var jsonData = require("./Constants/xmlData.json");
-
+import HeaderComponent from './controls/HeaderComponent';
 export default class Paging extends Component {
   constructor(props) {
     super(props);
@@ -453,31 +453,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
   render() {
     return (
       <Container>
-        <Header style={commonStyles.headrBgColor}>
-          <Left>
-            <Icon
-              name="ios-menu"
-              style={commonStyles.menuIcon}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-          </Left>
-
-          <Content
-            contentContainerStyle={commonStyles.contentStyle}
-          >
-            <Text style={commonStyles.contentLabel}>
-              {" "}
-              Demo Pagination
-            </Text>
-          </Content>
-
-          <Right>
-            <Image
-              style={commonStyles.contentImage}
-              source={require("./images/Save-White.png")}
-            />
-          </Right>
-        </Header>
+        <HeaderComponent title="Demo Pagination" onPress={() => this.props.navigation.openDrawer()} />
 
         <View style={styles.pageStyle}>
           <Swiper style={styles.wrapper} showsButtons={true}>

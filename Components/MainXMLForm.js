@@ -53,7 +53,11 @@ import { WebView } from "react-native";
 import * as commonFn from './utility/commonJs';
 
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+
 import FooterComponent from './controls/FooterComponent';
+
+import HeaderComponent from './controls/HeaderComponent';
+
 var responseText;
 let FileValues = [
   {
@@ -1118,24 +1122,8 @@ export default class MainXMLForm extends Component {
 
     return (
       <Container>
-        <Header style={commonStyles.headrBgColor}>
-          <Left>
-            <Icon
-              name="ios-menu"
-              style={commonStyles.menuIcon}
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-          </Left>
-          <Content contentContainerStyle={commonStyles.contentStyle}>
-            <Text style={commonStyles.contentLabel}>Main XML Form </Text>
-          </Content>
-          <Right>
-            <Image
-              style={commonStyles.contentImage}
-              source={require("./images/Save-White.png")}
-            />
-          </Right>
-        </Header>
+        <HeaderComponent title="Main XML Form" onPress={() => this.props.navigation.openDrawer()} />
+        
         <View style={commonStyles.pageStyle}>
           <DropdownComponent
             label="choose xml file/Data"
