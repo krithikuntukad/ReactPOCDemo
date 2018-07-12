@@ -95,7 +95,6 @@ export default class DemoPageStyleTwo extends Component {
               label=""
               labelStyle={labelStyle}
               checkboxStyle={checkBoxStyle}
-              onChange={checked => console.log("I am checked", checked)}
             />
 
             <Text numberOfLines={15} style={styles.checkBoxLable}>
@@ -222,10 +221,7 @@ export default class DemoPageStyleTwo extends Component {
 
             switchOrRadioControlArray.push(radioBtnOption);
 
-            console.log("switchOrRadioControlArray");
-
             if (innerItem.children.length - 1 == radioBtnOptionIndex) {
-              console.log(JSON.stringify(switchOrRadioControlArray));
 
               switchOrRadioControlArray.map(function(rad, radBtnOptionIndex) {
                 if (rad.name == "ListItem") {
@@ -532,19 +528,7 @@ export default class DemoPageStyleTwo extends Component {
           display: true
         });
 
-        // this.setS = res.uri
-
         Alert.alert(this.state.Url);
-
-        console.log(
-          res.uri,
-
-          res.type, // mime type
-
-          res.fileName,
-
-          res.fileSize
-        );
       }
     );
   };

@@ -126,7 +126,6 @@ export default class Accordian extends Component {
               label=""
               labelStyle={styles.labelStyle}
               checkboxStyle={styles.checkBoxStyle}
-              onChange={checked => console.log("I am checked", checked)}
             />
 
             <Text numberOfLines={15} style={styles.checkBoxLable}>
@@ -234,7 +233,6 @@ export default class Accordian extends Component {
             thickness={2}
             color="#153875"
             onSelect={(index, value) => {
-              console.log(value);
             }}
           >
             {radioBtn}
@@ -518,20 +516,7 @@ export default class Accordian extends Component {
 
           display: true
         });
-
-        // this.setS = res.uri
-
         Alert.alert(this.state.Url);
-
-        console.log(
-          res.uri,
-
-          res.type, // mime type
-
-          res.fileName,
-
-          res.fileSize
-        );
       }
     );
   };

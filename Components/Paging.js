@@ -93,7 +93,6 @@ export default class Paging extends Component {
               label=""
               labelStyle={labelStyle}
               checkboxStyle={checkBoxStyle}
-              onChange={checked => console.log("I am checked", checked)}
             />
 
             <Text numberOfLines={15} style={styles.checkBoxLable}>
@@ -200,7 +199,7 @@ export default class Paging extends Component {
             thickness={2}
             color="#153875"
             onSelect={(index, value) => {
-              console.log(value);
+             
             }}
           >
             {radioBtn}
@@ -310,8 +309,7 @@ export default class Paging extends Component {
     });
 
     keyIndex = keyIndex + 1;
-
-    console.log("dropDowValues", dropDowValues);
+    
 
     controlsArray.push(
       <TouchableOpacity
@@ -448,16 +446,6 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
         // this.setS = res.uri
 
         Alert.alert(this.state.Url);
-
-        console.log(
-          res.uri,
-
-          res.type, // mime type
-
-          res.fileName,
-
-          res.fileSize
-        );
       }
     );
   };

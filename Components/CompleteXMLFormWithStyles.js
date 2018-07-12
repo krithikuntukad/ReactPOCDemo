@@ -65,7 +65,6 @@ export default class CompleteXMLFormWithStyles extends Component {
               label=""
               labelStyle={labelStyle}
               checkboxStyle={checkBoxStyle}
-              onChange={checked => console.log("I am checked", checked)}
             />
             <Text numberOfLines={15} style={styles.checkBoxLable}>
               {innerItem.value}
@@ -177,9 +176,7 @@ export default class CompleteXMLFormWithStyles extends Component {
           } else {
             SwitchFlag = false;
             switchOrRadioControlArray.push(radioBtnOption);
-            console.log("switchOrRadioControlArray");
             if (innerItem.children.length - 1 == radioBtnOptionIndex) {
-              console.log(JSON.stringify(switchOrRadioControlArray));
               switchOrRadioControlArray.map(function(rad, radBtnOptionIndex) {
                 if (rad.name == "ListItem") {
                   keyIndex = keyIndex + 1;
@@ -465,19 +462,7 @@ Params : KeyIndex is the unique value, controlItem holds controls globally, cont
           display: true
         });
 
-        // this.setS = res.uri
-
         Alert.alert(this.state.Url);
-
-        console.log(
-          res.uri,
-
-          res.type, // mime type
-
-          res.fileName,
-
-          res.fileSize
-        );
       }
     );
   };

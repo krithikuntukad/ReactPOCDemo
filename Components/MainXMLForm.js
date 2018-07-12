@@ -105,9 +105,9 @@ export default class MainXMLForm extends Component {
    * Description : It is React native component life cycle event & invoked just before mounting occurs
    */
   componentWillMount() {
-    setTimeout(() => {
+    //setTimeout(() => {
       this.setState({ displayLoader: false });
-    }, 3000);
+    //}, 3000);
     this.displayData();
   }
   /**
@@ -124,6 +124,11 @@ export default class MainXMLForm extends Component {
         "visibilityData",
         JSON.stringify(this.state.visibilityInputs)
       );
+      const blankState = {};
+      Object.keys(this.state).forEach(stateKey => {
+        blankState[stateKey] = undefined;
+      });
+      this.setState(blankState);
     }
   }
 
@@ -133,21 +138,24 @@ export default class MainXMLForm extends Component {
    * Params : fileName is the name of the file from which the function should load xml data.
    */
   changeFileValue = fileName => {
-    var path = "./Constants/xmlData.json";
-    if (fileName == "xmlData") {
+      var path = "./Constants/xmlData.json";
+      if (fileName == "xmlData") {
       jsonData = require("./Constants/xmlData.json");
-    } else if (fileName == "xmlDataStyleFive") {
+      } else if (fileName == "xmlDataStyleFive") {
       jsonData = require("./Constants/xmlDataStyleFive.json");
-    } else {
+      } else {
       jsonData = require("./Constants/noTableData.json");
-    }
-    responseText = jsonData[0].data;
-    var xml = new XMLParser().parseFromString(responseText);
-    var tempArray = [];
-    tempArray.push(xml);
-    let statusCopy = Object.assign({}, this.state);
-    statusCopy.xmlJson = tempArray;
-    this.setState(statusCopy);
+      }
+      responseText = jsonData[0].data;
+      var xml = new XMLParser().parseFromString(responseText);
+      var tempArray = [];
+      tempArray.push(xml);
+      let statusCopy = Object.assign({}, this.state);
+      statusCopy.controlInputs = {};
+      statusCopy.validityRules = {};
+      statusCopy.visibilityInputs = {}
+      statusCopy.xmlJson = tempArray;
+      this.setState(statusCopy);
   };
 
   
@@ -629,7 +637,6 @@ export default class MainXMLForm extends Component {
                       '<p style="fontSize:10;margin-bottom:5">' +
                       this.getDisplayLabel(text, isRequired) +
                       "</p>";
-                      console.log("isRequired",isRequired)
                       validityArray["isRequired"] = isRequired
                       validityArray["visibility"] = visibility
                       this.state.validityRules[displayLabel] = validityArray;
@@ -651,12 +658,13 @@ export default class MainXMLForm extends Component {
                     </Text>
                   }
                   <View key={keyIndex}>
-                    <HTML
+                    {/* <HTML
                       html={displayTxt}
                       imagesMaxWidth={Dimensions.get("window").width}
                       decodeEntities={true}
                       debug={true}
-                    />
+                    /> */}
+                    {displayTxt}
                     <RadioGroup
                       size={24}
                       thickness={2}
@@ -934,7 +942,6 @@ export default class MainXMLForm extends Component {
           keyIndex = keyIndex + 1;
           var text = new AllHtmlEntities().decode(innerItem.value);
           text = commonFn.formateText(text)
-          console.log("controlActionsArray",controlActionsArray)
           controlActionsArray.length > 0 &&
             controlActionsArray.map(
               (visibilityAction, visibilityActionIndex) => {
@@ -993,7 +1000,6 @@ export default class MainXMLForm extends Component {
    * Description : Browses files from iOS andAndroid devices.
    */
   browsing = (fileObject) => {
-    console.log("browse fnlity")
     DocumentPicker.show({
       filetype: [DocumentPickerUtil.allFiles()],
     }, (error, res) => {
@@ -1004,12 +1010,6 @@ export default class MainXMLForm extends Component {
       statusCopy.display = true
       this.setState(statusCopy)
       Alert.alert(res.uri)
-      console.log(
-        res.uri,
-        res.type, // mime type
-        res.fileName,
-        res.fileSize
-      );
     });
   }
   /**
@@ -1040,7 +1040,6 @@ export default class MainXMLForm extends Component {
       ) {
         let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = rules["requiredFieldErrorMessage"];
-        console.log("key",key)
         errorMessage.push(statusCopy.controlValid[key]);
         this.setState(statusCopy);
       } else {
@@ -1050,7 +1049,6 @@ export default class MainXMLForm extends Component {
       }
     }
     if (errorMessage.length > 0) {
-      console.log("errorMessage",errorMessage)
       let statusCopy = Object.assign({}, this.state);
       statusCopy.validForm = false;
       this.setState(statusCopy);
