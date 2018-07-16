@@ -445,6 +445,11 @@ export default class MainXMLForm extends Component {
                       visibility = "true";
                       isRequired = "true";
                     }
+                  }else{
+                    this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                    validityArray["isRequired"] = isRequired
+                    validityArray["visibility"] = visibility
+                    this.state.validityRules[innerItem.value] = validityArray;
                   }
                 }
               );
@@ -539,6 +544,11 @@ export default class MainXMLForm extends Component {
                       visibility = "true";
                       isRequired = "true";
                     }
+                  }else{
+                    this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                    //validityArray["isRequired"] = isRequired
+                    //validityArray["visibility"] = visibility
+                   // this.state.validityRules[displayLabel] = validityArray;
                   }
                 }
               );
@@ -622,7 +632,11 @@ export default class MainXMLForm extends Component {
                     this.state.visibilityInputs[visibilityAction.SourceField] ==
                     visibilityAction.SourceValue
                   ) {
+                    console.log("Yes OPtion",displayLabel,"::::::::::"+this.state.visibilityInputs[visibilityAction.SourceField],":::"+visibilityAction.SourceField)
                     if (visibilityAction.Action == "Hide") {
+                      console.log("hide",visibilityAction.SourceField)
+                      this.state.visibilityInputs[visibilityAction.SourceField] = ""
+                      console.log(this.state.visibilityInputs[visibilityAction.SourceField])
                       visibility = "false";
                     } else if (visibilityAction.Action == "Show") {
                       visibility = "true";
@@ -631,19 +645,20 @@ export default class MainXMLForm extends Component {
                     ) {
                       visibility = "true";
                       isRequired = "true";
-                      displayTxt =
-                      '<p style="fontSize:10;margin-bottom:5">' +
-                      this.getDisplayLabel(text, isRequired) +
-                      "</p>";
-                      validityArray["isRequired"] = isRequired
-                      validityArray["visibility"] = visibility
-                      this.state.validityRules[displayLabel] = validityArray;
-                      
                     }
+                  }else{
+                    this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                    validityArray["isRequired"] = isRequired
+                    validityArray["visibility"] = visibility
+                    this.state.validityRules[displayLabel] = validityArray;
                   }
                 }
               );
             if (visibility == "true") {
+              displayTxt =
+              '<p style="fontSize:10;margin-bottom:5">' +
+              this.getDisplayLabel(text, isRequired) +
+              "</p>";
               keyIndex = keyIndex + 1;
               validityArray["isRequired"] = isRequired
               validityArray["visibility"] = visibility
@@ -751,6 +766,11 @@ export default class MainXMLForm extends Component {
                       visibility = "true";
                       isRequired = "true";
                     }
+                  }else{
+                    this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                    validityArray["isRequired"] = isRequired
+                    validityArray["visibility"] = visibility
+                    this.state.validityRules[text] = validityArray;
                   }
                 }
               );
@@ -866,6 +886,11 @@ export default class MainXMLForm extends Component {
                       visibility = "true";
                       isRequired = "true";
                     }
+                  }else{
+                    this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                    validityArray["isRequired"] = isRequired
+                    validityArray["visibility"] = visibility
+                    this.state.validityRules[label] = validityArray;
                   }
                 }
               );
@@ -957,6 +982,11 @@ export default class MainXMLForm extends Component {
                     visibility = "true";
                     isRequired = "true";
                   }
+                }else{
+                  this.state.visibilityInputs[validityArray["fieldId"]] = ""
+                  validityArray["isRequired"] = isRequired
+                  validityArray["visibility"] = visibility
+                  this.state.validityRules[text] = validityArray;
                 }
               }
             );
@@ -1032,9 +1062,9 @@ export default class MainXMLForm extends Component {
     var Array = this.state.controlInputs;
     for (var key in validationCheckRules) {
       var rules = validationCheckRules[key];
-
+console.log("rules",JSON.stringify(rules))
       if (
-        rules["isRequired"] == "true" && rules["visibility"] == "true" &&commonFn.checkForUndefinedORNull(Array[key])
+        rules["visibility"] == "true" && rules["isRequired"] == "true"  && commonFn.checkForUndefinedORNull(Array[key])
       ) {
         let statusCopy = Object.assign({}, this.state);
         statusCopy.controlValid[key] = rules["requiredFieldErrorMessage"];
@@ -1046,6 +1076,7 @@ export default class MainXMLForm extends Component {
         this.setState(statusCopy);
       }
     }
+    console.log("errorMessage",errorMessage)
     if (errorMessage.length > 0) {
       let statusCopy = Object.assign({}, this.state);
       statusCopy.validForm = false;
