@@ -67,12 +67,6 @@ let FileValues = [
     value: "xmlDataStyleFive"
   },
   {
-    value: "xmlWithFiveControls"
-  },
-  {
-    value: "xmlWithTenControls"
-  },
-  {
     value: "Interdependency"
   },
   {
@@ -109,9 +103,9 @@ export default class MainXMLForm extends Component {
    * Description : It is React native component life cycle event & invoked just before mounting occurs
    */
   componentWillMount() {
-    //setTimeout(() => {
+    setTimeout(() => {
       this.setState({ displayLoader: false });
-    //}, 3000);
+    }, 3000);
     this.displayData();
   }
   /**
